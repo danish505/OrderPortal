@@ -138,7 +138,7 @@ $config['subclass_prefix'] = 'Public_';
 | Note: This will NOT disable or override the CodeIgniter-specific
 |	autoloading (application/config/autoload.php)
 */
-$config['composer_autoload'] = '../vendor/autoload.php';
+//$config['composer_autoload'] = '../vendor/autoload.php';
 
 /*
 |--------------------------------------------------------------------------
@@ -477,7 +477,7 @@ $config['csrf_exclude_uris'] = array();
 | by the output class.  Do not 'echo' any values with compression enabled.
 |
 */
-$config['compress_output'] = FALSE;
+$config['compress_output'] = TRUE;
 
 /*
 |--------------------------------------------------------------------------
@@ -490,8 +490,8 @@ $config['compress_output'] = FALSE;
 | helper' page of the user guide for information regarding date handling.
 |
 */
-$config['time_reference'] = 'Asia/Karachi';
-date_default_timezone_set('Asia/Karachi');
+$config['time_reference'] = 'America/Chicago';
+date_default_timezone_set('America/Chicago');
 
 /*
 |--------------------------------------------------------------------------

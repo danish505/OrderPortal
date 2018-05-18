@@ -1,5 +1,5 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
 /*
 | -------------------------------------------------------------------------
@@ -49,32 +49,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | Examples:	my-controller/index	-> my_controller/index
 |		my-controller/my-method	-> my_controller/my_method
 */
-$route['default_controller'] = 'main';
-
-$route['jobs'] = 'jobs/index';
-$route['resources'] = 'page/coming_soon';
-$route['contact'] = 'statics/contact';
-$route['verification/resetpassword'] = 'verification/resetpassword';
-$route['verification/(:any)'] = 'verification/index/$1';
-$route['jobs/search'] = 'jobs/search';
-$route['jobs/categories'] = 'jobs/category_list';
-$route['jobs/cities'] = 'jobs/city_list';
-$route['jobs/(:num)'] = 'jobs/index/$1';
-$route['jobs-in-(:any)'] = 'jobs/cities/$1';
-$route['jobs-in-(:any)/(:num)'] = 'jobs/cities/$1/$2';
-$route['jobs/(:any)'] = 'jobs/categories/$1';
-$route['jobs/(:any)/(:num)'] = 'jobs/categories/$1/$2';
-$route['job/apply'] = 'jobs/apply';
-$route['job/apply/success'] = 'statics/applicationsuccess';
-$route['job/(:any)'] = 'jobs/details/$1';
-$route['forgot'] = 'login/forgot';
-$route['profile'] = 'user/profile'; /* @// TODO: Configure SendGrid */
-$route['notifications'] = 'user/notifications'; /* @// TODO: Configure SendGrid */
-$route['login'] = 'login';
-$route['password'] = 'user/password'; /* @// TODO: Configure SendGrid */
-$route['logout'] = 'login/dologout';
-$route['a/(:any)'] = 'user/accessasadmin/$1';
-$route['u/(:any)'] = 'user/loginasuser/$1';
+$route['default_controller'] = 'page';
+$route['about-us'] = 'page/aboutUs';
+$route['services'] = 'page/services';
+$route['hospitals'] = 'page/hospitals';
+$route['contact-us'] = 'page/contactUs';
+$route['patients'] = 'page/patients';
 
 $route['404_override'] = 'page/show404';
-$route['translate_uri_dashes'] = FALSE;
+$route['translate_uri_dashes'] = false;
