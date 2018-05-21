@@ -7,7 +7,10 @@ class USPT_Controller extends CI_Controller
     {
         // Get Settings from DB
         parent::__construct();
-        $this->load->vars('base_url', base_url());
+        $this->load->vars(array(
+          'base_url' => base_url(),
+          'site_title' => $this->config->config['site_title'],
+        ));
     }
 
     private function reverseStringForEncodingAndDecoding($string)

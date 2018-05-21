@@ -69,3 +69,19 @@ p, ul {
         display: flex !important;
     }
   }
+
+footer {
+  background-color: #edf5ef;
+}
+
+.card-services {
+  border: none;
+}
+
+.card-services h5{
+  color: #0076db;
+}
+
+.card-services-main img {
+  border: 5px solid #ff9016;
+}

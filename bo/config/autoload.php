@@ -58,7 +58,7 @@ $autoload['packages'] = array('../common');
 |
 |	$autoload['libraries'] = array('user_agent' => 'ua');
 */
-$autoload['libraries'] = array('database','session','email','events');
+$autoload['libraries'] = array('database','session','email');
 
 /*
 | -------------------------------------------------------------------
@@ -89,7 +89,7 @@ $autoload['drivers'] = array();
 |
 |	$autoload['helper'] = array('url', 'file');
 */
-$autoload['helper'] = array('url','error');
+$autoload['helper'] = array('url');
 
 /*
 | -------------------------------------------------------------------
@@ -103,7 +103,7 @@ $autoload['helper'] = array('url','error');
 | config files.  Otherwise, leave it blank.
 |
 */
-$autoload['config'] = array('options_data');
+$autoload['config'] = array(); //app_config
 
 /*
 | -------------------------------------------------------------------
@@ -132,4 +132,4 @@ $autoload['language'] = array();
 |
 |	$autoload['model'] = array('first_model' => 'first');
 */
-$autoload['model'] = array('db_model');
+$autoload['model'] = array();

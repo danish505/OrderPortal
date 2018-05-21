@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="en">
+
   <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -11,17 +12,20 @@
     <link rel="stylesheet" href="<?php echo $base_url; ?>assets/css/style.css" />
     <title>US - Patient Transfer</title>
   </head>
+
   <body>
-  <div class="container-fluid">
-      <div class="row">
-        <div class="col-3 border-right d-none d-lg-block" style="height:150px;">Image here</div>
+    <div class="container-fluid">
+      <header class="row">
+        <div class="col-3 border-right d-none d-lg-block pl-5 pr-5 pt-2 pb-2" style="height:150px;">
+          <img src="<?php echo $base_url;?>assets/images/logo.png" class="img-fluid">
+        </div>
         <div class="col-lg-9 col-sm-12">
           <div class="row border-bottom h-50 align-items-center d-none d-lg-block">
-          <ul class="nav" style="padding-left: 8px;">
-            <li class="nav-item"><a class="nav-link active" href="#">My Account</a></li>
-            <li class="nav-item"><a class="nav-link" href="#">Login</a></li>
-          </ul>
-            </div>
+            <ul class="nav" style="padding-left: 8px;">
+              <li class="nav-item"><a class="nav-link active" href="#">My Account</a></li>
+              <li class="nav-item"><a class="nav-link" href="#">Login</a></li>
+            </ul>
+          </div>
           <div class="row">
             <nav class="w-100 navbar navbar-expand-lg navbar-light">
               <a class="navbar-brand d-block d-lg-none" href="#">US - Patient Transfer</a>
@@ -60,4 +64,4 @@
             </nav>
           </div>
         </div>
-      </div>
+      </header>

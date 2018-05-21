@@ -1,5 +1,5 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
 /*
 | -------------------------------------------------------------------------
@@ -51,13 +51,5 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 */
 $route['default_controller'] = 'login';
 
-$route['applications/ajax'] = 'applications/ajax';
-$route['applications/export'] = 'applications/export';
-$route['applications/(:any)'] = 'applications/index/$1';
-$route['applications/(:any)/(:num)'] = 'applications/index/$1/$2';
-$route['viewer'] = 'users/viewer';
-$route['logout'] = 'login/dologout';
-$route['change_password'] = 'accounts/change_self_password';
-
-$route['404_override'] = 'error/show404';
-$route['translate_uri_dashes'] = FALSE;
+$route['404_override'] = 'page/show404';
+$route['translate_uri_dashes'] = false;
