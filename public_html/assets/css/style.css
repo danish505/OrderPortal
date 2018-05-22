@@ -1,0 +1,87 @@
+html * {
+  font-family: 'Raleway', Helvetica, Arial, Lucida, sans-serif;
+}
+
+p, ul {
+  font-size: 14px;
+}
+.btn-primary, .btn-primary:hover, .btn-primary:active {
+  background-color: #ff9016;
+  border-color: #ff9016;
+}
+.section-treatment-process {
+  background-image: url(../images/treatement-process-bg.png);
+  background-repeat: no-repeat;
+  background-color: #ff9016;
+  max-height: 500px;
+  color: #ffffff;
+}
+
+.section-treatment-process .card{
+  background: transparent;
+  border: none;
+}
+.section-treatment-process .card img{
+  width: 124px;
+}
+
+.section-treatment-process .card .card-title{
+  text-align: center;
+  color: #014a86;
+}
+.border-right {
+  border-right: 1px solid #ff9016 !important;;
+}
+
+.border-bottom {
+  border-bottom: 1px solid #ff9016 !important;;
+}
+
+.navbar-nav .nav-item > a.nav-link {
+  font-size: 16px;
+  color: #000000;
+}
+
+.navbar-nav .nav-item.active > a.nav-link{
+  color: #ff9016;
+}
+
+.navbar-light .navbar-toggler {
+    color: #ff9016;
+    border-color: #ff9016;
+}
+
+.icon-bar{
+  background-color: #ff9016;
+}
+
+.navbar-light .navbar-toggler-icon {
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255, 144, 22, 1)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+  }
+
+  .nav a {
+    font-size: 12px;
+    color: #000000;
+  }
+
+  @media (min-width: 992px){
+    .d-lg-block {
+        display: flex !important;
+    }
+  }
+
+footer {
+  background-color: #edf5ef;
+}
+
+.card-services {
+  border: none;
+}
+
+.card-services h5{
+  color: #0076db;
+}
+
+.card-services-main img {
+  border: 5px solid #ff9016;
+}
