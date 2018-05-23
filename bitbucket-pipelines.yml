@@ -1,0 +1,19 @@
+image: samueldebruyn/debian-git
+
+pipelines:
+  default:
+    - step:
+        script:
+          - apt-get update
+          - apt-get -y install git-ftp
+    - step:
+        name: Deploy to production
+        image: samueldebruyn/debian-git
+        deployment: production
+        trigger: manual
+        script:
+              - apt-get update
+              - apt-get -y install git-ftp
+              - git ftp push --user $FTP_USER --passwd $FTP_PASSWD ftp://global-patienttransfer.com   
+          
+          
