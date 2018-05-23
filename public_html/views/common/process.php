@@ -1,6 +1,6 @@
 <div class="row section-treatment-process justify-content-center">
   <div class="pl-5 pr-5 pt-5">
-    <h2>US PATIENT TRANSFER PROCESS</h2>
+    <h2>GLOBAL PATIENT TRANSFER PROCESS</h2>
   </div>
   <div class="col-12 p-5">
     <div class="row pl-5 pr-5">

@@ -40,9 +40,9 @@
     </div>
   </div>
   <div class="col-md-6 col-sm-12 pr-5 pl-5 pt-5">
-    <h2>WELCOME TO THE US PATIENT TRANSFER WEBSITE</h2>
-    <p>US Patient Transfer is part of a global healthcare advisory and patient care improvement concept run by IMG Advisors LLC. We strongly believe in improving patient care services across the globe including international transfer assistance for healthcare
-      needs. US Patient Transfer and its team have many years of global healthcare experience that we have used to streamline the international patient transfer process and created services that benefit patients and their families.</p>
+    <h2>WELCOME TO THE GLOBAL PATIENT TRANSFER WEBSITE</h2>
+    <p>Global Patient Transfer is part of a global healthcare advisory and patient care improvement concept run by IMG Advisors LLC. We strongly believe in improving patient care services across the globe including international transfer assistance for healthcare
+      needs. Global Patient Transfer and its team have many years of global healthcare experience that we have used to streamline the international patient transfer process and created services that benefit patients and their families.</p>
     <p>We offer international patients assistance to seek healthcare in the United States. We have created a smart portal that simplifies the whole process and offers case analysis as well as document uploads.</p>
     <ul>
       <li>Patients will create their personal profile</li>

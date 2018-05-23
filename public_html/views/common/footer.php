@@ -9,8 +9,8 @@
 		<div class="col-lg-4 col-md-12">
 			<h4>ABOUT US</h4>
 
-			<p align="justify">US Patient Transfer is part of a global healthcare advisory and patient care improvement concept run by IMG Advisors LLC. We strongly believe in improving patient care services across the globe including international transfer assistance for healthcare
-				needs. US Patient Transfer and its team have many years of global healthcare experience that we have used to streamline the international patient transfer process and created services that benefit patients and their families.
+			<p align="justify">Global Patient Transfer is part of a global healthcare advisory and patient care improvement concept run by IMG Advisors LLC. We strongly believe in improving patient care services across the globe including international transfer assistance for healthcare
+				needs. Global Patient Transfer and its team have many years of global healthcare experience that we have used to streamline the international patient transfer process and created services that benefit patients and their families.
 
 			</p>
 			<a href="#" target="_blank" class="aps-icon-link animated aps-tooltip" data-animation-class="">

@@ -1,9 +1,9 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-require_once APPPATH.'../common/core/USPT_Controller.php';
+require_once APPPATH.'../common/core/GPT_Controller.php';
 
-class BO_Controller extends USPT_Controller
+class BO_Controller extends GPT_Controller
 {
     public function __construct()
     {
