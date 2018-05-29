@@ -25,7 +25,7 @@ require_once('../common/config/config.php');
 | a PHP script and you can easily do that on your own.
 |
 */
-$config['base_url'] = $config['public_url'];
+$config['base_url'] = $config['admin_url'];
 
 /*
 |--------------------------------------------------------------------------
