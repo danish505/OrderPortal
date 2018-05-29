@@ -42,9 +42,9 @@ use Doctrine\Common\Collections\Criteria;
  */
 abstract class AbstractEntityPersister implements CachedEntityPersister
 {
-     /**
-     * @var \Doctrine\ORM\UnitOfWork
-     */
+    /**
+    * @var \Doctrine\ORM\UnitOfWork
+    */
     protected $uow;
 
     /**
@@ -62,9 +62,9 @@ abstract class AbstractEntityPersister implements CachedEntityPersister
      */
     protected $class;
 
-     /**
-     * @var array
-     */
+    /**
+    * @var array
+    */
     protected $queuedCache = array();
 
     /**
@@ -264,7 +264,6 @@ abstract class AbstractEntityPersister implements CachedEntityPersister
                 if (isset($assoc['cache']) &&
                     ($assoc['type'] & ClassMetadata::TO_ONE) &&
                     ($assoc['fetch'] === ClassMetadata::FETCH_EAGER || ! $assoc['isOwningSide'])) {
-
                     $associations[] = $name;
                 }
             }
@@ -641,5 +640,4 @@ abstract class AbstractEntityPersister implements CachedEntityPersister
     {
         $this->persister->refresh($id, $entity, $lockMode);
     }
-
 }

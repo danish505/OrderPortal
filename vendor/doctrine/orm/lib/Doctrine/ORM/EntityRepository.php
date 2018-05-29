@@ -177,7 +177,7 @@ class EntityRepository implements ObjectRepository, Selectable
     public function findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
     {
         $persister = $this->_em->getUnitOfWork()->getEntityPersister($this->_entityName);
-
+        
         return $persister->loadAll($criteria, $orderBy, $limit, $offset);
     }
 
