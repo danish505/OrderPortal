@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en">
-
+<!--div class="g-recaptcha" data-sitekey="6LekK1wUAAAAAP_GmvRYBWiHxmOi8rDvgc6atO5S"></div-->
   <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
     <link rel="stylesheet" href="<?php echo $base_url; ?>assets/css/style.css" />
     <title><?php echo $site_title;?></title>
+    <script src='https://www.google.com/recaptcha/api.js'></script>
   </head>
 
   <body>

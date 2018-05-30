@@ -37,7 +37,7 @@ class Login_Controller extends BO_Controller
     }
     public function index()
     {
-        if ($this->session->user && $this->session->user->id > 0) {
+        if ($this->isLoggedIn()) {
             redirect('');
         }
         $this->adminRepository = $this->doctrine->em->getRepository('GptAdmin');

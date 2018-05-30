@@ -8,17 +8,22 @@ class Public_Controller extends GPT_Controller
     public function __construct()
     {
         parent::__construct();
+        $this->load->vars(array(
+          'header' => 'common/header',
+          'footer' => 'common/footer',
+          'head' => 'common/head',
+          'nav' => 'common/nav',
+          'copyright' => 'common/copyright',
+          'scripts' => 'common/scripts',
+      ));
+    }
 
-        // $maintenance_mode = $this->setting_model->get('maintenance_mode');
-        // if(!$maintenance_mode) {
-        // 	if($this->session->userdata('user_logged_in')) {
-        //
-        // 		$this->user = $user;
-        // 	} else {
-        // 		$this->isloggedin = FALSE;
-        // 	}
-        // } else {
-        // 	redirect('maintenance');
-        // }
+    public function render($template, $data = [])
+    {
+        $this->load->vars(array(
+      'currentPage' => $template,
+      'currentPageData' => $data
+    ));
+        $this->load->view('common/base');
     }
 }

@@ -7,7 +7,7 @@ class Authenticated_Controller extends BO_Controller
     {
         parent::__construct();
 
-        if (!$this->session->user || !($this->session->user->id > 0)) {
+        if (!$this->isLoggedIn()) {
             redirect('login');
         }
     }

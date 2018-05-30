@@ -30,4 +30,9 @@ class GPT_Controller extends CI_Controller
     {
         return json_decode(base64_decode($this->reverseStringForEncodingAndDecoding(urldecode($string))));
     }
+
+    protected function isLoggedIn()
+    {
+        return ($this->session->user && $this->session->user->id > 0);
+    }
 }
