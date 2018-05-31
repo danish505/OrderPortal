@@ -35,4 +35,9 @@ class GPT_Controller extends CI_Controller
     {
         return ($this->session->user && $this->session->user->id > 0);
     }
+
+    protected function getUserData()
+    {
+        return $this->session->user;
+    }
 }

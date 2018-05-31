@@ -1,10 +1,10 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Login_Controller extends BO_Controller
+class Login_Controller extends Public_Controller
 {
     private $repository;
-    private $admin;
+    private $user;
 
     public function __construct()
     {
@@ -17,21 +17,22 @@ class Login_Controller extends BO_Controller
             $this->form_validation->set_message('check_login', 'The Username field is required');
             return false;
         }
-        $admin =  $this->repository->findOneBy([
-                    'username' => $this->input->post('username')
+        $user =  $this->repository->findOneBy([
+                    'username' => $this->input->post('username'),
+                    'role'     => $this->input->post('login_as')
                   ]);
 
-        if (!$admin) {
+        if (!$user) {
             $this->form_validation->set_message('check_login', 'Username does not exist');
             return false;
-        } elseif ($admin->isBanned()) {
+        } elseif ($user->isBanned()) {
             $this->form_validation->set_message('check_login', 'Username has been blocked. Please contact administrator');
             return false;
-        } elseif (!$this->auth->validatePwd($this->input->post('password'), $admin->getPassword())) {
+        } elseif (!$this->auth->validatePwd($this->input->post('password'), $user->getPassword())) {
             $this->form_validation->set_message('check_login', 'You have entered an invalid password');
             return false;
         } else {
-            $this->admin = $admin;
+            $this->user = $user;
             return true;
         }
     }
@@ -40,11 +41,12 @@ class Login_Controller extends BO_Controller
         if ($this->isLoggedIn()) {
             redirect('');
         }
-        $this->repository = $this->doctrine->em->getRepository('GptAdmin');
+        $this->repository = $this->doctrine->em->getRepository('GptUser');
+
         $this->load->library('form_validation');
 
         if ($this->form_validation->run('login') == false) {
-            $this->load->view('login');
+            $this->render('login');
         } else {
             $this->initializeLogin();
         }
@@ -53,8 +55,11 @@ class Login_Controller extends BO_Controller
     private function initializeLogin()
     {
         $this->session->set_userdata('user', (object)[
-          'id'    =>$this->admin->getId(),
-          'name'  =>$this->admin->getName()
+          'id'    =>$this->user->getId(),
+          'name'  =>$this->user->getName(),
+          'email'  =>$this->user->getEmail(),
+          'role'  =>$this->user->getRole(),
+          'association_id'  =>$this->user->getAssociationId(),
         ]);
         redirect('');
     }

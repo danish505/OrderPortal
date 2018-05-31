@@ -11,15 +11,19 @@ class Public_Controller extends GPT_Controller
         $this->load->vars(array(
           'header' => 'common/header',
           'footer' => 'common/footer',
-          'head' => 'common/head',
-          'nav' => 'common/nav',
-          'copyright' => 'common/copyright',
-          'scripts' => 'common/scripts',
+          'all_services' => 'common/main-services-all',
+          'selected_services' => 'common/main-services',
+          'map' => 'common/map',
+          'process' => 'common/process',
       ));
     }
 
     public function render($template, $data = [])
     {
+        $data['isUserLoggedIn'] = $this->isLoggedIn();
+        if ($data['isUserLoggedIn']) {
+            $data['userData'] = $this->getUserData();
+        }
         $this->load->vars(array(
       'currentPage' => $template,
       'currentPageData' => $data

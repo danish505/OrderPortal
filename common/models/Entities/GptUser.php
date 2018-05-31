@@ -8,6 +8,13 @@
  */
 class GptUser
 {
+    const USER_BANNED = true;
+    const USER_NOT_BANNED = false;
+
+    const USER_ROLE_PATIENT = 'PATIENT';
+    const USER_ROLE_HOSPITAL_REP = 'HOSPITAL_REP';
+    const USER_ROLE_SERVICE_PROVIDER = 'SERVICE_PROVIDER';
+
     /**
      * @var integer
      *
@@ -29,14 +36,27 @@ class GptUser
      *
      * @Column(name="email", type="string", length=255, nullable=false)
      */
+    private $name;
+    /**
+     * @var string
+     *
+     * @Column(name="name", type="string", length=255, nullable=false)
+     */
     private $email;
 
     /**
-     * @var boolean
+     * @var string
      *
-     * @Column(name="auth_level", type="boolean", nullable=false)
+     * @Column(name="role", type="string", length=50, nullable=true)
      */
-    private $authLevel;
+    private $role;
+
+    /**
+     * @var integer
+     *
+     * @Column(name="association_id", type="integer", length=4, nullable=false)
+     */
+    private $association_id;
 
     /**
      * @var boolean
@@ -93,4 +113,33 @@ class GptUser
      * @Column(name="modified_at", type="datetime", nullable=false)
      */
     private $modifiedAt = 'CURRENT_TIMESTAMP';
+
+    public function getId()
+    {
+        return $this->userId;
+    }
+    public function getName()
+    {
+        return $this->name;
+    }
+    public function isBanned()
+    {
+        return ((boolean) $this->banned === self::USER_BANNED);
+    }
+    public function getPassword()
+    {
+        return $this->passwd;
+    }
+    public function getAssociationId()
+    {
+        return $this->association_id;
+    }
+    public function getRole()
+    {
+        return $this->role;
+    }
+    public function getEmail()
+    {
+        return $this->role;
+    }
 }
