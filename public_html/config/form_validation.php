@@ -13,5 +13,41 @@ $config = array(
         'rules' => 'required'
       ),
   ),
-  'patient_registration' => array()
+  'patient_registration' => array(
+    array(
+      'field' => 'username',
+      'label' => 'Username',
+      'rules' => 'callback_check_patient_username',
+      'error_prefix' => '<small id="error_username" class="form-text text-muted">',
+      'error_suffix' => '</small>'
+    ),
+    array(
+      'field' => 'first_name',
+      'label' => 'First name',
+      'rules' => 'required',
+      'error_prefix' => '<small id="error_first_name" class="form-text text-muted">',
+      'error_suffix' => '</small>'
+    ),
+    array(
+      'field' => 'last_name',
+      'label' => 'Last name',
+      'rules' => 'required',
+      'error_prefix' => '<small id="error_last_name" class="form-text text-muted">',
+      'error_suffix' => '</small>'
+    ),
+    array(
+      'field' => 'age',
+      'label' => 'Age',
+      'rules' => 'required',
+      'error_prefix' => '<small id="error_age_name" class="form-text text-muted">',
+      'error_suffix' => '</small>'
+    ),
+    array(
+      'field' => 'g-recaptcha-response',
+      'label' => 'Captcha',
+      'rules' => 'callback_verify_patient_captcha',
+      'error_prefix' => '<small id="error_age_name" class="form-text text-muted">',
+      'error_suffix' => '</small>'
+    )
+  )
 );

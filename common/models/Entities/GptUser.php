@@ -8,8 +8,9 @@
  */
 class GptUser
 {
-    const USER_BANNED = true;
-    const USER_NOT_BANNED = false;
+    const USER_STATUS_ACTIVE = 1;
+    const USER_STATUS_INACTIVE = 2;
+    const USER_STATUS_WAITING_VERIFICATION = 3;
 
     const USER_ROLE_PATIENT = 'PATIENT';
     const USER_ROLE_HOSPITAL_REP = 'HOSPITAL_REP';
@@ -34,19 +35,6 @@ class GptUser
     /**
      * @var string
      *
-     * @Column(name="email", type="string", length=255, nullable=false)
-     */
-    private $name;
-    /**
-     * @var string
-     *
-     * @Column(name="name", type="string", length=255, nullable=false)
-     */
-    private $email;
-
-    /**
-     * @var string
-     *
      * @Column(name="role", type="string", length=50, nullable=true)
      */
     private $role;
@@ -59,11 +47,11 @@ class GptUser
     private $association_id;
 
     /**
-     * @var boolean
+     * @var integer
      *
-     * @Column(name="banned", type="boolean", nullable=false)
+     * @Column(name="status", type="integer", nullable=false)
      */
-    private $banned = '0';
+    private $status = 0;
 
     /**
      * @var string
@@ -118,25 +106,34 @@ class GptUser
     {
         return $this->userId;
     }
-    public function isBanned()
+    public function isActive()
     {
-        return ((boolean) $this->banned === self::USER_BANNED);
+        return ($this->getStatus() === self::USER_STATUS_ACTIVE);
     }
     public function getPassword()
     {
         return $this->passwd;
     }
+    public function setPassword($passwd)
+    {
+        $this->passwd = $passwd;
+    }
     public function getAssociationId()
     {
         return $this->association_id;
+    }
+
+    public function setAssociationId($associationId)
+    {
+        return $this->association_id = $associationId;
     }
     public function getRole()
     {
         return $this->role;
     }
-    public function getEmail()
+    public function setUserName($username)
     {
-        return $this->role;
+        return $this->username = $username;
     }
     public function getDetail(Doctrine\ORM\EntityManager $em)
     {
@@ -145,5 +142,24 @@ class GptUser
               'patientId'  =>  $this->getAssociationId()
             ]);
         }
+    }
+
+    public function getStatus()
+    {
+        return $this->status;
+    }
+
+    public function setStatus($status)
+    {
+        $this->status = $status;
+    }
+    public function setRole($role)
+    {
+        $this->role = $role;
+    }
+    public function preCreate()
+    {
+        $this->createdAt = new \DateTime();
+        $this->modifiedAt = new \DateTime();
     }
 }

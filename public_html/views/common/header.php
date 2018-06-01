@@ -11,7 +11,6 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
     <link rel="stylesheet" href="<?php echo $base_url; ?>assets/css/style.css" />
     <title><?php echo $site_title;?></title>
-    <script src='https://www.google.com/recaptcha/api.js'></script>
   </head>
 
   <body>

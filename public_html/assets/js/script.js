@@ -8,5 +8,8 @@
 
   });
 
+  _w.gpt_validate_captcha = function(response){
+    console.log(response);
+  }
 
 })(jQuery, window);

@@ -23,3 +23,9 @@ alter table gpt_hospital drop column status_id;
 DROP TABLE IF EXISTS `gpt_patient_status`;
 DROP TABLE IF EXISTS `gpt_hospital_status`;
 DROP TABLE IF EXISTS `gpt_company_status`;
+
+alter table gpt_user drop column name;
+alter table gpt_user drop column email;
+
+alter table gpt_user change banned status tinyint;
+alter table gpt_user modify username varchar(50);

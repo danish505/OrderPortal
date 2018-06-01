@@ -13,7 +13,7 @@ class GptPatient
      *
      * @Column(name="patient_id", type="smallint", nullable=false)
      * @Id
-     * @GeneratedValue(strategy="NONE")
+     * @GeneratedValue(strategy="IDENTITY")
      */
     private $patientId;
 
@@ -79,4 +79,45 @@ class GptPatient
      * @Column(name="update_ts", type="datetime", nullable=false)
      */
     private $updateTs = 'CURRENT_TIMESTAMP';
+
+    public function setSalutation($salutation)
+    {
+        $this->salutation = $salutation;
+    }
+
+    public function setFirstName($firstName)
+    {
+        $this->firstName = $firstName;
+    }
+
+    public function setLastName($lastName)
+    {
+        $this->lastName = $lastName;
+    }
+
+    public function setMiddleName($middleName)
+    {
+        $this->middleName = $middleName;
+    }
+
+    public function setGender($gender)
+    {
+        $this->gender = $gender;
+    }
+
+    public function setAge($age)
+    {
+        $this->age = $age;
+    }
+
+    public function getId()
+    {
+        return $this->patientId;
+    }
+
+    public function preCreate()
+    {
+        $this->createTs = new \DateTime();
+        $this->updateTs = new \DateTime();
+    }
 }

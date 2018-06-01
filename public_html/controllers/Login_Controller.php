@@ -26,8 +26,8 @@ class Login_Controller extends Public_Controller
         if (!$user) {
             $this->form_validation->set_message('check_login', 'Username does not exist');
             return false;
-        } elseif ($user->isBanned()) {
-            $this->form_validation->set_message('check_login', 'Username has been blocked. Please contact administrator');
+        } elseif (!$user->isActive()) {
+            $this->form_validation->set_message('check_login', 'User is not activated. Please contact administrator');
             return false;
         } elseif (!$this->auth->validatePwd($this->input->post('password'), $user->getPassword())) {
             $this->form_validation->set_message('check_login', 'You have entered an invalid password');
@@ -57,9 +57,7 @@ class Login_Controller extends Public_Controller
     {
         $this->session->set_userdata('user', (object)[
           'id'              =>  $this->user->getId(),
-          'email'           =>  $this->user->getEmail(),
           'role'            =>  $this->user->getRole(),
-          'association_id'  =>  $this->user->getAssociationId(),
           'detail'          =>  $this->user->getDetail($this->doctrine->em)
         ]);
         redirect('');
