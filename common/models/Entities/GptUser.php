@@ -118,10 +118,6 @@ class GptUser
     {
         return $this->userId;
     }
-    public function getName()
-    {
-        return $this->name;
-    }
     public function isBanned()
     {
         return ((boolean) $this->banned === self::USER_BANNED);
@@ -141,5 +137,13 @@ class GptUser
     public function getEmail()
     {
         return $this->role;
+    }
+    public function getDetail(Doctrine\ORM\EntityManager $em)
+    {
+        if ($this->getRole() === self::USER_ROLE_PATIENT) {
+            return $em->getRepository('GptPatient')->findOneBy([
+              'patientId'  =>  $this->getAssociationId()
+            ]);
+        }
     }
 }

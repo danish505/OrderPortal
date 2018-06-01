@@ -17,6 +17,7 @@ class Login_Controller extends Public_Controller
             $this->form_validation->set_message('check_login', 'The Username field is required');
             return false;
         }
+        $this->repository = $this->doctrine->em->getRepository('GptUser');
         $user =  $this->repository->findOneBy([
                     'username' => $this->input->post('username'),
                     'role'     => $this->input->post('login_as')
@@ -41,7 +42,7 @@ class Login_Controller extends Public_Controller
         if ($this->isLoggedIn()) {
             redirect('');
         }
-        $this->repository = $this->doctrine->em->getRepository('GptUser');
+
 
         $this->load->library('form_validation');
 
@@ -55,11 +56,11 @@ class Login_Controller extends Public_Controller
     private function initializeLogin()
     {
         $this->session->set_userdata('user', (object)[
-          'id'    =>$this->user->getId(),
-          'name'  =>$this->user->getName(),
-          'email'  =>$this->user->getEmail(),
-          'role'  =>$this->user->getRole(),
-          'association_id'  =>$this->user->getAssociationId(),
+          'id'              =>  $this->user->getId(),
+          'email'           =>  $this->user->getEmail(),
+          'role'            =>  $this->user->getRole(),
+          'association_id'  =>  $this->user->getAssociationId(),
+          'detail'          =>  $this->user->getDetail($this->doctrine->em)
         ]);
         redirect('');
     }

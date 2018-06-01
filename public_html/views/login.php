@@ -33,8 +33,8 @@
           <input type="submit" value="Submit" class="btn btn-primary btn-block" />
         <?php echo form_close(); ?>
         <div class="text-center">
-          <a class="d-block small mt-3" href="<?php echo $base_url;?>/register">Register an Account</a>
-          <a class="d-block small" href="<?php echo $base_url;?>/recover-password">Forgot Password?</a>
+          <a class="d-block small mt-3" href="<?php echo $base_url;?>register-patient">Register an Account</a>
+          <a class="d-block small" href="<?php echo $base_url;?>recover-password">Forgot Password?</a>
         </div>
       </div>
     </div>

@@ -3,7 +3,7 @@
 /**
  * GptPatient
  *
- * @Table(name="gpt_patient", indexes={@Index(name="fk_patient_status1_idx", columns={"status_id"})})
+ * @Table(name="gpt_patient")
  * @Entity
  */
 class GptPatient
@@ -79,16 +79,4 @@ class GptPatient
      * @Column(name="update_ts", type="datetime", nullable=false)
      */
     private $updateTs = 'CURRENT_TIMESTAMP';
-
-    /**
-     * @var \GptPatientStatus
-     *
-     * @Id
-     * @GeneratedValue(strategy="NONE")
-     * @OneToOne(targetEntity="GptPatientStatus")
-     * @JoinColumns({
-     *   @JoinColumn(name="status_id", referencedColumnName="status_id")
-     * })
-     */
-    private $status;
 }

@@ -12,5 +12,6 @@ $config = array(
         'label' => 'Password',
         'rules' => 'required'
       ),
-  )
+  ),
+  'patient_registration' => array()
 );
