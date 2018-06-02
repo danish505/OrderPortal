@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en">
-
+<!--div class="g-recaptcha" data-sitekey="6LekK1wUAAAAAP_GmvRYBWiHxmOi8rDvgc6atO5S"></div-->
   <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -22,8 +22,13 @@
         <div class="col-lg-9 col-sm-12">
           <div class="row border-bottom h-50 align-items-center d-none d-lg-block">
             <ul class="nav" style="padding-left: 8px;">
-              <li class="nav-item"><a class="nav-link active" href="#">My Account</a></li>
-              <li class="nav-item"><a class="nav-link" href="#">Login</a></li>
+              <?php if ($isUserLoggedIn): ?>
+              <li class="nav-item"><a class="nav-link active" href="<?php echo $base_url;?>my-account">My Account</a></li>
+              <li class="nav-item"><a class="nav-link" href="<?php echo $base_url;?>logout">Logout</a></li>
+            <?php else: ?>
+              <li class="nav-item"><a class="nav-link active" href="<?php echo $base_url;?>register-patient">Register</a></li>
+              <li class="nav-item"><a class="nav-link" href="<?php echo $base_url;?>login">Login</a></li>
+            <?php endif;?>
             </ul>
           </div>
           <div class="row">
@@ -52,12 +57,13 @@
                   <li class="nav-item">
                     <a class="nav-link" href="<?php echo $base_url; ?>contact-us">Contact us</a>
                   </li>
-                  <li class="nav-item d-block d-lg-none">
-                    <a class="nav-link" href="#">My Account</a>
-                  </li>
-                  <li class="nav-item d-block d-lg-none">
-                    <a class="nav-link" href="#">Login</a>
-                  </li>
+                  <?php if ($isUserLoggedIn): ?>
+                  <li class="nav-item d-block d-lg-none"><a class="nav-link" href="<?php $base_url;?>my-account">My Account</a></li>
+                  <li class="nav-item d-block d-lg-none"><a class="nav-link" href="<?php $base_url;?>logout">Logout</a></li>
+                <?php else: ?>
+                  <li class="nav-item d-block d-lg-none"><a class="nav-link" href="<?php $base_url;?>register-patient">Register</a></li>
+                  <li class="nav-item d-block d-lg-none"><a class="nav-link" href="<?php $base_url;?>login">Login</a></li>
+                <?php endif;?>
                 </ul>
 
               </div>

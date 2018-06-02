@@ -5,6 +5,9 @@
   * @author Shahzad Fateh Ali <shahzad.fatehali@gmail.com>
 **/
 
+/**
+  * @// TODO: Rename this to Password and refactor the code
+**/
 class Auth
 {
     public function generatedPwd()

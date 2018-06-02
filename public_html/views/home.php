@@ -1,4 +1,3 @@
-<?php $this->load->view('common/header');?>
 <div class="row">
   <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
     <ol class="carousel-indicators">
@@ -56,4 +55,3 @@
 <?php $this->load->view('common/process');?>
 <?php $this->load->view('common/main-services-all');?>
 <?php $this->load->view('common/map');?>
-<?php $this->load->view('common/footer');?>

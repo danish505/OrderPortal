@@ -3,7 +3,7 @@
 /**
  * GptPatient
  *
- * @Table(name="gpt_patient", indexes={@Index(name="fk_patient_status1_idx", columns={"status_id"})})
+ * @Table(name="gpt_patient")
  * @Entity
  */
 class GptPatient
@@ -13,7 +13,7 @@ class GptPatient
      *
      * @Column(name="patient_id", type="smallint", nullable=false)
      * @Id
-     * @GeneratedValue(strategy="NONE")
+     * @GeneratedValue(strategy="IDENTITY")
      */
     private $patientId;
 
@@ -80,15 +80,44 @@ class GptPatient
      */
     private $updateTs = 'CURRENT_TIMESTAMP';
 
-    /**
-     * @var \GptPatientStatus
-     *
-     * @Id
-     * @GeneratedValue(strategy="NONE")
-     * @OneToOne(targetEntity="GptPatientStatus")
-     * @JoinColumns({
-     *   @JoinColumn(name="status_id", referencedColumnName="status_id")
-     * })
-     */
-    private $status;
+    public function setSalutation($salutation)
+    {
+        $this->salutation = $salutation;
+    }
+
+    public function setFirstName($firstName)
+    {
+        $this->firstName = $firstName;
+    }
+
+    public function setLastName($lastName)
+    {
+        $this->lastName = $lastName;
+    }
+
+    public function setMiddleName($middleName)
+    {
+        $this->middleName = $middleName;
+    }
+
+    public function setGender($gender)
+    {
+        $this->gender = $gender;
+    }
+
+    public function setAge($age)
+    {
+        $this->age = $age;
+    }
+
+    public function getId()
+    {
+        return $this->patientId;
+    }
+
+    public function preCreate()
+    {
+        $this->createTs = new \DateTime();
+        $this->updateTs = new \DateTime();
+    }
 }

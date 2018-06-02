@@ -1,35 +1,35 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Page extends Public_Controller
+class Page_Controller extends Public_Controller
 {
     public function index()
     {
-        $this->load->view('home');
+        $this->render('home');
     }
 
     public function aboutUs()
     {
-        $this->load->view('about-us');
+        $this->render('about-us');
     }
 
     public function services()
     {
-        $this->load->view('services');
+        $this->render('services');
     }
 
     public function patients()
     {
-        $this->load->view('patients');
+        $this->render('patients');
     }
 
     public function hospitals()
     {
-        $this->load->view('hospitals');
+        $this->render('hospitals');
     }
 
     public function contactUs()
     {
-        $this->load->view('contact-us');
+        $this->render('contact-us');
     }
 }

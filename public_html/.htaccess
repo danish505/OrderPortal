@@ -1,8 +1,10 @@
+# MAKE SURE TO LEAVE THE DENY LIST AT THE TOP OF THE FILE !!!
+# BEGIN DENY LIST --
+# END DENY LIST --
+
 SetEnv CI_ENV development
 
 RewriteEngine On
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-
-
-# This is test comment
+RewriteRule ^(.*)$ index.php/$1 [L]
