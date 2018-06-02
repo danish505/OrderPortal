@@ -22,19 +22,18 @@ class Registration_Controller extends Public_Controller
         $url = 'https://www.google.com/recaptcha/api/siteverify';
         $data = array('secret' => $this->config->config['GOOGLE_CAPTCHA_SECRET_KEY'], 'response' => $value, 'remoteip' => $this->input->server('REMOTE_ADDR'));
 
-        // use key 'http' even if you send the request to https://...
-        $options = array(
-            'http' => array(
-                'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
-                'method'  => 'POST',
-                'content' => http_build_query($data)
-            )
-        );
-        $context  = stream_context_create($options);
-        $result = file_get_contents($url, false, $context);
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
+        curl_setopt($ch, CURLOPT_HEADER, 0);
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        $result = curl_exec($ch);
+        curl_close($ch);
+
         if ($result === false) { /* Handle error */
             return false;
         }
+
         $result = json_decode($result);
         return $result->success;
     }
