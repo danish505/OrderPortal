@@ -64,4 +64,6 @@ $route['register-hospital'] = 'Registration_Controller/registerHospital';
 $route['register-service-provider'] = 'Registration_Controller/registerServiceProvider';
 $route['v/p/(:any)'] = 'Verification_Controller/verifyPatient/$1';
 
+$route['my-account'] = 'MyAccount_Controller';
+
 $route['translate_uri_dashes'] = false;

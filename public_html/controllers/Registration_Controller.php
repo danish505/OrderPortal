@@ -65,12 +65,12 @@ class Registration_Controller extends Public_Controller
     public function registerPatient()
     {
         $this->load->library('form_validation');
-        $data = array('user_creation_successful' => false);
+        $data = array('user_creation_successful' => false, 'salutations' => $this->config->config['gpt_variable']['salutation']);
 
         if ($this->form_validation->run('patient_registration')) {
             $patientId = $this->createPatient();
             $code = $this->createUser($patientId);
-            $data = array('user_creation_successful' => true, 'code' => $code);
+            $data['user_creation_successful'] = true;
         }
         $this->render('register/patient', $data);
     }
@@ -83,7 +83,7 @@ class Registration_Controller extends Public_Controller
         $patient->setFirstName($this->input->post('first_name'));
         $patient->setLastName($this->input->post('last_name'));
         $patient->setMiddleName($this->input->post('middle_name'));
-        $patient->setAge((int)$this->input->post('age'));
+        $patient->setAge($this->input->post('age'));
         $patient->setGender($this->input->post('gender'));
         $patient->preCreate();
         $em->persist($patient);
