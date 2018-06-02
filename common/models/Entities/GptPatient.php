@@ -53,9 +53,9 @@ class GptPatient
     private $gender;
 
     /**
-     * @var boolean
+     * @var integer
      *
-     * @Column(name="age", type="boolean", nullable=true)
+     * @Column(name="age", type="integer", nullable=true)
      */
     private $age;
 
@@ -100,6 +100,11 @@ class GptPatient
         $this->middleName = $middleName;
     }
 
+    public function getDisplayName()
+    {
+        return $this->getFirstName().' '.$this->getLastName();
+    }
+
     public function setGender($gender)
     {
         $this->gender = $gender;
@@ -119,5 +124,35 @@ class GptPatient
     {
         $this->createTs = new \DateTime();
         $this->updateTs = new \DateTime();
+    }
+
+    public function getSalutation()
+    {
+        return $this->salutation;
+    }
+
+    public function getFirstName()
+    {
+        return $this->firstName ;
+    }
+
+    public function getLastName()
+    {
+        return $this->lastName;
+    }
+
+    public function getMiddleName()
+    {
+        return $this->middleName;
+    }
+
+    public function getGender()
+    {
+        return $this->gender;
+    }
+
+    public function getAge()
+    {
+        return $this->age;
     }
 }

@@ -57,8 +57,7 @@ class Login_Controller extends Public_Controller
     {
         $this->session->set_userdata('user', (object)[
           'id'              =>  $this->user->getId(),
-          'role'            =>  $this->user->getRole(),
-          'detail'          =>  $this->user->getDetail($this->doctrine->em)
+          'role'            =>  $this->user->getRole()
         ]);
         redirect('');
     }
