@@ -62,6 +62,7 @@ $route['search'] = 'Search_Controller';
 $route['register-patient'] = 'Registration_Controller/registerPatient';
 $route['register-hospital'] = 'Registration_Controller/registerHospital';
 $route['register-service-provider'] = 'Registration_Controller/registerServiceProvider';
+$route['v/p/(:any)'] = 'Verification_Controller/verifyPatient/$1';
 
 $route['404_override'] = 'Page_Controller/show404';
 $route['translate_uri_dashes'] = false;

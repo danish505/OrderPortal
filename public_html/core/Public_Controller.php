@@ -15,7 +15,8 @@ class Public_Controller extends GPT_Controller
           'selected_services' => 'common/main-services',
           'map' => 'common/map',
           'process' => 'common/process',
-          'GOOGLE_CAPTCHA_SITE_KEY' => $this->config->config['GOOGLE_CAPTCHA_SITE_KEY']
+          'GOOGLE_CAPTCHA_SITE_KEY' => $this->config->config['GOOGLE_CAPTCHA_SITE_KEY'],
+          'injected_scripts' => ''
       ));
     }
 

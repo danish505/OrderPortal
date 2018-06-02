@@ -29,3 +29,8 @@ alter table gpt_user drop column email;
 
 alter table gpt_user change banned status tinyint;
 alter table gpt_user modify username varchar(50);
+
+alter table gpt_user modify passwd varchar(255);
+alter table gpt_user modify passwd_recovery_code varchar(255);
+alter table gpt_user add column verification_code varchar(255) after status;
+alter table gpt_user add column email varchar(255) after username;

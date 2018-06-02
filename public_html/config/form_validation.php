@@ -36,6 +36,13 @@ $config = array(
       'error_suffix' => '</small>'
     ),
     array(
+      'field' => 'email_address',
+      'label' => 'Email Address',
+      'rules' => 'trim|required|valid_email',
+      'error_prefix' => '<small id="error_email_address" class="form-text text-muted">',
+      'error_suffix' => '</small>'
+    ),
+    array(
       'field' => 'age',
       'label' => 'Age',
       'rules' => 'required',
@@ -49,5 +56,17 @@ $config = array(
       'error_prefix' => '<small id="error_age_name" class="form-text text-muted">',
       'error_suffix' => '</small>'
     )
-  )
+  ),
+  'user_activation' => array(
+    array(
+        'field' => 'password',
+        'label' => 'Password',
+        'rules' => 'required'
+      ),
+      array(
+        'field' => 'confirm_password',
+        'label' => 'Confirm Password',
+        'rules' => 'required|matches[password]'
+      ),
+  ),
 );

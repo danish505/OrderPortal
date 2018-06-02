@@ -70,8 +70,8 @@ class Registration_Controller extends Public_Controller
 
         if ($this->form_validation->run('patient_registration')) {
             $patientId = $this->createPatient();
-            $this->createUser($patientId);
-            $data = array('user_creation_successful' => true);
+            $code = $this->createUser($patientId);
+            $data = array('user_creation_successful' => true, 'code' => $code);
         }
         $this->render('register/patient', $data);
     }
@@ -92,18 +92,41 @@ class Registration_Controller extends Public_Controller
         return $patient->getId();
     }
 
-    private function createUser($associationId, $role = GptUser::USER_ROLE_PATIENT, $status = GptUser::USER_STATUS_ACTIVE)
+    private function createUser($associationId, $role = GptUser::USER_ROLE_PATIENT, $status = GptUser::USER_STATUS_AWAITING_VERIFICATION)
     {
         $em = $this->doctrine->em;
         $user = new GptUser();
         $user->setAssociationId($associationId);
         $user->setUserName($this->input->post('username'));
+        $user->setEmail($this->input->post('email_address'));
         $user->setStatus($status);
         $user->setRole($role);
         $user->setPassword("dummypassword"); // just to fill the column
         $user->preCreate();
+        $verification_code = $user->generateVerificationCode();
+        $user->setVerificationCode($verification_code);
         $em->persist($user);
         $em->flush();
+
+        $this->sendVerificationEmail($user, $verification_code);
+        return $verification_code;
+    }
+
+    private function sendVerificationEmail($user, $code)
+    {
+        $this->load->library('email');
+        $this->load->library('parser');
+
+        $html = $this->parser->parse('email/verification', [
+          'username' => $user->getUserName(),
+          'verification_link' => $user->getVerificationLink()
+        ]);
+
+        $this->email->from($this->config->config['gpt_email_config']['from_email'], $this->config->config['gpt_email_config']['from_name']);
+        $this->email->to($user->getEmail());
+        $this->email->subject($this->config->config['site_title'].' :: Verification required');
+        $this->email->message($html);
+        $this->email->send();
     }
 
     public function registerHospital()

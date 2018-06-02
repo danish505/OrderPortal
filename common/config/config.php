@@ -17,3 +17,6 @@ $config['gpt_variable']['salutation'] = [
   'Mrs.' => 'Mrs.',
   'Dr.' => 'Dr.'
 ];
+
+$config['gpt_email_config']['from_email'] = 'no-reply@lobal-patienttransfer.local';
+$config['gpt_email_config']['from_name']  = $config['site_title'];
