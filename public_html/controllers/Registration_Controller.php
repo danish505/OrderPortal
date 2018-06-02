@@ -119,7 +119,7 @@ class Registration_Controller extends Public_Controller
         $html = $this->parser->parse('email/verification', [
           'username' => $user->getUserName(),
           'verification_link' => $user->getVerificationLink()
-        ]);
+        ], true);
 
         $this->email->from($this->config->config['gpt_email_config']['from_email'], $this->config->config['gpt_email_config']['from_name']);
         $this->email->to($user->getEmail());

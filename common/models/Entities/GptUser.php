@@ -215,15 +215,15 @@ class GptUser
         switch ($this->getRole()) {
 
         case self::USER_ROLE_PATIENT:
-          return base_url().'p/v/'.$code;
+          return base_url().'v/p/'.$code;
         break;
 
         case self::USER_ROLE_HOSPITAL_REP:
-          return base_url().'h/v/'.$code;
+          return base_url().'v/h/'.$code;
         break;
 
         case self::USER_ROLE_SERVICE_PROVIDER:
-          return base_url().'s/v/'.$code;
+          return base_url().'v/s/'.$code;
         break;
 
       }
