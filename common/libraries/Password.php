@@ -5,24 +5,21 @@
   * @author Shahzad Fateh Ali <shahzad.fatehali@gmail.com>
 **/
 
-/**
-  * @// TODO: Rename this to Password and refactor the code
-**/
-class Auth
+class Password
 {
-    public function generatedPwd()
+    public function generate()
     {
         $chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()<>?:"{}+_=-~`';
         $length = 12;
         return substr(str_shuffle($chars), 0, $length);
     }
 
-    public function validatePwd($rawPwd, $hash)
+    public function validate($rawPwd, $hash)
     {
         return password_verify($rawPwd, $hash);
     }
 
-    public function makePwd($pwd)
+    public function make($pwd)
     {
         return password_hash($pwd, PASSWORD_DEFAULT);
     }

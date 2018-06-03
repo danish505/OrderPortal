@@ -1,6 +1,5 @@
 <!doctype html>
 <html lang="en">
-<!--div class="g-recaptcha" data-sitekey="6LekK1wUAAAAAP_GmvRYBWiHxmOi8rDvgc6atO5S"></div-->
   <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">

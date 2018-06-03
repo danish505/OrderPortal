@@ -17,30 +17,9 @@ class Registration_Controller extends Public_Controller
         redirect('register-patient');
     }
 
-    private function verify_captcha($value)
+    public function verify_captcha($value)
     {
-        $url = 'https://www.google.com/recaptcha/api/siteverify';
-        $data = array('secret' => $this->config->config['GOOGLE_CAPTCHA_SECRET_KEY'], 'response' => $value, 'remoteip' => $this->input->server('REMOTE_ADDR'));
-
-        $ch = curl_init($url);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
-        curl_setopt($ch, CURLOPT_HEADER, 0);
-        curl_setopt($ch, CURLOPT_POST, 1);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        $result = curl_exec($ch);
-        curl_close($ch);
-
-        if ($result === false) { /* Handle error */
-            return false;
-        }
-
-        $result = json_decode($result);
-        return $result->success;
-    }
-
-    public function verify_patient_captcha($value)
-    {
-        return $this->verify_captcha($value);
+        return $this->captcha->verify($value, $this->input->server('REMOTE_ADDR'));
     }
 
     public function check_patient_username($value)
@@ -49,6 +28,7 @@ class Registration_Controller extends Public_Controller
             $this->form_validation->set_message('check_patient_username', 'The Username is required');
             return false;
         }
+
         $this->repository = $this->doctrine->em->getRepository('GptUser');
         $user =  $this->repository->findOneBy([
                   'username' => $this->input->post('username'),
@@ -65,7 +45,13 @@ class Registration_Controller extends Public_Controller
     public function registerPatient()
     {
         $this->load->library('form_validation');
-        $data = array('user_creation_successful' => false, 'salutations' => $this->config->config['gpt_variable']['salutation']);
+        $this->load->library('captcha');
+
+        $data = array(
+          'user_creation_successful' => false,
+          'salutations' => $this->config->config['gpt_variable']['salutation'],
+          'GOOGLE_CAPTCHA_SITE_KEY' => $this->captcha->getSiteKey()
+        );
 
         if ($this->form_validation->run('patient_registration')) {
             $patientId = $this->createPatient();

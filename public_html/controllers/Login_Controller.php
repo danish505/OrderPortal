@@ -3,13 +3,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Login_Controller extends Public_Controller
 {
-    private $repository;
     private $user;
-
-    public function __construct()
-    {
-        parent::__construct();
-    }
 
     public function check_login($value)
     {
@@ -17,8 +11,12 @@ class Login_Controller extends Public_Controller
             $this->form_validation->set_message('check_login', 'The Username field is required');
             return false;
         }
-        $this->repository = $this->doctrine->em->getRepository('GptUser');
-        $user =  $this->repository->findOneBy([
+
+
+        $this->load->library('Password');
+        $repository = $this->doctrine->em->getRepository('GptUser');
+
+        $user =  $repository->findOneBy([
                     'username' => $this->input->post('username'),
                     'role'     => $this->input->post('login_as')
                   ]);
@@ -29,7 +27,7 @@ class Login_Controller extends Public_Controller
         } elseif (!$user->isActive()) {
             $this->form_validation->set_message('check_login', 'User is not activated. Please contact administrator');
             return false;
-        } elseif (!$this->auth->validatePwd($this->input->post('password'), $user->getPassword())) {
+        } elseif (!$this->password->validate($this->input->post('password'), $user->getPassword())) {
             $this->form_validation->set_message('check_login', 'You have entered an invalid password');
             return false;
         } else {
@@ -37,12 +35,13 @@ class Login_Controller extends Public_Controller
             return true;
         }
     }
+
+    // index = login
     public function index()
     {
         if ($this->isLoggedIn()) {
             redirect('');
         }
-
 
         $this->load->library('form_validation');
 
@@ -55,10 +54,7 @@ class Login_Controller extends Public_Controller
 
     private function initializeLogin()
     {
-        $this->session->set_userdata('user', (object)[
-          'id'              =>  $this->user->getId(),
-          'role'            =>  $this->user->getRole()
-        ]);
+        $this->setUserInSession($this->user);
         redirect('');
     }
 

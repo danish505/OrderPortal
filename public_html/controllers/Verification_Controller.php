@@ -24,6 +24,7 @@ class Verification_Controller extends Public_Controller
 
     private function verify($role, $code)
     {
+        $this->load->library('Password');
         $userRepository = $this->doctrine->em->getRepository('GptUser');
         $user = $userRepository->findOneBy([
           'role'              =>  $role,
@@ -34,7 +35,7 @@ class Verification_Controller extends Public_Controller
             $this->load->library('form_validation');
             if ($this->form_validation->run('user_activation')) {
                 $user->setStatus(GptUser::USER_STATUS_ACTIVE);
-                $user->setPassword($this->auth->makePwd($this->input->post('password')));
+                $user->setPassword($this->password->make($this->input->post('password')));
                 $this->doctrine->em->persist($user);
                 $this->doctrine->em->flush();
                 redirect('login?activation=1');
