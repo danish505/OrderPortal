@@ -13,6 +13,8 @@ class MyAccount_Controller extends Authenticated_Controller
     public function index()
     {
         $this->load->library('form_validation');
+        $this->load->library('captcha');
+
         $session_user = $this->getUser();
         $key = strtolower($session_user->role);
 
@@ -25,7 +27,9 @@ class MyAccount_Controller extends Authenticated_Controller
           'user' => $user,
           'user_detail' => $user_detail,
           'salutations' => $this->config->config['gpt_variable']['salutation'],
-          'profile_update_successful' => false
+          'profile_update_successful' => false,
+          'GOOGLE_CAPTCHA_SITE_KEY' => $this->captcha->getSiteKey(),
+          'injected_scripts' => $this->captcha->getScript()
       ];
         if ($this->form_validation->run($key.'_profile')) {
             if ($user->getEmail() !== $this->input->post('email_address')) {
@@ -59,7 +63,6 @@ class MyAccount_Controller extends Authenticated_Controller
 
     public function verify_captcha($value)
     {
-        $this->load->library('captcha');
         return $this->captcha->verify($value, $this->input->server('REMOTE_ADDR'));
     }
 }

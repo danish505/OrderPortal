@@ -50,7 +50,8 @@ class Registration_Controller extends Public_Controller
         $data = array(
           'user_creation_successful' => false,
           'salutations' => $this->config->config['gpt_variable']['salutation'],
-          'GOOGLE_CAPTCHA_SITE_KEY' => $this->captcha->getSiteKey()
+          'GOOGLE_CAPTCHA_SITE_KEY' => $this->captcha->getSiteKey(),
+          'injected_scripts' => $this->captcha->getScript()
         );
 
         if ($this->form_validation->run('patient_registration')) {

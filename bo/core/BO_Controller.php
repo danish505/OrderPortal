@@ -26,4 +26,12 @@ class BO_Controller extends GPT_Controller
       ));
         $this->load->view('common/base');
     }
+
+    protected function setUserInSession($user)
+    {
+        $this->session->set_userdata('user', (object)[
+        'id'    =>  $user->getId(),
+        'name'  =>  $user->getName()
+      ]);
+    }
 }

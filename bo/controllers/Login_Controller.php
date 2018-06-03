@@ -48,16 +48,13 @@ class Login_Controller extends BO_Controller
         if ($this->form_validation->run('login') == false) {
             $this->load->view('login');
         } else {
-            $this->initializeLogin();
+            $this->initializeLogin($this->admin);
         }
     }
 
-    private function initializeLogin()
+    private function initializeLogin($user)
     {
-        $this->session->set_userdata('user', (object)[
-          'id'    =>$this->admin->getId(),
-          'name'  =>$this->admin->getName()
-        ]);
+        $this->setUserInSession($user);
         redirect('');
     }
 
