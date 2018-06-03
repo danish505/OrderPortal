@@ -13,6 +13,8 @@ class MyAccount_Controller extends Authenticated_Controller
     public function index()
     {
         $this->load->library('form_validation');
+        $this->load->library('captcha');
+
         $session_user = $this->getUser();
         $key = strtolower($session_user->role);
 
@@ -25,7 +27,9 @@ class MyAccount_Controller extends Authenticated_Controller
           'user' => $user,
           'user_detail' => $user_detail,
           'salutations' => $this->config->config['gpt_variable']['salutation'],
-          'profile_update_successful' => false
+          'profile_update_successful' => false,
+          'GOOGLE_CAPTCHA_SITE_KEY' => $this->captcha->getSiteKey(),
+          'injected_scripts' => $this->captcha->getScript()
       ];
         if ($this->form_validation->run($key.'_profile')) {
             if ($user->getEmail() !== $this->input->post('email_address')) {
@@ -56,29 +60,9 @@ class MyAccount_Controller extends Authenticated_Controller
         $this->doctrine->em->persist($patient);
         $this->doctrine->em->flush();
     }
-    private function verify_captcha($value)
+
+    public function verify_captcha($value)
     {
-        $url = 'https://www.google.com/recaptcha/api/siteverify';
-        $data = array('secret' => $this->config->config['GOOGLE_CAPTCHA_SECRET_KEY'], 'response' => $value, 'remoteip' => $this->input->server('REMOTE_ADDR'));
-
-        $ch = curl_init($url);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
-        curl_setopt($ch, CURLOPT_HEADER, 0);
-        curl_setopt($ch, CURLOPT_POST, 1);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        $result = curl_exec($ch);
-        curl_close($ch);
-
-        if ($result === false) { /* Handle error */
-            return false;
-        }
-
-        $result = json_decode($result);
-        return $result->success;
-    }
-
-    public function verify_patient_captcha($value)
-    {
-        return $this->verify_captcha($value);
+        return $this->captcha->verify($value, $this->input->server('REMOTE_ADDR'));
     }
 }

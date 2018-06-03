@@ -2,7 +2,7 @@
 Dear {username},
 
 Kindly click the link given below to activate your account.
-{verification_link}
+<a href="{verification_link}">Verify Account</a>
 
 Thanks you,
 

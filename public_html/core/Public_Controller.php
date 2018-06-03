@@ -15,21 +15,25 @@ class Public_Controller extends GPT_Controller
           'selected_services' => 'common/main-services',
           'map' => 'common/map',
           'process' => 'common/process',
-          'GOOGLE_CAPTCHA_SITE_KEY' => $this->config->config['GOOGLE_CAPTCHA_SITE_KEY'],
           'injected_scripts' => ''
       ));
     }
 
-    public function render($template, $data = [])
+    protected function render($template, $data = [])
     {
         $data['isUserLoggedIn'] = $this->isLoggedIn();
-        if ($data['isUserLoggedIn']) {
-            $data['userData'] = $this->getUserData();
-        }
         $this->load->vars(array(
-      'currentPage' => $template,
-      'currentPageData' => $data
-    ));
+          'currentPage' => $template,
+          'currentPageData' => $data
+        ));
         $this->load->view('common/base');
+    }
+
+    protected function setUserInSession($user)
+    {
+        $this->session->set_userdata('user', (object)[
+        'id'    =>  $user->getId(),
+        'role'  =>  $user->getRole()
+      ]);
     }
 }

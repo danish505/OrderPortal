@@ -26,6 +26,7 @@ $config = array(
       ),
   ),
 );
+
 $patient_profile = array(
   array(
     'field' => 'first_name',
@@ -58,11 +59,12 @@ $patient_profile = array(
   array(
     'field' => 'g-recaptcha-response',
     'label' => 'Captcha',
-    'rules' => 'callback_verify_patient_captcha',
+    'rules' => 'callback_verify_captcha',
     'error_prefix' => '<small id="error_age_name" class="form-text text-muted">',
     'error_suffix' => '</small>'
   )
 );
+
 $patient_registration = array_merge($patient_profile, array(array(
   'field' => 'username',
   'label' => 'Username',

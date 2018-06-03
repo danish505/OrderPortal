@@ -3,6 +3,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class GPT_Controller extends CI_Controller
 {
+    private $isLoggedIn;
+    private $user;
+
     public function __construct()
     {
         // Get Settings from DB
@@ -11,33 +14,20 @@ class GPT_Controller extends CI_Controller
           'base_url' => base_url(),
           'site_title' => $this->config->config['site_title'],
         ));
+
+        $this->isLoggedIn = ($this->session->user && $this->session->user->id > 0);
+        if ($this->isLoggedIn()) {
+            $this->user = $this->session->user;
+        }
     }
 
-    private function reverseStringForEncodingAndDecoding($string)
+    public function isLoggedIn()
     {
-        $string_length = strlen($string);
-        $part1 = substr($string, 0, ($string_length/2));
-        $part2 = strrev(substr($string, $string_length/2));
-        return $part1.$part2;
+        return $this->isLoggedIn;
     }
 
-    protected function encode($data)
+    public function getUser()
     {
-        return urlencode($this->reverseStringForEncodingAndDecoding(base64_encode(json_encode($data))));
-    }
-
-    protected function decode($string)
-    {
-        return json_decode(base64_decode($this->reverseStringForEncodingAndDecoding(urldecode($string))));
-    }
-
-    protected function isLoggedIn()
-    {
-        return ($this->session->user && $this->session->user->id > 0);
-    }
-
-    protected function getUserData()
-    {
-        return $this->session->user;
+        return $this->user;
     }
 }
