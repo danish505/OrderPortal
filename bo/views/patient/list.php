@@ -28,10 +28,10 @@
           <tr>
             <td><?php echo $patient->details->getDisplayName();?></td>
             <td><a href="mailto:<?php echo $patient->getEmail();?>"><?php echo $patient->getEmail();?></a></td>
-            <td><?php echo ($patient->details->getGender() === 'M')?'Male':'Female'?></td>
+            <td><?php echo $genderMap[$patient->details->getGender()]?></td>
             <td><?php echo $patient->details->getAge();?></td>
             <td><span class="badge badge-<?php echo $statusClassMap[$patient->getStatus()];?>"><?php echo $statusMap[$patient->getStatus()];?></span></td>
-            <td><a class="nav-link" href="<?php echo $base_url;?>/patient/1"><i class="fa fa-fw fa-eye"></i></a></td>
+            <td><a class="nav-link" href="<?php echo $base_url;?>patient/<?php echo $patient->getId();?>"><i class="fa fa-fw fa-eye"></i></a></td>
           </tr>
         <?php endforeach;?>
         </tbody>
