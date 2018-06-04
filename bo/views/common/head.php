@@ -10,3 +10,4 @@
 <link href="<?php echo $base_url;?>assets/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 <!-- Custom styles for this template-->
 <link href="<?php echo $base_url;?>assets/css/sb-admin.min.css" rel="stylesheet">
+<link href="<?php echo $base_url;?>assets/css/style.css" rel="stylesheet">
