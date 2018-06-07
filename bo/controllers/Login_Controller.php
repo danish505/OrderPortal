@@ -6,11 +6,6 @@ class Login_Controller extends BO_Controller
     private $repository;
     private $admin;
 
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
     public function check_login($value)
     {
         if (trim($value) === '') {

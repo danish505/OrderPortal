@@ -103,4 +103,41 @@ class GptPatientContactAddress
      * })
      */
     private $patientCont;
+
+    public function preCreate()
+    {
+        $this->createTs = new \DateTime();
+        $this->updateTs = new \DateTime();
+    }
+
+    public function setAddress($address){
+        $this->streetAddr1 = $address['streetAddr1'];
+        $this->streetAddr2 = $address['streetAddr2'];
+        $this->streetAddr3 = $address['streetAddr3'];
+        $this->zipcode = $address['zipcode'];
+        $this->city = $address['city'];
+        $this->state = $address['state'];
+        $this->country = $address['country'];
+    }
+
+    public function getAddress() {
+        $address = [
+            'streetAddr1'   =>  $this->streetAddr1,
+            'streetAddr2'   =>  $this->streetAddr2,
+            'streetAddr3'   =>  $this->streetAddr3,
+            'zipcode'       =>  $this->zipcode,
+            'city'          =>  $this->city,
+            'state'         =>  $this->state,
+            'country'       =>  $this->country
+        ];
+        return (object) $address;
+    }
+
+    public function setPrimary() {
+        $this->primaryFlg = '1';
+    }
+
+    public function isPrimary(){
+        return $this->primaryFlg == '1';
+    }
 }

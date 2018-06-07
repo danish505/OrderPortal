@@ -82,4 +82,34 @@ class GptPatientPhone
      * })
      */
     private $patientCont;
+
+    public function preCreate()
+    {
+        $this->createTs = new \DateTime();
+        $this->updateTs = new \DateTime();
+    }
+
+    public function setPhone($phone) {
+        $this->ctryCd = $phone['ctryCd'];
+        $this->areaCd = $phone['areaCd'];
+        $this->phoneNo = $phone['phoneNo'];
+        $this->extension = $phone['extension'];
+    }
+
+    public function getPhone(){
+        return (object) [
+            'ctryCd' => $this->ctryCd,
+            'areaCd' => $this->areaCd,
+            'phoneNo' => $this->phoneNo,
+            'extension' => $this->extension,
+        ];
+    }
+
+    public function setPrimary() {
+        $this->primaryFlg = '1';
+    }
+
+    public function isPrimary(){
+        return $this->primaryFlg == '1';
+    }
 }

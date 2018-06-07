@@ -82,4 +82,61 @@ class GptPatientContact
      * })
      */
     private $patient;
+
+    public function preCreate()
+    {
+        $this->createTs = new \DateTime();
+        $this->updateTs = new \DateTime();
+    }
+
+    public function getSalutation(){
+        return $this->salutation;
+    }
+
+    public function setSalutation($salutation) {
+        $this->salutation = $salutation;
+    }
+
+    public function getFirstName()
+    {
+        return $this->firstName ;
+    }
+
+    public function getLastName()
+    {
+        return $this->lastName;
+    }
+
+    public function getMiddleName()
+    {
+        return $this->middleName;
+    }
+
+    public function setFirstName($firstName)
+    {
+        $this->firstName = $firstName;
+    }
+
+    public function setLastName($lastName)
+    {
+        $this->lastName = $lastName;
+    }
+
+    public function setMiddleName($middleName)
+    {
+        $this->middleName = $middleName;
+    }
+
+    public function getDisplayName()
+    {
+        return $this->getFirstName().' '.$this->getLastName();
+    }
+
+    public function setPrimary() {
+        $this->primaryFlg = '1';
+    }
+
+    public function isPrimary(){
+        return $this->primaryFlg == '1';
+    }
 }

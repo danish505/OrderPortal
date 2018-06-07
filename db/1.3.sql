@@ -1,0 +1,1 @@
+rename table gpt_patient_phone to gpt_patient_contact_phone;

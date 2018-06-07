@@ -61,4 +61,26 @@ class GptPatientContactEmail
      * })
      */
     private $patientCont;
+
+    public function preCreate()
+    {
+        $this->createTs = new \DateTime();
+        $this->updateTs = new \DateTime();
+    }
+
+    public function setPrimary() {
+        $this->primaryFlg = '1';
+    }
+
+    public function isPrimary(){
+        return $this->primaryFlg == '1';
+    }
+
+    public function getEmail(){
+        return $this->email;
+    }
+
+    public function setEmail($email) {
+        $this->email = $email;
+    }
 }
