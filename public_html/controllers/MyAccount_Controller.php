@@ -5,11 +5,6 @@ require_once APPPATH.'controllers/Authenticated_Controller.php';
 
 class MyAccount_Controller extends Authenticated_Controller
 {
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
     public function index()
     {
         $this->load->library('form_validation');
@@ -23,13 +18,16 @@ class MyAccount_Controller extends Authenticated_Controller
           'userId'  =>  $session_user->id
         ]);
         $user_detail = $user->getDetail($this->doctrine->em);
+        $injectedScripts[] = $this->captcha->getScript();
+        $injectedScripts[] = '<script type="text/javascript" async="" src="'.$this->config->config['base_url'].'/assets/js/patient.js"></script>';
+
         $data = [
           'user' => $user,
           'user_detail' => $user_detail,
           'salutations' => $this->config->config['gpt_variable']['salutation'],
           'profile_update_successful' => false,
           'GOOGLE_CAPTCHA_SITE_KEY' => $this->captcha->getSiteKey(),
-          'injected_scripts' => $this->captcha->getScript()
+          'injected_scripts' => implode('',$injectedScripts)
       ];
         if ($this->form_validation->run($key.'_profile')) {
             if ($user->getEmail() !== $this->input->post('email_address')) {
@@ -65,4 +63,13 @@ class MyAccount_Controller extends Authenticated_Controller
     {
         return $this->captcha->verify($value, $this->input->server('REMOTE_ADDR'));
     }
+
+    public function ajax(){
+        $this->{'callback_'.$this->input->post('action')}();
+    }
+
+    private function callback_patient_contact_add(){
+        die("Got the request");
+    }
+    
 }

@@ -14,13 +14,13 @@
 
 			</p>
 			<a href="#" target="_blank" class="aps-icon-link animated aps-tooltip" data-animation-class="">
-																			<img src="<?php echo $base_url;?>assets/images/1476943299_Facebook_Solid.png" alt="Facebook">
+			<img src="https://en.facebookbrand.com/wp-content/uploads/2016/05/flogo_rgb_hex-brc-site-250.png" alt="Facebook" width="50">
 																	</a>
 			<a href="#" target="_blank" class="aps-icon-link animated aps-tooltip" data-animation-class="">
-								                                                <img src="<?php echo $base_url;?>assets/images/1476943350_03-twitter.png" alt="Twitter">
+			<img src="http://icons.iconarchive.com/icons/limav/flat-gradient-social/256/Twitter-icon.png" alt="Twitter" width="55" alt="Twitter">
 								                                            </a>
 			<a href="#" target="_blank" class="aps-icon-link animated aps-tooltip" data-animation-class="">
-																					                                                <img src="<?php echo $base_url;?>assets/images/1476943332_social_instagram.png" alt="Instagram">
+			<img src="https://instagram-brand.com/wp-content/uploads/2016/11/app-icon2.png" alt="Instagram" alt="Instagram" width="50">
 																					                                            </a>
 		</div>
 		<div class="col-lg-4 col-md-12">
@@ -56,7 +56,7 @@
 </div>
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
 <?php echo $injected_scripts;?>
