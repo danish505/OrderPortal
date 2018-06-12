@@ -5,10 +5,8 @@
         </button>
     </div>
 </div>
-<ul class="list-group mt-2">
-    <li class="list-group-item">
-        <?php $this->load->view('myaccount/partials/display-contact');?>
-    </li>
+<ul class="list-group mt-2 patient-contacts-list">
+    <?php $this->load->view('myaccount/partials/display-contact');?>
 </ul>
 <!-- Modals -->
 <?php $this->load->view('myaccount/modals/address-add');?>

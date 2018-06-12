@@ -76,7 +76,7 @@ class GptPatientContact
     /**
      * @var \GptPatient
      *
-     * @ManyToOne(targetEntity="GptPatient")
+     * @ManyToOne(targetEntity="GptPatient", inversedBy="contacts")
      * @JoinColumns({
      *   @JoinColumn(name="patient_id", referencedColumnName="patient_id")
      * })
@@ -132,11 +132,23 @@ class GptPatientContact
         return $this->getFirstName().' '.$this->getLastName();
     }
 
+    public function setPatient(GptPatient $patient) {
+        $this->patient = $patient;
+    }
+
+    public function getPatient() {
+        return $this->patient;
+    }
+
     public function setPrimary() {
         $this->primaryFlg = '1';
     }
 
     public function isPrimary(){
         return $this->primaryFlg == '1';
+    }
+
+    public function getId(){
+        return $this->patientContId;
     }
 }

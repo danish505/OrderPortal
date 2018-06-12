@@ -10,13 +10,9 @@ class MyAccount_Controller extends Authenticated_Controller
         $this->load->library('form_validation');
         $this->load->library('captcha');
 
-        $session_user = $this->getUser();
-        $key = strtolower($session_user->role);
+        $user = $this->getUser();
+        $key = strtolower($user->getRole());
 
-        $userRepository = $this->doctrine->em->getRepository('GptUser');
-        $user = $userRepository->findOneBy([
-          'userId'  =>  $session_user->id
-        ]);
         $user_detail = $user->getDetail($this->doctrine->em);
         $injectedScripts[] = $this->captcha->getScript();
         $injectedScripts[] = '<script type="text/javascript" async="" src="'.$this->config->config['base_url'].'/assets/js/patient.js"></script>';
@@ -36,7 +32,7 @@ class MyAccount_Controller extends Authenticated_Controller
                 $this->doctrine->em->flush();
             }
 
-            switch ($session_user->role) {
+            switch ($user->getRole()) {
               case GptUser::USER_ROLE_PATIENT:
                 $this->updatePatient($user_detail);
               break;
@@ -68,8 +64,82 @@ class MyAccount_Controller extends Authenticated_Controller
         $this->{'callback_'.$this->input->post('action')}();
     }
 
+    private function output_response_success($html){
+        $response = array('success' => TRUE, 'html' => $html);
+        $this->output
+            ->set_status_header(200)
+            ->set_content_type('application/json')
+            ->set_output(json_encode($response));
+    }
+
+    private function output_response_failure($message){
+        $response = array('success' => FALSE, 'message' => $message);
+        $this->output
+        ->set_content_type('application/json')
+        ->set_output(json_encode($response));
+    }
+
     private function callback_patient_contact_add(){
-        die("Got the request");
+
+        $em = $this->doctrine->em;
+
+        $contact = new GptPatientContact();
+        $contact->setSalutation($this->input->post('salutation'));
+        $contact->setFirstName($this->input->post('first_name'));
+        $contact->setLastName($this->input->post('last_name'));
+        $contact->setMiddleName($this->input->post('middle_name'));
+        $patient = $this->getUser()->getDetail($em);
+        $contact->setPatient($patient);
+        $contact->preCreate();
+        $em->persist($contact);
+        $em->flush();
+        echo $contact->getId().' == ';
+        echo $contact->getPatient()->getId();
+        //$patient->setAge($this->input->post('age'));
+        //$patient->setGender($this->input->post('gender'));
+        //$patient->preCreate();
+        //$em->persist($patient);
+        //$em->flush();
+        //return $patient->getId();
+        
+        $view = $this->load->view('myaccount/partials/display-contact', [], true);
+
+        $this->output_response_success($view);
+    }
+
+    private function callback_patient_contact_update(){
+        $view = $this->load->view('myaccount/partials/display-contact', [], true);
+        $this->output_response_success($view);
+    }
+
+    private function callback_patient_contact_address_add(){
+        $view = $this->load->view('myaccount/partials/display-address', [], true);
+        $this->output_response_success($view);
+    }
+
+    private function callback_patient_contact_address_update(){
+        $view = $this->load->view('myaccount/partials/display-address', [], true);
+        $this->output_response_success($view);
+    }
+
+    private function callback_patient_contact_phone_number_add(){
+        $view = $this->load->view('myaccount/partials/display-phone', [], true);
+        $this->output_response_success($view);
+    }
+
+    private function callback_patient_contact_phone_number_update(){
+        $view = $this->load->view('myaccount/partials/display-phone', [], true);
+        $this->output_response_success($view);
+    }
+
+    private function callback_patient_contact_email_address_add(){
+        $view = $this->load->view('myaccount/partials/display-email', [], true);
+        $this->output_response_success($view);
+    }
+
+    private function callback_patient_contact_email_address_update(){
+        $view = $this->load->view('myaccount/partials/display-email', [], true);
+        $this->output_response_success($view);
     }
     
 }
