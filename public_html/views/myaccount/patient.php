@@ -12,10 +12,10 @@
       </ul>
       <div class="tab-content mt-2" id="myaccountContent">
         <div class="tab-pane fade show active" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-          <?php $this->load->view('myaccount/patient_profile');?>
+          <?php $this->load->view('myaccount/patient-profile');?>
         </div>
         <div class="tab-pane fade" id="contacts" role="tabpanel" aria-labelledby="contacts-tab">
-        <?php $this->load->view('myaccount/patient_contacts');?>
+        <?php $this->load->view('myaccount/patient-contacts');?>
         </div>
       </div>
     </div>
