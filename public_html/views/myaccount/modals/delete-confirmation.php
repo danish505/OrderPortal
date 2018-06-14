@@ -8,6 +8,7 @@
                 </button>
             </div>
             <div class="modal-body">
+                <div class="alert alert-danger d-none" role="alert">An error occurred while processing your request. Please try again.</div>
                 Do you really want to delete? This action is irreversible.
             </div>
             <div class="modal-footer">

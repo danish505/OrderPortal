@@ -1,4 +1,4 @@
-<div class="row pb-2 single-address">
+<div class="row pb-2 single-address" data-id="<?php echo $address->getId();?>">
     <div class="col-8 pr-0"><?php echo $address;?></div>
     <div class="col-4">
         <div class="btn-group float-right" role="group">

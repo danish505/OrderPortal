@@ -153,6 +153,10 @@ class GptPatientContactAddress
         return $this->addressId;
     }
 
+    public function setId($id){
+        $this->addressId = $id;
+    }
+
     public function __toString(){
         return  $this->streetAddr1.', '
                 .$this->streetAddr2.' '

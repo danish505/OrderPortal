@@ -83,7 +83,7 @@ class GptPatient
     /**
      * Bidirectional - One-To-Many (INVERSE SIDE)
      *
-     * @OneToMany(targetEntity="GptPatientContact", mappedBy="patient")
+     * @OneToMany(targetEntity="GptPatientContact", mappedBy="patient", cascade={"remove"})
      */
     private $contacts;
 

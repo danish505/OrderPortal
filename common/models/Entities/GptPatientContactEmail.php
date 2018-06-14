@@ -96,6 +96,10 @@ class GptPatientContactEmail
         return $this->emailId;
     }
 
+    public function setId($id){
+        $this->emailId = $id;
+    }
+
     public function __toString(){
         return $this->email;
     }

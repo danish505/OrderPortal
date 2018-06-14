@@ -86,21 +86,21 @@ class GptPatientContact
     /**
      * Bidirectional - One-To-Many (INVERSE SIDE)
      *
-     * @OneToMany(targetEntity="GptPatientContactAddress", mappedBy="contact")
+     * @OneToMany(targetEntity="GptPatientContactAddress", mappedBy="contact", cascade={"remove"})
      */
     private $addresses;
 
     /**
      * Bidirectional - One-To-Many (INVERSE SIDE)
      *
-     * @OneToMany(targetEntity="GptPatientContactEmail", mappedBy="contact")
+     * @OneToMany(targetEntity="GptPatientContactEmail", mappedBy="contact", cascade={"remove"})
      */
     private $emails;
 
     /**
      * Bidirectional - One-To-Many (INVERSE SIDE)
      *
-     * @OneToMany(targetEntity="GptPatientContactPhone", mappedBy="contact")
+     * @OneToMany(targetEntity="GptPatientContactPhone", mappedBy="contact", cascade={"remove"})
      */
     private $phone_numbers;
 
@@ -171,6 +171,10 @@ class GptPatientContact
 
     public function getId(){
         return $this->patientContId;
+    }
+
+    public function setId($id){
+        $this->patientContId = $id;
     }
 
     public function getAddresses(){

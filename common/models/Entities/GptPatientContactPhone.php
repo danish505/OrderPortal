@@ -129,4 +129,8 @@ class GptPatientContactPhone
     public function getId(){
         return $this->phoneId;
     }
+
+    public function setId($id){
+        $this->phoneId = $id;
+    }
 }

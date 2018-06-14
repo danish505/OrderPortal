@@ -36,53 +36,99 @@ $(document).ready(function(){
                 list.find('div.not-found').addClass('d-none');
             });
         },
-        callback_delete_email: function($el, contact_id){
+        callback_delete_email: function(response, $el){
             handler.handle(response, function(r){
-
+                let $parent = $el.parent();
+                $el.remove();
+                if($parent.find('div.single-email').length == 0){
+                    $parent.find('div.not-found').removeClass('d-none');
+                }
             });
         },
-        callback_delete_address: function($el, contact_id){
+        callback_delete_address: function(response, $el){
             handler.handle(response, function(r){
-
+                let $parent = $el.parent();
+                $el.remove();
+                if($parent.find('div.single-address').length == 0){
+                    $parent.find('div.not-found').removeClass('d-none');
+                }
             });
         },
-        callback_delete_phone: function($el, contact_id){
+        callback_delete_phone: function(response, $el){
             handler.handle(response, function(r){
-
+                let $parent = $el.parent();
+                $el.remove();
+                if($parent.find('div.single-phone').length == 0){
+                    $parent.find('div.not-found').removeClass('d-none');
+                }
             });
         },
-        callback_delete_contact: function($el, contact_id){
+        callback_delete_contact: function(response, $el){
             handler.handle(response, function(r){
-
+                let $parent = $el.parent();
+                $el.remove();
+                if($parent.find('li.single-contact').length == 0){
+                    $parent.find('li.not-found').removeClass('d-none');
+                }
             });
         },
-        delete_email: function($el, contact_id) {
-            let $parent = $el.parent();
-            $el.remove();
-            if($parent.find('div.single-email').length == 0){
-                $parent.find('div.not-found').removeClass('d-none');
-            }
+        delete_email: function(modal, $el, contact_id) {
+            let email_id = $el.data('id');
+            let token = $('input[name="csrf_token"]').eq(0).val();
+
+            make_call(
+                '/my-account/ajax',
+                $.param([{name:'email_id', value: email_id}, {name:'contact_id', value: contact_id}, {name: "action", value: "patient_contact_email_delete"},{name:'csrf_token', value:token}]),
+                function(response){
+                    handler['callback_delete_email'](response, $el);
+                },
+                function(response){
+                    callback_delete_fail(response, modal);
+                }
+            );
         },
-        delete_address: function($el, contact_id) {
-            let $parent = $el.parent();
-            $el.remove();
-            if($parent.find('div.single-address').length == 0){
-                $parent.find('div.not-found').removeClass('d-none');
-            }
+        delete_address: function(modal, $el, contact_id) {
+            let address_id = $el.data('id');
+            let token = $('input[name="csrf_token"]').eq(0).val();
+
+            make_call(
+                '/my-account/ajax',
+                $.param([{name:'address_id', value: address_id}, {name:'contact_id', value: contact_id}, {name: "action", value: "patient_contact_address_delete"},{name:'csrf_token', value:token}]),
+                function(response){
+                    handler['callback_delete_address'](response, $el);
+                },
+                function(response){
+                    callback_delete_fail(response, modal);
+                }
+            );
         },
-        delete_phone: function($el, contact_id) {
-            let $parent = $el.parent();
-            $el.remove();
-            if($parent.find('div.single-phone').length == 0){
-                $parent.find('div.not-found').removeClass('d-none');
-            }
+        delete_phone: function(modal, $el, contact_id) {
+            let phone_id = $el.data('id');
+            let token = $('input[name="csrf_token"]').eq(0).val();
+
+            make_call(
+                '/my-account/ajax',
+                $.param([{name:'phone_id', value: phone_id}, {name:'contact_id', value: contact_id}, {name: "action", value: "patient_contact_phone_delete"},{name:'csrf_token', value:token}]),
+                function(response){
+                    handler['callback_delete_phone'](response, $el);
+                },
+                function(response){
+                    callback_delete_fail(response, modal);
+                }
+            );
         },
-        delete_contact: function($el, contact_id){
-            let $parent = $el.parent();
-            $el.remove();
-            if($parent.find('li.single-contact').length == 0){
-                $parent.find('li.not-found').removeClass('d-none');
-            }
+        delete_contact: function(modal, $el, contact_id){
+            let token = $('input[name="csrf_token"]').eq(0).val();
+            make_call(
+                '/my-account/ajax',
+                $.param([{name:'contact_id', value: contact_id}, {name: "action", value: "patient_contact_delete"},{name:'csrf_token', value:token}]),
+                function(response){
+                    handler['callback_delete_contact'](response, $el);
+                },
+                function(response){
+                    callback_delete_fail(response, modal);
+                }
+            );
         },
         submit_form: function(modal, callback) {
             var form = modal.find('form');
@@ -129,9 +175,10 @@ $(document).ready(function(){
         let action_for = $(e.relatedTarget).data('for');
         let action = 'delete_'+action_for;
         let modal = $(this);
+        modal.find('.alert.alert-danger').addClass('d-none');
         $(this).find('button.btn-primary').bind('click', function(){
             if(!!handler[action]){
-                handler[action]($(e.relatedTarget).closest('.single-'+action_for), contact_id);
+                handler[action](modal, $(e.relatedTarget).closest('.single-'+action_for), contact_id);
                 modal.modal('hide');
             }
         });
@@ -143,6 +190,9 @@ $(document).ready(function(){
         form.classList.add('was-validated');
     }
 
+    function callback_delete_fail(response, modal) {
+        modal.find('.alert.alert-danger.d-none').removeClass('d-none');
+    }
     function callback_fail(response, modal) {
             modal.find('.alert.alert-danger.d-none').removeClass('d-none');
     }

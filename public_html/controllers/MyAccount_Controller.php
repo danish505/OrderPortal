@@ -198,5 +198,45 @@ class MyAccount_Controller extends Authenticated_Controller
         
         
     }
+
+    private function callback_patient_contact_address_delete(){
+        $em = $this->doctrine->em;
+        $address = $em->find('GptPatientContactAddress', $this->input->post('address_id'));
+        if($address){
+            $em->remove($address);
+            $em->flush();
+        }
+        $this->output_response_success('');
+    }
+
+    private function callback_patient_contact_email_delete(){
+        $em = $this->doctrine->em;
+        $email = $em->find('GptPatientContactEmail', $this->input->post('email_id'));
+        if($email){
+            $em->remove($email);
+            $em->flush();
+        }
+        $this->output_response_success('');
+    }
+
+    private function callback_patient_contact_delete(){
+        $em = $this->doctrine->em;
+        $contact = $em->find('GptPatientContact', $this->input->post('contact_id'));
+        if($contact){
+            $em->remove($contact);
+            $em->flush();
+        }
+        $this->output_response_success('');
+    }
+
+    private function callback_patient_contact_phone_delete(){
+        $em = $this->doctrine->em;
+        $phone = $em->find('GptPatientContactPhone', $this->input->post('phone_id'));
+        if($phone){
+            $em->remove($phone);
+            $em->flush();
+        }
+        $this->output_response_success('');
+    }
     
 }
