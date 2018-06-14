@@ -83,6 +83,27 @@ class GptPatientContact
      */
     private $patient;
 
+    /**
+     * Bidirectional - One-To-Many (INVERSE SIDE)
+     *
+     * @OneToMany(targetEntity="GptPatientContactAddress", mappedBy="contact")
+     */
+    private $addresses;
+
+    /**
+     * Bidirectional - One-To-Many (INVERSE SIDE)
+     *
+     * @OneToMany(targetEntity="GptPatientContactEmail", mappedBy="contact")
+     */
+    private $emails;
+
+    /**
+     * Bidirectional - One-To-Many (INVERSE SIDE)
+     *
+     * @OneToMany(targetEntity="GptPatientContactPhone", mappedBy="contact")
+     */
+    private $phone_numbers;
+
     public function preCreate()
     {
         $this->createTs = new \DateTime();
@@ -150,5 +171,21 @@ class GptPatientContact
 
     public function getId(){
         return $this->patientContId;
+    }
+
+    public function getAddresses(){
+        return $this->addresses;
+    }
+
+    public function getEmails(){
+        return $this->emails;
+    }
+
+    public function getPhoneNumbers(){
+        return $this->phone_numbers;
+    }
+
+    public function __toString(){
+        return $this->getFirstName().' '.$this->getLastName();
     }
 }

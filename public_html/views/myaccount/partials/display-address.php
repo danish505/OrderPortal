@@ -1,3 +1,9 @@
-<div class="row pb-2">
-    <div class="col-9 pr-0">A-106 Ali Complex, Suparco Road Gulzar Hijri Karachi</div><div class="col-3"><button type="button" class="btn btn-secondary btn-sm float-right"><i class="fa fa-fw fa-edit"></i></button></div>
+<div class="row pb-2 single-address">
+    <div class="col-8 pr-0"><?php echo $address;?></div>
+    <div class="col-4">
+        <div class="btn-group float-right" role="group">
+            <button type="button" class="btn btn-secondary btn-sm" data-for="address"><i class="fa fa-fw fa-edit"></i></button>
+            <button type="button" class="btn btn-secondary btn-sm" data-toggle="modal" data-for="address" data-target="#deletecConfirmationModal"><i class="fa fa-fw fa-trash"></i></button>
+        </div>
+    </div>
 </div>

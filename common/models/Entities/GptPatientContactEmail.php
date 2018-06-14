@@ -55,12 +55,12 @@ class GptPatientContactEmail
     /**
      * @var \GptPatientContact
      *
-     * @ManyToOne(targetEntity="GptPatientContact")
+     * @ManyToOne(targetEntity="GptPatientContact", inversedBy="emails")
      * @JoinColumns({
      *   @JoinColumn(name="patient_cont_id", referencedColumnName="patient_cont_id")
      * })
      */
-    private $patientCont;
+    private $contact;
 
     public function preCreate()
     {
@@ -82,5 +82,21 @@ class GptPatientContactEmail
 
     public function setEmail($email) {
         $this->email = $email;
+    }
+
+    public function setContact($contact) {
+        $this->contact = $contact;
+    }
+    
+    public function getContact(){
+        return $this->contact;
+    }
+
+    public function getId(){
+        return $this->emailId;
+    }
+
+    public function __toString(){
+        return $this->email;
     }
 }

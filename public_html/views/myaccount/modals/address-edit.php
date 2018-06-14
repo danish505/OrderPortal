@@ -8,9 +8,10 @@
                 </button>
             </div>
             <div class="modal-body">
-                <?php echo form_open('', ['id' => 'frm_patient_contact_address_new']); ?>
+                <?php echo form_open(''); ?>
                 <div class="alert alert-danger d-none" role="alert">An error occurred while processing your request. Please try again.</div>
                 <input type="hidden" name="action" value="patient_contact_address_update" />
+                <input type="hidden" name="contact_id" />
                 <div class="form-group row">
                     <label for="street_add_1" class="col-sm-3 col-form-label">Street Address 1</label>
                     <div class="col-sm-9">

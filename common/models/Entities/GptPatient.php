@@ -166,4 +166,8 @@ class GptPatient
     public function getContacts(){
         return $this->contacts;
     }
+
+    public function __toString() {
+        return $this->getFirstName().' '.$this->getLastName();
+    }
 }

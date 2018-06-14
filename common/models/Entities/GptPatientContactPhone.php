@@ -1,12 +1,12 @@
 <?php
 
 /**
- * GptPatientPhone
+ * GptPatientContactPhone
  *
- * @Table(name="gpt_patient_phone", indexes={@Index(name="fk_phone_patient_contact1_idx", columns={"patient_cont_id"})})
+ * @Table(name="gpt_patient_contact_phone", indexes={@Index(name="fk_phone_patient_contact1_idx", columns={"patient_cont_id"})})
  * @Entity
  */
-class GptPatientPhone
+class GptPatientContactPhone
 {
     /**
      * @var integer
@@ -76,12 +76,12 @@ class GptPatientPhone
     /**
      * @var \GptPatientContact
      *
-     * @ManyToOne(targetEntity="GptPatientContact")
+     * @ManyToOne(targetEntity="GptPatientContact", inversedBy="phone_numbers")
      * @JoinColumns({
      *   @JoinColumn(name="patient_cont_id", referencedColumnName="patient_cont_id")
      * })
      */
-    private $patientCont;
+    private $contact;
 
     public function preCreate()
     {
@@ -105,11 +105,28 @@ class GptPatientPhone
         ];
     }
 
+    public function __toString() {
+        return "+".$this->ctryCd." ".$this->areaCd." ".$this->phoneNo
+                .($this->extension != ''?(' ext:'.$this->extension):'');
+    }
+
     public function setPrimary() {
         $this->primaryFlg = '1';
     }
 
     public function isPrimary(){
         return $this->primaryFlg == '1';
+    }
+
+    public function getContact(){
+        return $this->contact;
+    }
+
+    public function setContact($contact){
+        $this->contact = $contact;
+    }
+
+    public function getId(){
+        return $this->phoneId;
     }
 }

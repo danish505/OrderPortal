@@ -1,3 +1,9 @@
-<div class="row pb-2">
-    <div class="col-9 pr-0">+92 331 249 2232</div><div class="col-3"><button type="button" class="btn btn-secondary btn-sm float-right"><i class="fa fa-fw fa-edit"></i></button></div>
+<div class="row pb-2 single-phone">
+    <div class="col-8 pr-0"><?php echo $phone_number;?></div>
+    <div class="col-4">
+        <div class="btn-group float-right" role="group">
+            <button type="button" class="btn btn-secondary btn-sm" data-for="phone"><i class="fa fa-fw fa-edit"></i></button>
+            <button type="button" class="btn btn-secondary btn-sm" data-toggle="modal" data-for="phone" data-target="#deletecConfirmationModal"><i class="fa fa-fw fa-trash"></i></button>
+        </div>
+    </div>
 </div>

@@ -8,40 +8,16 @@
                 </button>
             </div>
             <div class="modal-body">
-                <?php echo form_open('', ['id' => 'frm_patient_contact_new']); ?>
+                <?php echo form_open(''); ?>
                 <div class="alert alert-danger d-none" role="alert">An error occurred while processing your request. Please try again.</div>
                 <input type="hidden" name="action" value="patient_contact_email_address_update" />
+                <input type="hidden" name="contact_id" />
                 <div class="form-group row">
-                    <label for="salutation" class="col-sm-3 col-form-label">Salutation</label>
-                    <div class="col-sm-9">
-                        <select class="form-control" name="salutation" id="salutation">
-                            <?php foreach ($salutations as $salutation):?>
-                            <option value="<?php echo $salutation;?>"><?php echo $salutation;?></option>
-                            <?php endforeach;?>
-                        </select>
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label for="first_name" class="col-sm-3 col-form-label">First Name</label>
-                    <div class="col-sm-9">
-                        <input type="text" class="form-control" id="first_name" name="first_name" value="" required>
+                    <label for="email_address" class="col-sm-4 col-form-label">Email Address</label>
+                    <div class="col-sm-8">
+                        <input type="email" class="form-control" id="email_address" name="email_address" value="" required>
                         <div class="invalid-feedback">
-                        Please provide first name
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label for="middle_name" class="col-sm-3 col-form-label">Middle Name</label>
-                    <div class="col-sm-9">
-                        <input type="text" class="form-control" id="middle_name" name="middle_name" value="">
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label for="last_name" class="col-sm-3 col-form-label">Last Name</label>
-                    <div class="col-sm-9">
-                        <input type="text" class="form-control" id="last_name" name="last_name" value="" required>
-                        <div class="invalid-feedback">
-                        Please provide last name
+                        Please provide correct email address.
                         </div>
                     </div>
                 </div>

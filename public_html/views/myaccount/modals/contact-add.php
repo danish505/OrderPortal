@@ -8,7 +8,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <?php echo form_open('', ['id' => 'frm_patient_contact_new']); ?>
+                <?php echo form_open(''); ?>
                 <div class="alert alert-danger d-none" role="alert">An error occurred while processing your request. Please try again.</div>
                 <input type="hidden" name="action" value="patient_contact_add" />
                 <div class="form-group row">

@@ -97,12 +97,12 @@ class GptPatientContactAddress
     /**
      * @var \GptPatientContact
      *
-     * @ManyToOne(targetEntity="GptPatientContact")
+     * @ManyToOne(targetEntity="GptPatientContact", inversedBy="addresses")
      * @JoinColumns({
      *   @JoinColumn(name="patient_cont_id", referencedColumnName="patient_cont_id")
      * })
      */
-    private $patientCont;
+    private $contact;
 
     public function preCreate()
     {
@@ -139,5 +139,27 @@ class GptPatientContactAddress
 
     public function isPrimary(){
         return $this->primaryFlg == '1';
+    }
+
+    public function getContact(){
+        return $this->contact;
+    }
+
+    public function setContact($contact) {
+        $this->contact = $contact;
+    }
+
+    public function getId(){
+        return $this->addressId;
+    }
+
+    public function __toString(){
+        return  $this->streetAddr1.', '
+                .$this->streetAddr2.' '
+                .$this->streetAddr3.', '
+                .$this->zipcode.', '
+                .$this->city.', '
+                .$this->state.', '
+                .$this->country;
     }
 }
