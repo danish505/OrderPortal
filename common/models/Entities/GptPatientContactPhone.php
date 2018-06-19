@@ -133,4 +133,15 @@ class GptPatientContactPhone
     public function setId($id){
         $this->phoneId = $id;
     }
+
+    public function toJson(){
+        return [
+            'phone_id' => $this->phoneId,
+            'contact_id' => $this->contact->getId(),
+            'ctry_code' => $this->ctryCd,
+            'area_code' => $this->areaCd,
+            'phone_no' => $this->phoneNo,
+            'extension' => $this->extension,
+        ];
+    }
 }

@@ -103,4 +103,12 @@ class GptPatientContactEmail
     public function __toString(){
         return $this->email;
     }
+
+    public function toJson(){
+        return [
+            'email_id' => $this->emailId,
+            'contact_id' => $this->contact->getId(),
+            'email' => $this->email,
+        ];
+    }
 }

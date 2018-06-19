@@ -12,6 +12,7 @@
                 <div class="alert alert-danger d-none" role="alert">An error occurred while processing your request. Please try again.</div>
                 <input type="hidden" name="action" value="patient_contact_email_address_update" />
                 <input type="hidden" name="contact_id" />
+                <input type="hidden" name="email_id" />
                 <div class="form-group row">
                     <label for="email_address" class="col-sm-4 col-form-label">Email Address</label>
                     <div class="col-sm-8">

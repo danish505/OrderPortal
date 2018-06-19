@@ -192,4 +192,15 @@ class GptPatientContact
     public function __toString(){
         return $this->getFirstName().' '.$this->getLastName();
     }
+
+    public function toJson() {
+        return [
+            'id' => $this->getId(),
+            'patient_id' => $this->patient->getId(),
+            'salutation' => $this->getSalutation(),
+            'first_name' => $this->getFirstName(),
+            'middle_name' => $this->getMiddleName(),
+            'last_name' => $this->getLastName(),
+        ];
+    }
 }

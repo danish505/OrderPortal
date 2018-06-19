@@ -13,37 +13,23 @@
                 <div class="alert alert-danger d-none" role="alert">An error occurred while processing your request. Please try again.</div>
                 <input type="hidden" name="action" value="patient_contact_phone_number_update" />
                 <input type="hidden" name="contact_id" />
+                <input type="hidden" name="phone_id" />
                 <div class="form-group row">
-                    <label for="salutation" class="col-sm-3 col-form-label">Salutation</label>
-                    <div class="col-sm-9">
-                        <select class="form-control" name="salutation" id="salutation">
-                            <?php foreach ($salutations as $salutation):?>
-                            <option value="<?php echo $salutation;?>"><?php echo $salutation;?></option>
-                            <?php endforeach;?>
-                        </select>
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label for="first_name" class="col-sm-3 col-form-label">First Name</label>
-                    <div class="col-sm-9">
-                        <input type="text" class="form-control" id="first_name" name="first_name" value="" required>
-                        <div class="invalid-feedback">
-                        Please provide first name
+                    <label for="phone_number" class="col-sm-4 col-form-label pr-1">Phone Number</label>
+                    <div class="col-sm-8 pl-0">
+                        <div class="input-group input-group-sm">
+                            <span class="pt-1 pl-1 pr-1">+</span>
+                            <input type="tel" class="form-control col-5" name="ctry_cd" pattern="[0-9]{1,}" maxlength="3" size="3" required="" style="width: 7%;">
+                            <span class="pt-1 pl-1 pr-1">(</span>
+                            <input type="tel" class="form-control" name="area_cd" pattern="[0-9]{3}" maxlength="3" size="3" required="" style="width: 7%;">
+                            <span class="pt-1 pl-1 pr-1">)</span>
+                            <input type="tel" class="form-control" name="phone_no" pattern="[0-9]{7}" maxlength="7" size="7" required="" style="width: 20%;">
+                            <span class="pt-1 pl-1 pr-1">ext</span>
+                            <input type="tel" class="form-control" name="ext" pattern="[0-9]{0,}" maxlength="4" size="4" style="width: 7%;">
                         </div>
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label for="middle_name" class="col-sm-3 col-form-label">Middle Name</label>
-                    <div class="col-sm-9">
-                        <input type="text" class="form-control" id="middle_name" name="middle_name" value="">
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label for="last_name" class="col-sm-3 col-form-label">Last Name</label>
-                    <div class="col-sm-9">
-                        <input type="text" class="form-control" id="last_name" name="last_name" value="" required>
+                        <small id="phoneNumberHelp" class="form-text text-muted">Enter phone number in +1 (111) 111 1111 format</small>
                         <div class="invalid-feedback">
-                        Please provide last name
+                            Please provide correct phone number.
                         </div>
                     </div>
                 </div>

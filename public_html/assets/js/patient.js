@@ -150,7 +150,46 @@ $(document).ready(function(){
                     }
                 )
             }
-        }
+        },
+        prepare_contact: function(data){
+            let modal = $('div.modal#contactUpdateModal');
+            modal.find('input[name="contact_id"]').val(data.id);
+            modal.find('input[name="salutation"]').val(data.salutation);
+            modal.find('input[name="first_name"]').val(data.first_name);
+            modal.find('input[name="middle_name"]').val(data.middle_name);
+            modal.find('input[name="last_name"]').val(data.last_name);
+            modal.modal('show');
+        },
+        prepare_email: function(data){
+            let modal = $('div.modal#contactEmailAddressUpdateModal');
+            modal.find('input[name="contact_id"]').val(data.contact_id);
+            modal.find('input[name="email_id"]').val(data.email_id);
+            modal.find('input[name="email_address"]').val(data.email);
+            modal.modal('show');
+        },
+        prepare_phone: function(data){
+            let modal = $('div.modal#contactPhoneNumberUpdateModal');
+            modal.find('input[name="contact_id"]').val(data.contact_id);
+            modal.find('input[name="phone_id"]').val(data.phone_id);
+            modal.find('input[name="ctry_cd"]').val(data.ctry_code);
+            modal.find('input[name="area_cd"]').val(data.area_code);
+            modal.find('input[name="phone_no"]').val(data.phone_no);
+            modal.find('input[name="ext"]').val(data.extension);
+            modal.modal('show');
+        },
+        prepare_address: function(data){
+            let modal = $('div.modal#contactAddressUpdateModal');
+            modal.find('input[name="contact_id"]').val(data.contact_id);
+            modal.find('input[name="address_id"]').val(data.id);
+            modal.find('input[name="street_add_1"]').val(data.street_addr_1);
+            modal.find('input[name="street_add_2"]').val(data.street_addr_2);
+            modal.find('input[name="street_add_3"]').val(data.street_addr_3);
+            modal.find('input[name="city"]').val(data.city);
+            modal.find('input[name="state"]').val(data.state);
+            modal.find('input[name="zipcode"]').val(data.zipcode);
+            modal.find('input[name="country"]').val(data.country);
+            modal.modal('show');
+        },
     }
     
     $('div.modal:not(#deletecConfirmationModal)').on('hidden.bs.modal', function (e) {
@@ -208,4 +247,18 @@ $(document).ready(function(){
             success
         ).fail(failure);
     }
+
+    $('body').on('click','button.edit', function(){
+        let action_for = $(this).data('for');
+        let id = $(this).closest('.single-'+action_for).data('id');
+
+        $.get(`/my-account/json/${action_for}/${id}`, null, function(response){
+            let prepare_function = 'prepare_'+action_for;
+            if(response.success && !!handler[prepare_function]){
+                handler[prepare_function](response.html);
+            } else {
+                console.log("Unable to process request");
+            }
+        })
+    })
 });

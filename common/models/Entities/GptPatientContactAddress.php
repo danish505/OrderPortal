@@ -166,4 +166,18 @@ class GptPatientContactAddress
                 .$this->state.', '
                 .$this->country;
     }
+
+    public function toJson() {
+        return [
+            'id' => $this->addressId,
+            'contact_id' => $this->contact->getId(),
+            'street_addr_1' => $this->streetAddr1,
+            'street_addr_2' => $this->streetAddr2,
+            'street_addr_3' => $this->streetAddr3,
+            'zipcode' => $this->zipcode,
+            'city' => $this->city,
+            'state' => $this->state,
+            'country' => $this->country
+        ];
+    }
 }

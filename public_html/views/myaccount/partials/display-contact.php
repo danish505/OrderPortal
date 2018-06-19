@@ -1,10 +1,10 @@
-<li class="list-group-item single-contact">
+<li class="list-group-item single-contact" data-id="<?php echo $contact->getId();?>">
     <div class="row pr-3">
         <div class="col-10 mt-2"><h4><?php echo $contact->getDisplayName();?></h4></div>
         <div class="col-2 pr-0">
             <div class="btn-group pt-1 float-right" role="group">
                 <button type="button" class="btn btn-secondary btn-sm" data-toggle="collapse" href="#contactDetail<?php echo $contact->getId();?>"><i class="fa fa-fw fa-eye"></i></button>
-                <button type="button" class="btn btn-secondary btn-sm"><i class="fa fa-fw fa-edit"></i></button>
+                <button type="button" class="btn btn-secondary btn-sm edit" data-for="contact"><i class="fa fa-fw fa-edit"></i></button>
                 <button type="button" class="btn btn-secondary btn-sm" data-toggle="modal" data-for="contact" data-target="#deletecConfirmationModal"><i class="fa fa-fw fa-trash"></i></button>
             </div>
         </div>

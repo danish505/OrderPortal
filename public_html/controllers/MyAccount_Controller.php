@@ -66,6 +66,38 @@ class MyAccount_Controller extends Authenticated_Controller
         $this->{'callback_'.$this->input->post('action')}();
     }
 
+    public function json($type, $id){
+        $object = null;
+        $em = $this->doctrine->em;
+        $error = false;
+
+        switch($type){
+            case 'email':
+                $object = $em->find('GptPatientContactEmail', $id);
+            break;
+
+            case 'address':
+                $object = $em->find('GptPatientContactAddress', $id);
+            break;
+
+            case 'contact':
+                $object = $em->find('GptPatientContact', $id);
+            break;
+
+            case 'phone':
+                $object = $em->find('GptPatientContactPhone', $id);
+            break;
+        }
+
+        if(!$object) $error = true;
+        
+        if(!$error){
+            $this->output_response_success($object->toJson());
+        } else {
+            $this->output_response_failure('Invalid argument provided');
+        }
+    }
+
     private function output_response_success($html){
         $response = array('success' => TRUE, 'html' => $html);
         $this->output
@@ -238,5 +270,7 @@ class MyAccount_Controller extends Authenticated_Controller
         }
         $this->output_response_success('');
     }
+
+
     
 }

@@ -393,4 +393,15 @@ class GptPatientContact extends \GptPatientContact implements \Doctrine\ORM\Prox
         return parent::__toString();
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    public function toJson()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'toJson', []);
+
+        return parent::toJson();
+    }
+
 }
