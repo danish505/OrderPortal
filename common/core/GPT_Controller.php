@@ -26,8 +26,16 @@ class GPT_Controller extends CI_Controller
         return $this->isLoggedIn;
     }
 
-    public function getUser()
-    {
+    public function getUser($return_entity = true) {
+        if($return_entity){
+            $userRepository = $this->doctrine->em->getRepository('GptUser');
+            $user = $userRepository->findOneBy([
+                'userId'  =>  $this->user->id
+            ]);
+            return $user;
+            
+        }
+        // return session object instead of entity
         return $this->user;
     }
 }

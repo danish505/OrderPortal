@@ -80,6 +80,13 @@ class GptPatient
      */
     private $updateTs = 'CURRENT_TIMESTAMP';
 
+    /**
+     * Bidirectional - One-To-Many (INVERSE SIDE)
+     *
+     * @OneToMany(targetEntity="GptPatientContact", mappedBy="patient", cascade={"remove"})
+     */
+    private $contacts;
+
     public function setSalutation($salutation)
     {
         $this->salutation = $salutation;
@@ -154,5 +161,13 @@ class GptPatient
     public function getAge()
     {
         return $this->age;
+    }
+
+    public function getContacts(){
+        return $this->contacts;
+    }
+
+    public function __toString() {
+        return $this->getFirstName().' '.$this->getLastName();
     }
 }
