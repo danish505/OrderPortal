@@ -1,4 +1,4 @@
-<li class="list-group-item single-contact" data-id="<?php echo $contact->getId();?>">
+<li class="list-group-item single-contact" data-id="<?php echo $contact->getId();?>" id="row-contact-<?php echo $contact->getId();?>">
     <div class="row pr-3">
         <div class="col-10 mt-2"><h4><?php echo $contact->getDisplayName();?></h4></div>
         <div class="col-2 pr-0">

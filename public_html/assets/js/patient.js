@@ -22,6 +22,13 @@ $(document).ready(function(){
                 list.find('div.not-found').addClass('d-none');
             });
         },
+        callback_contact_email_address_update: function(response, contact_id) {
+            handler.handle(response, function(r){
+                var id = $(r.html).data('id');
+                let div = $('div.collapse#'+prefix+contact_id).find('div.emails-list').find('#row-email-'+id);
+                div.replaceWith(r.html);
+            });
+        },
         callback_contact_address_add: function(response, contact_id) {
             handler.handle(response, function(r){
                 let list = $('div.collapse#'+prefix+contact_id).find('div.address-list');

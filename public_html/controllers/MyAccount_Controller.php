@@ -227,8 +227,26 @@ class MyAccount_Controller extends Authenticated_Controller
 
     private function callback_patient_contact_email_address_update(){
 
-        
-        
+        $em = $this->doctrine->em;
+        $contact = $this->findContact($this->input->post('contact_id'));
+
+        if($contact){
+            $criteria = Criteria::create()
+                    ->where(Criteria::expr()->eq("emailId", $this->input->post('email_id')));
+            $emails = $contact->getEmails();
+            $email = $emails->matching($criteria)->get(0);
+            if($email){
+                $email->setEmail($this->input->post('email_address'));
+                $em->persist($email);
+                $em->flush();
+                $view = $this->load->view('myaccount/partials/display-email', ['email' => $email], true);
+                $this->output_response_success($view);
+            }else{
+                $this->output_response_failure('Invalid arguments provided');
+            }
+        }else{
+            $this->output_response_failure('Invalid arguments provided');
+        }
     }
 
     private function callback_patient_contact_address_delete(){
