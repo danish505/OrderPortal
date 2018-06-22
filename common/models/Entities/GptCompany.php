@@ -3,7 +3,7 @@
 /**
  * GptCompany
  *
- * @Table(name="gpt_company", uniqueConstraints={@UniqueConstraint(name="hospital_name_UNIQUE", columns={"company_name"})}, indexes={@Index(name="fk_patient_status1_idx_idx", columns={"status_id"})})
+ * @Table(name="gpt_company")
  * @Entity
  */
 class GptCompany
@@ -13,7 +13,7 @@ class GptCompany
      *
      * @Column(name="svc_comp_id", type="smallint", nullable=false)
      * @Id
-     * @GeneratedValue(strategy="NONE")
+     * @GeneratedValue(strategy="IDENTITY")
      */
     private $svcCompId;
 
@@ -67,14 +67,47 @@ class GptCompany
     private $updateTs = 'CURRENT_TIMESTAMP';
 
     /**
-     * @var \GptCompanyStatus
+     * Bidirectional - One-To-Many (INVERSE SIDE)
      *
-     * @Id
-     * @GeneratedValue(strategy="NONE")
-     * @OneToOne(targetEntity="GptCompanyStatus")
-     * @JoinColumns({
-     *   @JoinColumn(name="status_id", referencedColumnName="status_id")
-     * })
+     * @OneToMany(targetEntity="GptCompanyContact", mappedBy="company", cascade={"remove"})
      */
-    private $status;
+    private $contacts;
+
+    public function preCreate()
+    {
+        $this->createTs = new \DateTime();
+        $this->updateTs = new \DateTime();
+    }
+
+    public function getId() {
+        return $this->svcCompId;
+    }
+
+    public function getCompanyName() {
+        return $this->companyName;
+    }
+
+    public function getCompanyType() {
+        return $this->companyType;
+    }
+
+    public function getCompanyUrl() {
+        return $this->companyUrl;
+    }
+
+    public function getContacts(){
+        return $this->contacts;
+    }
+
+    public function setCompanyName($companyName) {
+        $this->companyName = $companyName;
+    }
+
+    public function setCompanyType($companyType) {
+        $this->companyType = $companyType;
+    }
+
+    public function setCompanyUrl($companyUrl) {
+        $this->companyUrl = $companyUrl;
+    }
 }

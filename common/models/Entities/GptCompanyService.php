@@ -62,10 +62,52 @@ class GptCompanyService
     /**
      * @var \GptCompany
      *
-     * @ManyToOne(targetEntity="GptCompany")
+     * @ManyToOne(targetEntity="GptCompany", inversedBy="services")
      * @JoinColumns({
      *   @JoinColumn(name="svc_comp_id", referencedColumnName="svc_comp_id")
      * })
      */
-    private $svcComp;
+    private $company;
+
+    public function preCreate()
+    {
+        $this->createTs = new \DateTime();
+        $this->updateTs = new \DateTime();
+    }
+
+    public function getId() {
+        return $this->serviceId;
+    }
+
+    public function getServiceName() {
+        return $this->serviceName;
+    }
+
+    public function setServiceName($serviceName) {
+        $this->serviceName = $serviceName;
+    }
+    
+    public function getServiceCategory() {
+        return $this->serviceCategory;
+    }
+
+    public function setServiceCategory($serviceCategory) {
+        $this->serviceCategory = $serviceCategory;
+    }
+    
+    public function getServiceSubCategory(){
+        return $this->serviceSubCategory;
+    }
+
+    public function setServiceSubCategory($serviceSubCategory){
+        $this->serviceSubCategory = $serviceSubCategory;
+    }
+
+    public function setActive() {
+        $this->activeFlg = '1';
+    }
+
+    public function isActive(){
+        return $this->activeFlg == '1';
+    }
 }

@@ -55,10 +55,60 @@ class GptCompanyContactEmail
     /**
      * @var \GptCompanyContact
      *
-     * @ManyToOne(targetEntity="GptCompanyContact")
+     * @ManyToOne(targetEntity="GptCompanyContact", inversedBy="emails")
      * @JoinColumns({
      *   @JoinColumn(name="cont_id", referencedColumnName="cont_id")
      * })
      */
-    private $cont;
+    private $contact;
+
+    public function preCreate()
+    {
+        $this->createTs = new \DateTime();
+        $this->updateTs = new \DateTime();
+    }
+
+    public function setPrimary() {
+        $this->primaryFlg = '1';
+    }
+
+    public function isPrimary(){
+        return $this->primaryFlg == '1';
+    }
+
+    public function getEmail(){
+        return $this->email;
+    }
+
+    public function setEmail($email) {
+        $this->email = $email;
+    }
+
+    public function setContact($contact) {
+        $this->contact = $contact;
+    }
+    
+    public function getContact(){
+        return $this->contact;
+    }
+
+    public function getId(){
+        return $this->emailId;
+    }
+
+    public function setId($id){
+        $this->emailId = $id;
+    }
+
+    public function __toString(){
+        return $this->email;
+    }
+
+    public function toJson(){
+        return [
+            'email_id' => $this->emailId,
+            'contact_id' => $this->contact->getId(),
+            'email' => $this->email,
+        ];
+    }
 }
