@@ -97,10 +97,87 @@ class GptHospitalContactAddress
     /**
      * @var \GptHospitalContact
      *
-     * @ManyToOne(targetEntity="GptHospitalContact")
+     * @ManyToOne(targetEntity="GptHospitalContact", inversedBy="addresses")
      * @JoinColumns({
      *   @JoinColumn(name="cont_id", referencedColumnName="cont_id")
      * })
      */
-    private $cont;
+    private $contact;
+
+    public function preCreate()
+    {
+        $this->createTs = new \DateTime();
+        $this->updateTs = new \DateTime();
+    }
+
+    public function setAddress($address){
+        $this->streetAddr1 = $address['streetAddr1'];
+        $this->streetAddr2 = $address['streetAddr2'];
+        $this->streetAddr3 = $address['streetAddr3'];
+        $this->zipcode = $address['zipcode'];
+        $this->city = $address['city'];
+        $this->state = $address['state'];
+        $this->country = $address['country'];
+    }
+
+    public function getAddress() {
+        $address = [
+            'streetAddr1'   =>  $this->streetAddr1,
+            'streetAddr2'   =>  $this->streetAddr2,
+            'streetAddr3'   =>  $this->streetAddr3,
+            'zipcode'       =>  $this->zipcode,
+            'city'          =>  $this->city,
+            'state'         =>  $this->state,
+            'country'       =>  $this->country
+        ];
+        return (object) $address;
+    }
+
+    public function setPrimary() {
+        $this->primaryFlg = '1';
+    }
+
+    public function isPrimary(){
+        return $this->primaryFlg == '1';
+    }
+
+    public function getContact(){
+        return $this->contact;
+    }
+
+    public function setContact($contact) {
+        $this->contact = $contact;
+    }
+
+    public function getId(){
+        return $this->addressId;
+    }
+
+    public function setId($id){
+        $this->addressId = $id;
+    }
+
+    public function __toString(){
+        return  $this->streetAddr1.', '
+                .$this->streetAddr2.' '
+                .$this->streetAddr3.', '
+                .$this->zipcode.', '
+                .$this->city.', '
+                .$this->state.', '
+                .$this->country;
+    }
+
+    public function toJson() {
+        return [
+            'id' => $this->addressId,
+            'contact_id' => $this->contact->getId(),
+            'street_addr_1' => $this->streetAddr1,
+            'street_addr_2' => $this->streetAddr2,
+            'street_addr_3' => $this->streetAddr3,
+            'zipcode' => $this->zipcode,
+            'city' => $this->city,
+            'state' => $this->state,
+            'country' => $this->country
+        ];
+    }
 }

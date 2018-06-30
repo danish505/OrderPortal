@@ -3,7 +3,7 @@
 /**
  * GptHospital
  *
- * @Table(name="gpt_hospital", uniqueConstraints={@UniqueConstraint(name="hospital_name_UNIQUE", columns={"hospital_name"})}, indexes={@Index(name="fk_hospital_status1_idx", columns={"status_id"})})
+ * @Table(name="gpt_hospital")
  * @Entity
  */
 class GptHospital
@@ -13,7 +13,7 @@ class GptHospital
      *
      * @Column(name="hospital_id", type="smallint", nullable=false)
      * @Id
-     * @GeneratedValue(strategy="NONE")
+     * @GeneratedValue(strategy="IDNETITY")
      */
     private $hospitalId;
 
@@ -66,15 +66,32 @@ class GptHospital
      */
     private $updateTs = 'CURRENT_TIMESTAMP';
 
-    /**
-     * @var \GptHospitalStatus
-     *
-     * @Id
-     * @GeneratedValue(strategy="NONE")
-     * @OneToOne(targetEntity="GptHospitalStatus")
-     * @JoinColumns({
-     *   @JoinColumn(name="status_id", referencedColumnName="status_id")
-     * })
-     */
-    private $status;
+    public function getId(){
+        return $this->hospitalId;
+    }
+
+    public function getHospitalName(){
+        return $this->hospitalName;
+    }
+
+    public function setHospitalName($hospitalName){
+        $this->hospitalName = $hospitalName;
+    }
+
+    public function getHospitalType() {
+        return $this->hospitalType;
+    }
+    
+    public function setHospitalType($hospitalType) {
+        $this->hospitalType = $hospitalType;
+    }
+
+    public function getHospitalUrl() {
+        return $this->hospitalUrl;
+    }
+
+    public function setHospitalUrl($hospitalUrl) {
+        $this->hospitalUrl = $hospitalUrl;
+    }
+
 }

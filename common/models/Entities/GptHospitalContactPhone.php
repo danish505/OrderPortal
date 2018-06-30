@@ -76,10 +76,72 @@ class GptHospitalContactPhone
     /**
      * @var \GptHospitalContact
      *
-     * @ManyToOne(targetEntity="GptHospitalContact")
+     * @ManyToOne(targetEntity="GptHospitalContact", inversedBy="phone_numbers")
      * @JoinColumns({
      *   @JoinColumn(name="cont_id", referencedColumnName="cont_id")
      * })
      */
-    private $cont;
+    private $contact;
+
+    public function preCreate()
+    {
+        $this->createTs = new \DateTime();
+        $this->updateTs = new \DateTime();
+    }
+
+    public function setPhone($phone) {
+        $this->ctryCd = $phone['ctryCd'];
+        $this->areaCd = $phone['areaCd'];
+        $this->phoneNo = $phone['phoneNo'];
+        $this->extension = $phone['extension'];
+    }
+
+    public function getPhone(){
+        return (object) [
+            'ctryCd' => $this->ctryCd,
+            'areaCd' => $this->areaCd,
+            'phoneNo' => $this->phoneNo,
+            'extension' => $this->extension,
+        ];
+    }
+
+    public function __toString() {
+        return "+".$this->ctryCd." ".$this->areaCd." ".$this->phoneNo
+                .($this->extension != ''?(' ext:'.$this->extension):'');
+    }
+
+    public function setPrimary() {
+        $this->primaryFlg = '1';
+    }
+
+    public function isPrimary(){
+        return $this->primaryFlg == '1';
+    }
+
+    public function getContact(){
+        return $this->contact;
+    }
+
+    public function setContact($contact){
+        $this->contact = $contact;
+    }
+
+    public function getId(){
+        return $this->phoneId;
+    }
+
+    public function setId($id){
+        $this->phoneId = $id;
+    }
+
+    public function toJson(){
+        return [
+            'phone_id' => $this->phoneId,
+            'contact_id' => $this->contact->getId(),
+            'ctry_code' => $this->ctryCd,
+            'area_code' => $this->areaCd,
+            'phone_no' => $this->phoneNo,
+            'extension' => $this->extension,
+        ];
+    }
 }

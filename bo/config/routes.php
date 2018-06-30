@@ -51,7 +51,14 @@ defined('BASEPATH') or exit('No direct script access allowed');
 */
 //$route['default_controller'] = 'Dashboard_Controller';
 $route['default_controller'] = 'Patient_Controller';
+$route['patients'] = 'Patient_Controller';
 $route['patient/(:num)'] = 'Patient_Controller/view/$1';
+$route['hospitals'] = 'Hospital_Controller';
+$route['services'] = 'Service_Controller';
+$route['departments'] = 'Department_Controller';
+$route['service-providers'] = 'ServiceProvider_Controller';
+
+
 $route['login'] = 'Login_Controller';
 $route['logout'] = 'Login_Controller/logout';
 
