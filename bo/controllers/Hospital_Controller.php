@@ -3,8 +3,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 require_once APPPATH.'controllers/Authenticated_Controller.php';
 
-class Patient_Controller extends Authenticated_Controller
+class Hospital_Controller extends Authenticated_Controller
 {
+  /*
     public function __construct()
     {
         parent::__construct();
@@ -25,18 +26,19 @@ class Patient_Controller extends Authenticated_Controller
           ]
         ]);
     }
+    */
     public function index()
     {
-        $em = $this->doctrine->em;
+        /*$em = $this->doctrine->em;
         $userRepository = $em->getRepository('GptUser');
         $patients = $userRepository->findBy([
           'role' => GptUser::USER_ROLE_PATIENT
         ]);
         foreach ($patients as &$patient) {
             $patient->details = $patient->getDetail($em);
-        }
-        $this->render('patient/list', [
-          'patients' => $patients,
+        }*/
+        $this->render('hospital/list', [
+          'hospitals' => [],
         ]);
     }
 

@@ -1,6 +1,6 @@
 <div class="card mb-3">
   <div class="card-header">
-    <i class="fa fa-wheelchair"></i> Patients</div>
+    <i class="fa fa-handshake-o"></i> Service Providers</div>
   <div class="card-body">
     <div class="table-responsive">
       <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
@@ -15,14 +15,14 @@
           </tr>
         </thead>
         <tbody>
-          <?php foreach ($patients as $patient):?>
+          <?php foreach ($providers as $provider):?>
           <tr>
-            <td><?php echo $patient->details->getDisplayName();?></td>
-            <td><a href="mailto:<?php echo $patient->getEmail();?>"><?php echo $patient->getEmail();?></a></td>
-            <td><?php echo $genderMap[$patient->details->getGender()]?></td>
-            <td><?php echo $patient->details->getAge();?></td>
-            <td><span class="badge badge-<?php echo $statusClassMap[$patient->getStatus()];?>"><?php echo $statusMap[$patient->getStatus()];?></span></td>
-            <td><a class="nav-link" href="<?php echo $base_url;?>patient/<?php echo $patient->getId();?>"><i class="fa fa-fw fa-eye"></i></a></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td><a class="nav-link" href="<?php echo $base_url;?>service-provider/<?php echo $provider->getId();?>"><i class="fa fa-fw fa-eye"></i></a></td>
           </tr>
         <?php endforeach;?>
         </tbody>
