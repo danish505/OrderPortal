@@ -134,8 +134,22 @@ class MyAccount_Controller extends Authenticated_Controller
     }
 
     private function callback_patient_contact_update(){
-        $view = $this->load->view('myaccount/partials/display-contact', [], true);
-        $this->output_response_success($view);
+        $em = $this->doctrine->em;
+
+        $contact = $this->findContact($this->input->post('contact_id'));
+
+        if($contact){
+            $contact->setSalutation($this->input->post('salutation'));
+            $contact->setFirstName($this->input->post('first_name'));
+            $contact->setLastName($this->input->post('last_name'));
+            $contact->setMiddleName($this->input->post('middle_name'));
+            $em->persist($contact);
+            $em->flush();
+            $view = $this->load->view('myaccount/partials/display-contact', ['contact' => $contact], true);
+            $this->output_response_success($view);
+        }else{
+            $this->output_response_failure('Invalid arguments provided');
+        }
     }
 
     private function callback_patient_contact_address_add(){

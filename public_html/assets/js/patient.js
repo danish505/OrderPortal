@@ -15,6 +15,12 @@ $(document).ready(function(){
                 list.find('li.not-found').addClass('d-none');
             });
         },
+        callback_contact_update: function(response, contact_id) {
+            handler.handle(response, function(r){
+                let list = $('ul.patient-contacts-list').find('li#row-contact-'+contact_id);
+                list.replaceWith(r.html);
+            });
+        },
         callback_contact_email_address_add: function(response, contact_id) {
             handler.handle(response, function(r){
                 let list = $('div.collapse#'+prefix+contact_id).find('div.emails-list');
