@@ -38,4 +38,8 @@ class GPT_Controller extends CI_Controller
         // return session object instead of entity
         return $this->user;
     }
+
+    public function getScriptTag($script_uri){
+        return '<script type="text/javascript" async="" src="'.$this->config->config['base_url'].$script_uri.'"></script>';
+    }
 }

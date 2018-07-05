@@ -43,6 +43,20 @@ $(document).ready(function(){
                 list.find('div.not-found').addClass('d-none');
             });
         },
+        callback_contact_phone_number_update: function(response, contact_id) {
+            handler.handle(response, function(r){
+                var id = $(r.html).data('id');
+                let div = $('div.collapse#'+prefix+contact_id).find('div.phones-list').find('#row-phone-'+id);
+                div.replaceWith(r.html);
+            });
+        },
+        callback_contact_address_update: function(response, contact_id) {
+            handler.handle(response, function(r){
+                var id = $(r.html).data('id');
+                let div = $('div.collapse#'+prefix+contact_id).find('div.address-list').find('#row-address-'+id);
+                div.replaceWith(r.html);
+            });
+        },
         callback_delete_email: function(response, $el){
             handler.handle(response, function(r){
                 let $parent = $el.parent();

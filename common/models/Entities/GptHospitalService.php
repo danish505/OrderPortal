@@ -58,4 +58,48 @@ class GptHospitalService
      * @Column(name="update_ts", type="datetime", nullable=false)
      */
     private $updateTs = 'CURRENT_TIMESTAMP';
+
+    function getId(){
+        return $this->hospitalServiceId;
+    }
+
+    function getServiceName(){
+        return $this->serviceName;
+    }
+
+    function setServiceName($name){
+        $this->serviceName = $name;
+    }
+    
+    function getCategory(){
+        return $this->serviceCategory;
+    }
+
+    function setCategory($category){
+        $this->serviceCategory = $category;
+    }
+
+    function getSubCategory(){
+        return $this->serviceSubCategory;
+    }
+
+    function setSubCategory($subCategory){
+        $this->serviceSubCategory = $subCategory;
+    }
+
+    public function preCreate()
+    {
+        $this->createTs = new \DateTime();
+        $this->updateTs = new \DateTime();
+    }
+
+    public function toJson() {
+        return [
+            'service_id' => $this->hospitalServiceId,
+            'service_name' => $this->serviceName,
+            'service_category' => $this->serviceCategory,
+            'service_sub_category' => $this->serviceSubCategory
+        ];
+    }
+
 }

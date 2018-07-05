@@ -15,6 +15,7 @@ class BO_Controller extends GPT_Controller
             'nav' => 'common/nav',
             'copyright' => 'common/copyright',
             'scripts' => 'common/scripts',
+            'injected_scripts' => ''
         ));
     }
 

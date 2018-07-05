@@ -165,8 +165,33 @@ class MyAccount_Controller extends Authenticated_Controller
     }
 
     private function callback_patient_contact_address_update(){
-        $view = $this->load->view('myaccount/partials/display-address', [], true);
-        $this->output_response_success($view);
+
+        $em = $this->doctrine->em;
+        $contact = $this->findContact($this->input->post('contact_id'));
+
+        if($contact){
+            $criteria = Criteria::create()
+                    ->where(Criteria::expr()->eq("addressId", $this->input->post('address_id')));
+            $addresses = $contact->getAddresses();
+            $address = $addresses->matching($criteria)->get(0);
+            if($address){
+                $address->setAddress([
+                    'streetAddr1' => $this->input->post('street_add_1'),
+                    'streetAddr2' => $this->input->post('street_add_2'),
+                    'streetAddr3' => $this->input->post('street_add_3'),
+                    'zipcode' => $this->input->post('zipcode'),
+                    'city' => $this->input->post('city'),
+                    'state' => $this->input->post('state'),
+                    'country' => $this->input->post('country')
+                ]);
+                $em->persist($address);
+                $em->flush();
+                $view = $this->load->view('myaccount/partials/display-address', ['address' => $address], true);
+                $this->output_response_success($view);
+            }else{
+                $this->output_response_failure('Invalid arguments provided');
+            }
+        }
     }
 
     private function callback_patient_contact_phone_number_add(){
@@ -194,8 +219,29 @@ class MyAccount_Controller extends Authenticated_Controller
     }
 
     private function callback_patient_contact_phone_number_update(){
-        $view = $this->load->view('myaccount/partials/display-phone', [], true);
-        $this->output_response_success($view);
+        $em = $this->doctrine->em;
+        $contact = $this->findContact($this->input->post('contact_id'));
+
+        if($contact){
+            $criteria = Criteria::create()
+                    ->where(Criteria::expr()->eq("phoneId", $this->input->post('phone_id')));
+            $phone_numbers = $contact->getPhoneNumbers();
+            $phone_number = $phone_numbers->matching($criteria)->get(0);
+            if($phone_number){
+                $phone_number->setPhone([
+                    'ctryCd' => $this->input->post('ctry_cd'),
+                    'areaCd' => $this->input->post('area_cd'),
+                    'phoneNo' => $this->input->post('phone_no'),
+                    'extension' => $this->input->post('ext')
+                ]);
+                $em->persist($phone_number);
+                $em->flush();
+                $view = $this->load->view('myaccount/partials/display-phone', ['phone_number' => $phone_number], true);
+                $this->output_response_success($view);
+            }else{
+                $this->output_response_failure('Invalid arguments provided');
+            }
+        }
     }
 
     private function findContact($contact_id) {

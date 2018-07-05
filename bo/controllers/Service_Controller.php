@@ -5,57 +5,67 @@ require_once APPPATH.'controllers/Authenticated_Controller.php';
 
 class Service_Controller extends Authenticated_Controller
 {
-  /*
-    public function __construct()
-    {
-        parent::__construct();
-        $this->load->vars([
-          'statusClassMap' => [
-            GptUser::USER_STATUS_ACTIVE                 =>  'success',
-            GptUser::USER_STATUS_INACTIVE               =>  'danger',
-            GptUser::USER_STATUS_AWAITING_VERIFICATION  =>  'warning',
-          ],
-          'statusMap' => [
-            GptUser::USER_STATUS_ACTIVE                 =>  'Active',
-            GptUser::USER_STATUS_INACTIVE               =>  'Inactive',
-            GptUser::USER_STATUS_AWAITING_VERIFICATION  =>  'Unverified',
-          ],
-          'genderMap' =>  [
-            'M' =>  'Male',
-            'F' =>  'Female'
-          ]
-        ]);
-    }
-    */
     public function index()
     {
-        /*
         $em = $this->doctrine->em;
-        $userRepository = $em->getRepository('GptUser');
-        $patients = $userRepository->findBy([
-          'role' => GptUser::USER_ROLE_PATIENT
-        ]);
-        foreach ($patients as &$patient) {
-            $patient->details = $patient->getDetail($em);
-        }
-        */
+        $serviceRepository = $em->getRepository('GptHospitalService');
+        $services = $serviceRepository->findAll();
+        $injectedScripts[] = $this->getScriptTag('/assets/js/service.js');
+        $this->load->library('form_validation');
         $this->render('service/list', [
-          'services' => [],
+          'services' => $services,
+          'injected_scripts' => implode('', $injectedScripts)
         ]);
     }
 
-    public function view($id)
-    {
-        $em = $this->doctrine->em;
-        $userRepository = $em->getRepository('GptUser');
-        $patient = $userRepository->findOneBy([
-          'role'    =>  GptUser::USER_ROLE_PATIENT,
-          'userId'  =>  $id
-        ]);
-        $patient->details = $patient->getDetail($em);
+    private function callback_service_add(){
 
-        $this->render('patient/view', [
-        'patient' => $patient,
-      ]);
+      $em = $this->doctrine->em;
+
+      $service = new GptHospitalService();
+      $service->setServiceName($this->input->post('service_name'));
+      $service->setCategory($this->input->post('service_category'));
+      $service->setSubCategory($this->input->post('service_sub_category'));
+      $service->preCreate();
+      $em->persist($service);
+      $em->flush();
+      
+      $view = $this->load->view('service/partials/display-service', ['service' => $service], true);
+
+      $this->output_response_success($view);
+  }
+    public function ajax(){
+      $this->{'callback_'.$this->input->post('action')}();
     }
+
+    public function json($id){
+      $object = null;
+      $em = $this->doctrine->em;
+      $error = false;
+
+      $object = $em->find('GptHospitalService', $id);
+
+      if(!$object) $error = true;
+      
+      if(!$error){
+          $this->output_response_success($object->toJson());
+      } else {
+          $this->output_response_failure('Invalid argument provided');
+      }
+  }
+
+  private function output_response_success($html){
+      $response = array('success' => TRUE, 'html' => $html);
+      $this->output
+          ->set_status_header(200)
+          ->set_content_type('application/json')
+          ->set_output(json_encode($response));
+  }
+
+  private function output_response_failure($message){
+      $response = array('success' => FALSE, 'message' => $message);
+      $this->output
+      ->set_content_type('application/json')
+      ->set_output(json_encode($response));
+  }
 }

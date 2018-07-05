@@ -55,6 +55,8 @@ $route['patients'] = 'Patient_Controller';
 $route['patient/(:num)'] = 'Patient_Controller/view/$1';
 $route['hospitals'] = 'Hospital_Controller';
 $route['services'] = 'Service_Controller';
+$route['services/ajax'] = 'Service_Controller/ajax';
+$route['services/json/(:num)'] = 'Service_Controller/json/$1';
 $route['departments'] = 'Department_Controller';
 $route['service-providers'] = 'ServiceProvider_Controller';
 
