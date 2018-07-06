@@ -1,33 +1,38 @@
 <div class="card mb-3">
   <div class="card-header">
-    <i class="fa fa-handshake-o"></i> Service Providers</div>
+  <i class="fa fa-handshake-o"></i> Service Providers</div>
+    <button class="btn btn-primary btn-sm float-right" data-toggle="modal" data-target="#addModal">
+        <i class="fa fa-fw fa-plus"></i>
+    </button>
+  </div>
   <div class="card-body">
     <div class="table-responsive">
       <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
         <thead>
           <tr>
             <th>Name</th>
-            <th>Email Address</th>
-            <th>Gender</th>
-            <th>Age</th>
-            <th>Status</th>
+            <th>Type</th>
+            <th>Url</th>
             <th></th>
           </tr>
         </thead>
         <tbody>
-          <?php foreach ($providers as $provider):?>
-          <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td><a class="nav-link" href="<?php echo $base_url;?>service-provider/<?php echo $provider->getId();?>"><i class="fa fa-fw fa-eye"></i></a></td>
-          </tr>
-        <?php endforeach;?>
+        <?php 
+            $class='';
+            if($serviceProviders && count($serviceProvider)){
+                $class='d-none';
+                foreach($serviceProviders as $serviceProvider) {
+                    $this->load->view('service-provider/partials/display-service-provider', ['serviceProvider' => $serviceProvider]);
+                }
+            }
+        ?>
+            <tr class="not-found <?php echo $class;?>">
+              <td colspan="4">No service found. Click "+" above to add.</td>
+            </tr>
         </tbody>
       </table>
     </div>
   </div>
-  <!--div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div-->
 </div>
+<?php $this->load->view('service-provider/modals/add-provider');?>
+<?php $this->load->view('service-provider/modals/edit-provider');?>
