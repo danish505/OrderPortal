@@ -58,6 +58,8 @@ $route['services'] = 'Service_Controller';
 $route['services/ajax'] = 'Service_Controller/ajax';
 $route['services/json/(:num)'] = 'Service_Controller/json/$1';
 $route['departments'] = 'Department_Controller';
+$route['departments/ajax'] = 'Department_Controller/ajax';
+$route['departments/json/(:num)'] = 'Department_Controller/json/$1';
 $route['service-providers'] = 'ServiceProvider_Controller';
 
 

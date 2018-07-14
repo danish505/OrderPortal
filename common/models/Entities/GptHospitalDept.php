@@ -44,4 +44,30 @@ class GptHospitalDept
      * @Column(name="update_ts", type="datetime", nullable=false)
      */
     private $updateTs = 'CURRENT_TIMESTAMP';
+
+    
+    function getId(){
+        return $this->hospitalDeptId;
+    } 
+
+    function getDepartmentName(){
+        return $this->hospitalDeptName;
+    }
+
+    function setDepartmentName($hospitalDeptName){
+        $this->hospitalDeptName = $hospitalDeptName;
+    }
+
+    public function preCreate()
+    {
+        $this->createTs = new \DateTime();
+        $this->updateTs = new \DateTime();
+    }
+
+    public function toJson() {
+        return [
+            'department_id' => $this->hospitalDeptId,
+            'department_name' => $this->hospitalDeptName
+        ];
+    }
 }

@@ -37,31 +37,20 @@ class Service_Controller extends Authenticated_Controller
 
     private function callback_service_update(){
 
+        $service = null;
         $em = $this->doctrine->em;
-        $contact = $this->findContact($this->input->post('contact_id'));
+        $service = $em->find('GptHospitalService', $this->input->post('service_id'));
 
-        if($contact){
-            $criteria = Criteria::create()
-                    ->where(Criteria::expr()->eq("addressId", $this->input->post('address_id')));
-            $addresses = $contact->getAddresses();
-            $address = $addresses->matching($criteria)->get(0);
-            if($address){
-                $address->setAddress([
-                    'streetAddr1' => $this->input->post('street_add_1'),
-                    'streetAddr2' => $this->input->post('street_add_2'),
-                    'streetAddr3' => $this->input->post('street_add_3'),
-                    'zipcode' => $this->input->post('zipcode'),
-                    'city' => $this->input->post('city'),
-                    'state' => $this->input->post('state'),
-                    'country' => $this->input->post('country')
-                ]);
-                $em->persist($address);
-                $em->flush();
-                $view = $this->load->view('myaccount/partials/display-address', ['address' => $address], true);
-                $this->output_response_success($view);
-            }else{
-                $this->output_response_failure('Invalid arguments provided');
-            }
+        if($service){
+            $service->setServiceName($this->input->post('service_name'));
+            $service->setCategory($this->input->post('service_category'));
+            $service->setSubCategory($this->input->post('service_sub_category'));
+            $em->persist($service);
+            $em->flush();
+            $view = $this->load->view('service/partials/display-service', ['service' => $service], true);
+            $this->output_response_success($view);
+        }else{
+            $this->output_response_failure('Invalid arguments provided');
         }
     }
 

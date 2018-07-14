@@ -13,21 +13,21 @@
                 <input type="hidden" name="action" value="service_update" />
                 <input type="hidden" name="service_id" />
                 <div class="form-group row">
-                    <label for="service_name" class="col-sm-4 col-form-label">Service Name</label>
+                    <label for="service_name" class="col-sm-4 col-form-label">Name</label>
                     <div class="col-sm-8">
                         <input type="text" class="form-control" id="service_name" name="service_name" value="" required>
                         <div class="invalid-feedback">Service Name is required.</div>
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label for="service_category" class="col-sm-4 col-form-label">Service Category</label>
+                    <label for="service_category" class="col-sm-4 col-form-label">Category</label>
                     <div class="col-sm-8">
                         <input type="text" class="form-control" id="service_category" name="service_category" value="" required>
                         <div class="invalid-feedback">Service category is required.</div>
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label for="service_sub_category" class="col-sm-4 col-form-label">Service sub category</label>
+                    <label for="service_sub_category" class="col-sm-4 col-form-label">Sub category</label>
                     <div class="col-sm-8">
                         <input type="text" class="form-control" id="service_sub_category" name="service_sub_category" value="">
                         <!--div class="invalid-feedback">Service sub category is required.</div-->

@@ -1,5 +1,5 @@
 $(document).ready(function(){
-    var prefix = 'service_';
+    var prefix = 'department_';
     var handler = {
         handle: function(response, _cb){
             if(response.success){
@@ -8,32 +8,32 @@ $(document).ready(function(){
                 console.log(response.message);
             }
         },
-        callback_service_add: function(response, service_id) {
+        callback_department_add: function(response, department_id) {
             handler.handle(response, function(r){
                 let list = $('table > tbody');
                 list.append(r.html);
                 list.find('tr.not-found').addClass('d-none');
             });
         },
-        callback_service_update: function(response, service_id) {
+        callback_department_update: function(response, department_id) {
             handler.handle(response, function(r){
                 var id = $(r.html).data('id');
-                let div = $('tr#'+prefix+service_id);
+                let div = $('tr#'+prefix+department_id);
                 div.replaceWith(r.html);
             });
         },
         submit_form: function(modal, callback) {
             var form = modal.find('form');
-            var service_id = form.find('input[name="service_id"]').val();
+            var department_id = form.find('input[name="department_id"]').val();
             if (form[0].checkValidity() === false) {
                 display_errors(form[0]);
             } else {
                 make_call(
-                    '/services/ajax',
+                    '/departments/ajax',
                     $.param(form.serializeArray()),
                     function(response){
                         if(!!handler[callback]){
-                            handler[callback](response, service_id);
+                            handler[callback](response, department_id);
                         }
                         callback_after_success(response, modal);
                     },
@@ -43,12 +43,12 @@ $(document).ready(function(){
                 )
             }
         },
-        prepare_service: function(data){
+        prepare_department: function(data){
             let modal = $('div.modal#updateModal');
-            modal.find('input[name="service_id"]').val(data.service_id);
-            modal.find('input[name="service_name"]').val(data.service_name);
-            modal.find('input[name="service_category"]').val(data.service_category);
-            modal.find('input[name="service_sub_category"]').val(data.service_sub_category);
+            modal.find('input[name="department_id"]').val(data.department_id);
+            modal.find('input[name="department_name"]').val(data.department_name);
+            modal.find('input[name="department_category"]').val(data.department_category);
+            modal.find('input[name="department_sub_category"]').val(data.department_sub_category);
             modal.modal('show');
         }
     }
@@ -91,7 +91,7 @@ $(document).ready(function(){
         let action_for = $(this).data('for');
         let id = $(this).closest('tr').data('id');
 
-        $.get(`/services/json/${id}`, null, function(response){
+        $.get(`/departments/json/${id}`, null, function(response){
             let prepare_function = 'prepare_'+action_for;
             if(response.success && !!handler[prepare_function]){
                 handler[prepare_function](response.html);

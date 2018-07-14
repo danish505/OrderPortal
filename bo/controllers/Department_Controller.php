@@ -5,57 +5,83 @@ require_once APPPATH.'controllers/Authenticated_Controller.php';
 
 class Department_Controller extends Authenticated_Controller
 {
-  /*
-    public function __construct()
-    {
-        parent::__construct();
-        $this->load->vars([
-          'statusClassMap' => [
-            GptUser::USER_STATUS_ACTIVE                 =>  'success',
-            GptUser::USER_STATUS_INACTIVE               =>  'danger',
-            GptUser::USER_STATUS_AWAITING_VERIFICATION  =>  'warning',
-          ],
-          'statusMap' => [
-            GptUser::USER_STATUS_ACTIVE                 =>  'Active',
-            GptUser::USER_STATUS_INACTIVE               =>  'Inactive',
-            GptUser::USER_STATUS_AWAITING_VERIFICATION  =>  'Unverified',
-          ],
-          'genderMap' =>  [
-            'M' =>  'Male',
-            'F' =>  'Female'
-          ]
-        ]);
-    }
-    */
     public function index()
     {
-        /*
         $em = $this->doctrine->em;
-        $userRepository = $em->getRepository('GptUser');
-        $patients = $userRepository->findBy([
-          'role' => GptUser::USER_ROLE_PATIENT
-        ]);
-        foreach ($patients as &$patient) {
-            $patient->details = $patient->getDetail($em);
-        }
-        */
+        $departmentRepository = $em->getRepository('GptHospitalDept');
+        $departments = $departmentRepository->findAll();
+        $injectedScripts[] = $this->getScriptTag('/assets/js/department.js');
+        $this->load->library('form_validation');
         $this->render('department/list', [
-          'departments' => [],
+          'departments' => $departments,
+          'injected_scripts' => implode('', $injectedScripts)
         ]);
     }
 
-    public function view($id)
-    {
+    private function callback_department_add(){
+
+      $em = $this->doctrine->em;
+
+      $department = new GptHospitalDept();
+      $department->setdepartmentName($this->input->post('department_name'));
+      $department->preCreate();
+      $em->persist($department);
+      $em->flush();
+      
+      $view = $this->load->view('department/partials/display-department', ['department' => $department], true);
+
+      $this->output_response_success($view);
+    }
+
+    private function callback_department_update(){
+
+        $department = null;
         $em = $this->doctrine->em;
-        $userRepository = $em->getRepository('GptUser');
-        $patient = $userRepository->findOneBy([
-          'role'    =>  GptUser::USER_ROLE_PATIENT,
-          'userId'  =>  $id
-        ]);
-        $patient->details = $patient->getDetail($em);
+        $department = $em->find('GptHospitalDept', $this->input->post('department_id'));
 
-        $this->render('patient/view', [
-        'patient' => $patient,
-      ]);
+        if($department){
+            $department->setDepartmentName($this->input->post('department_name'));;
+            $em->persist($department);
+            $em->flush();
+            $view = $this->load->view('department/partials/display-department', ['department' => $department], true);
+            $this->output_response_success($view);
+        }else{
+            $this->output_response_failure('Invalid arguments provided');
+        }
     }
+
+    public function ajax(){
+      $this->{'callback_'.$this->input->post('action')}();
+    }
+
+    public function json($id){
+      $object = null;
+      $em = $this->doctrine->em;
+      $error = false;
+
+      $object = $em->find('GptHospitalDept', $id);
+
+      if(!$object) $error = true;
+      
+      if(!$error){
+          $this->output_response_success($object->toJson());
+      } else {
+          $this->output_response_failure('Invalid argument provided');
+      }
+  }
+
+  private function output_response_success($html){
+      $response = array('success' => TRUE, 'html' => $html);
+      $this->output
+          ->set_status_header(200)
+          ->set_content_type('application/json')
+          ->set_output(json_encode($response));
+  }
+
+  private function output_response_failure($message){
+      $response = array('success' => FALSE, 'message' => $message);
+      $this->output
+      ->set_content_type('application/json')
+      ->set_output(json_encode($response));
+  }
 }
