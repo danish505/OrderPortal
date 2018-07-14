@@ -1,6 +1,6 @@
 <div class="card mb-3">
   <div class="card-header">
-  <i class="fa fa-handshake-o"></i> Service Providers</div>
+  <i class="fa fa-handshake-o"></i> Service Providers
     <button class="btn btn-primary btn-sm float-right" data-toggle="modal" data-target="#addModal">
         <i class="fa fa-fw fa-plus"></i>
     </button>
@@ -19,7 +19,7 @@
         <tbody>
         <?php 
             $class='';
-            if($serviceProviders && count($serviceProvider)){
+            if($serviceProviders && count($serviceProviders)){
                 $class='d-none';
                 foreach($serviceProviders as $serviceProvider) {
                     $this->load->view('service-provider/partials/display-service-provider', ['serviceProvider' => $serviceProvider]);
@@ -27,7 +27,7 @@
             }
         ?>
             <tr class="not-found <?php echo $class;?>">
-              <td colspan="4">No service found. Click "+" above to add.</td>
+              <td colspan="4">No service provider found. Click "+" above to add.</td>
             </tr>
         </tbody>
       </table>
@@ -36,3 +36,4 @@
 </div>
 <?php $this->load->view('service-provider/modals/add-provider');?>
 <?php $this->load->view('service-provider/modals/edit-provider');?>
+<?php $this->load->view('service-provider/modals/delete-confirmation');?>

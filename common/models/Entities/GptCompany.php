@@ -110,4 +110,13 @@ class GptCompany
     public function setCompanyUrl($companyUrl) {
         $this->companyUrl = $companyUrl;
     }
+
+    public function toJson() {
+        return [
+            'service_provider_id' => $this->svcCompId,
+            'service_provider_name' => $this->companyName,
+            'service_provider_type' => $this->companyType,
+            'service_provider_url' => $this->companyUrl
+        ];
+    }
 }
