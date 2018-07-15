@@ -219,7 +219,7 @@ $(document).ready(function(){
         },
     }
     
-    $('div.modal:not(#deletecConfirmationModal)').on('hidden.bs.modal', function (e) {
+    $('div.modal:not(#deleteConfirmationModal)').on('hidden.bs.modal', function (e) {
         let form = $(this).find('form')[0];
         form.reset();
         form.classList.remove('was-validated');
@@ -236,7 +236,7 @@ $(document).ready(function(){
         handler.submit_form(modal, callback);
     });
 
-    $('div.modal#deletecConfirmationModal').on('show.bs.modal', function(e){
+    $('div.modal#deleteConfirmationModal').on('show.bs.modal', function(e){
         let contact_id = $(e.relatedTarget).closest('li.list-group-item.single-contact').find('div.collapse')[0].id.replace(prefix,'');
         let action_for = $(e.relatedTarget).data('for');
         let action = 'delete_'+action_for;

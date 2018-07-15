@@ -57,7 +57,7 @@ class GptCompanyContact
      *
      * @Column(name="job_fuction", type="string", length=100, nullable=true)
      */
-    private $jobFuction;
+    private $jobFunction;
 
     /**
      * @var string
@@ -164,11 +164,6 @@ class GptCompanyContact
         return $this->getFirstName().' '.$this->getLastName();
     }
 
-    public function toJson() {
-        return [
-        ];
-    }
-
     public function getSalutation(){
         return $this->salutation;
     }
@@ -220,12 +215,12 @@ class GptCompanyContact
         return $this->jobTitle;
     }
     
-    public function setJobFuction($jobFuction){
-        $this->jobFuction = $jobFuction;
+    public function setJobFunction($jobFunction){
+        $this->jobFunction = $jobFunction;
     }
 
-    public function getJobFuction(){
-        return $this->jobFuction;
+    public function getJobFunction(){
+        return $this->jobFunction;
     }
 
     public function setJobRole($jobRole){
@@ -234,6 +229,19 @@ class GptCompanyContact
 
     public function getJobRole(){
         return $this->jobRole;
+    }
+
+    public function toJson() {
+        return [
+            'service_provider_id' => $this->getCompany()->getId(),
+            'contact_id' => $this->contId,
+            'first_name' => $this->firstName,
+            'middle_name' => $this->middleName,
+            'last_name' => $this->lastName,
+            'job_title' => $this->jobTitle,
+            'job_function' => $this->jobFunction,
+            'job_role' => $this->jobRole
+        ];
     }
 
 }

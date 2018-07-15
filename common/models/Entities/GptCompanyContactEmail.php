@@ -108,6 +108,7 @@ class GptCompanyContactEmail
         return [
             'email_id' => $this->emailId,
             'contact_id' => $this->contact->getId(),
+            'service_provider_id' => $this->getContact()->getCompany()->getId(),
             'email' => $this->email,
         ];
     }

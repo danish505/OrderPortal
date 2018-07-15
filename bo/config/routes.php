@@ -64,6 +64,10 @@ $route['service-providers'] = 'ServiceProvider_Controller';
 $route['service-providers/ajax'] = 'ServiceProvider_Controller/ajax';
 $route['service-providers/json/(:num)'] = 'ServiceProvider_Controller/json/$1';
 $route['service-providers/json/(:num)/service'] = 'ServiceProvider_Controller/json_service/$1';
+$route['service-providers/json/(:num)/contact'] = 'ServiceProvider_Controller/json_contact/$1';
+$route['service-providers/json/(:num)/contact-address'] = 'ServiceProvider_Controller/json_contact_address/$1';
+$route['service-providers/json/(:num)/contact-email'] = 'ServiceProvider_Controller/json_contact_email/$1';
+$route['service-providers/json/(:num)/contact-phone'] = 'ServiceProvider_Controller/json_contact_phone/$1';
 $route['service-providers/(:num)'] = 'ServiceProvider_Controller/view/$1';
 
 

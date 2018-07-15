@@ -28,4 +28,3 @@
 </table>
 <?php $this->load->view('service-provider/service/modals/add-service');?>
 <?php $this->load->view('service-provider/service/modals/edit-service');?>
-<?php $this->load->view('service-provider/service/modals/delete-confirmation');?>

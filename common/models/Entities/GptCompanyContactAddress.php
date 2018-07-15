@@ -169,8 +169,9 @@ class GptCompanyContactAddress
 
     public function toJson() {
         return [
-            'id' => $this->addressId,
+            'address_id' => $this->addressId,
             'contact_id' => $this->contact->getId(),
+            'service_provider_id' => $this->getContact()->getCompany()->getId(),
             'street_addr_1' => $this->streetAddr1,
             'street_addr_2' => $this->streetAddr2,
             'street_addr_3' => $this->streetAddr3,

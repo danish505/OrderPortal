@@ -138,6 +138,7 @@ class GptCompanyContactPhone
         return [
             'phone_id' => $this->phoneId,
             'contact_id' => $this->contact->getId(),
+            'service_provider_id' => $this->getContact()->getCompany()->getId(),
             'ctry_code' => $this->ctryCd,
             'area_code' => $this->areaCd,
             'phone_no' => $this->phoneNo,

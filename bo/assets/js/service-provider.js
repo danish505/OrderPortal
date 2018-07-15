@@ -22,6 +22,18 @@ $(document).ready(function(){
                 list.find('tr.not-found').addClass('d-none');
             });
         },
+        callback_service_provider_contact_add: function(response) {
+            let list = $('ul.service-provider-contacts-list');
+                list.append(response.html);
+                list.find('li.not-found').addClass('d-none');
+        },
+        callback_service_provider_contact_update: function(response){
+            handler.handle(response, function(r){
+                var id = $(r.html).data('id');
+                let div = $('ul.service-provider-contacts-list').find('li#row-contact-'+id);
+                div.replaceWith(r.html);
+            });
+        },
         callback_service_provider_update: function(response, service_provider_id) {
             handler.handle(response, function(r){
                 var id = $(r.html).data('id');
@@ -58,7 +70,30 @@ $(document).ready(function(){
                 }
             );
         },
+        callback_delete_contact: function(response, $el) {
+            handler.handle(response, function(r){
+                let $parent = $el.parent();
+                $el.remove();
+                if($parent.find('li:not(.not-found)').length == 0){
+                    $parent.find('li.not-found').removeClass('d-none');
+                }
+            });
+        },
+        delete_contact: function(modal, $el, contact_id){
+            let token = $('input[name="csrf_token"]').eq(0).val();
+            make_call(
+                '/service-providers/ajax',
+                $.param([{name:'id', value: contact_id}, {name: "action", value: "service_provider_contact_delete"},{name:'csrf_token', value:token}]),
+                function(response){
+                    handler['callback_delete_contact'](response, $el);
+                },
+                function(response){
+                    callback_delete_fail(response, modal);
+                }
+            );
+        },
         submit_form: function(modal, callback) {
+            console.log(callback);
             var form = modal.find('form');
             var service_provider_id = form.find('input[name="service_provider_id"]').val();
             if (form[0].checkValidity() === false) {
@@ -95,10 +130,22 @@ $(document).ready(function(){
             modal.find('input[name="service_category"]').val(data.service_category);
             modal.find('input[name="service_sub_category"]').val(data.service_sub_category);
             modal.modal('show');
-        }
+        },
+        prepare_contact: function(data){
+            let modal = $('div.modal#contactUpdateModal');
+            modal.find('input[name="service_provider_id"]').val(data.service_provider_id);
+            modal.find('input[name="contact_id"]').val(data.contact_id);
+            modal.find('input[name="first_name"]').val(data.first_name);
+            modal.find('input[name="last_name"]').val(data.last_name);
+            modal.find('input[name="middle_name"]').val(data.middle_name);
+            modal.find('input[name="job_title"]').val(data.job_title);
+            modal.find('input[name="job_function"]').val(data.job_function);
+            modal.find('input[name="job_role"]').val(data.job_role);
+            modal.modal('show');
+        },
     }
     
-    $('div.modal:not(#deletecConfirmationModal)').on('hidden.bs.modal', function (e) {
+    $('div.modal:not(#deleteConfirmationModal)').on('hidden.bs.modal', function (e) {
         let form = $(this).find('form')[0];
         form.reset();
         form.classList.remove('was-validated');
@@ -143,7 +190,7 @@ $(document).ready(function(){
     $('body').on('click','button.edit', function(){
         
         let action_for = $(this).data('for');
-        let id = $(this).closest('tr').data('id');
+        let id = $(this).closest('tr,li').data('id');
 
         $.get(`/service-providers/json/${id}${urlSuffixMap[action_for]}`, null, function(response){
             let prepare_function = 'prepare_'+action_for;
@@ -155,15 +202,17 @@ $(document).ready(function(){
         })
     })
 
-    $('div.modal#deletecConfirmationModal').on('show.bs.modal', function(e){
-        let service_provider_id = $(e.relatedTarget).closest('tr').data('id');
+    $('div.modal#deleteConfirmationModal').on('show.bs.modal', function(e){
+        let $el = $(e.relatedTarget).closest('tr, li');
+        let service_provider_id = $el.data('id');
         let action_for = $(e.relatedTarget).data('for');
         let action = 'delete_'+action_for;
         let modal = $(this);
         modal.find('.alert.alert-danger').addClass('d-none');
+        console.log(action);
         $(this).find('button.btn-primary').bind('click', function(){
             if(!!handler[action]){
-                handler[action](modal, $(e.relatedTarget).closest('tr'), service_provider_id);
+                handler[action](modal, $el, service_provider_id);
                 modal.modal('hide');
             }
         });

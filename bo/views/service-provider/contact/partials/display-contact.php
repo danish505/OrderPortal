@@ -25,7 +25,7 @@
                         if($addresses && count($addresses)){
                             $class='d-none';
                             foreach($addresses as $address){
-                                $this->load->view('myaccount/partials/display-address',['address'=>$address]);
+                                $this->load->view('service-provider/contact/partials/display-address',['address'=>$address]);
                             }
                         }
                         ?>
@@ -47,7 +47,7 @@
                         if($emails && count($emails)){
                             $class='d-none';
                             foreach($emails as $email){
-                                $this->load->view('myaccount/partials/display-email',['email'=>$email]);
+                                $this->load->view('service-provider/contact/partials/display-email',['email'=>$email]);
                             }
                         }
                         ?>
@@ -69,7 +69,7 @@
                         if($phone_numbers && count($phone_numbers)){
                             foreach($phone_numbers as $phone_number){
                                 $class='d-none';
-                                $this->load->view('myaccount/partials/display-phone',['phone_number'=>$phone_number]);
+                                $this->load->view('service-provider/contact/partials/display-phone',['phone_number'=>$phone_number]);
                             }
                         }
                         ?>

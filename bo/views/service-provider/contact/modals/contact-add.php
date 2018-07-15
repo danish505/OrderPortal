@@ -10,7 +10,8 @@
             <div class="modal-body">
                 <?php echo form_open(''); ?>
                 <div class="alert alert-danger d-none" role="alert">An error occurred while processing your request. Please try again.</div>
-                <input type="hidden" name="action" value="patient_contact_add" />
+                <input type="hidden" name="action" value="service_provider_contact_add" />
+                <input type="hidden" name="service_provider_id" value="<?php echo $serviceProvider->getId();?>" />
                 <div class="form-group row">
                     <label for="salutation" class="col-sm-4 col-form-label">Salutation</label>
                     <div class="col-sm-8">
@@ -45,11 +46,38 @@
                         </div>
                     </div>
                 </div>
+                <div class="form-group row">
+                    <label for="job_title" class="col-sm-4 col-form-label">Job Title</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" id="job_title" name="job_title" value="" required>
+                        <div class="invalid-feedback">
+                        Please provide job title
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="job_function" class="col-sm-4 col-form-label">Job Function</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" id="job_function" name="job_function" value="" required>
+                        <div class="invalid-feedback">
+                        Please provide job function
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="job_role" class="col-sm-4 col-form-label">Job Role</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" id="job_role" name="job_role" value="" required>
+                        <div class="invalid-feedback">
+                        Please provide job role
+                        </div>
+                    </div>
+                </div>
                 <?php echo form_close(); ?>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" id="btn_contact_add">Add Contact</button>
+                <button type="button" class="btn btn-primary" id="btn_service_provider_contact_add">Add Contact</button>
             </div>
         </div>
     </div>

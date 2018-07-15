@@ -15,9 +15,10 @@
           <?php $this->load->view('service-provider/services', ['services' => $serviceProvider->getServices()]);?>
         </div>
         <div class="tab-pane fade" id="contacts" role="tabpanel" aria-labelledby="contacts-tab">
-        <?php //$this->load->view('service-provider/contacts');?>
+        <?php $this->load->view('service-provider/contacts', ['contacts' => $serviceProvider->getContacts()]);?>
         </div>
       </div>
     </div>
   </div>
 </div>
+<?php $this->load->view('service-provider/service/modals/delete-confirmation');?>

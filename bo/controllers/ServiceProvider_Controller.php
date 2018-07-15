@@ -30,7 +30,8 @@ class ServiceProvider_Controller extends Authenticated_Controller
         $this->load->library('form_validation');
         $this->render('service-provider/view', [
         'serviceProvider' => $serviceProvider,
-        'injected_scripts' => implode('', $injectedScripts)
+        'injected_scripts' => implode('', $injectedScripts),
+        'salutations' => $this->config->config['gpt_variable']['salutation'],
       ]);
     }
 
@@ -61,6 +62,16 @@ class ServiceProvider_Controller extends Authenticated_Controller
         $this->output_response_success('');
     }
 
+    private function callback_service_provider_contact_delete() {
+        $em = $this->doctrine->em;
+        $contact = $em->find('GptCompanyContact', $this->input->post('id'));
+        if($contact){
+            $em->remove($contact);
+            $em->flush();
+        }
+        $this->output_response_success('');
+    }
+
     private function callback_service_provider_update(){
 
         $company = null;
@@ -74,6 +85,31 @@ class ServiceProvider_Controller extends Authenticated_Controller
             $em->persist($company);
             $em->flush();
             $view = $this->load->view('service-provider/partials/display-service-provider', ['serviceProvider' => $company], true);
+            $this->output_response_success($view);
+        }else{
+            $this->output_response_failure('Invalid arguments provided');
+        }
+    }
+
+    private function callback_service_provider_contact_add() {
+        $company = null;
+        $em = $this->doctrine->em;
+        $company = $this->getServiceProvider($this->input->post('service_provider_id'));
+
+        if($company){
+            $contact = new GptCompanyContact();
+            $contact->setSalutation($this->input->post('salutation'));
+            $contact->setFirstName($this->input->post('first_name'));
+            $contact->setLastName($this->input->post('last_name'));
+            $contact->setMiddleName($this->input->post('middle_name'));
+            $contact->setJobTitle($this->input->post('job_title'));
+            $contact->setJobFunction($this->input->post('job_function'));
+            $contact->setJobRole($this->input->post('job_role'));
+            $contact->setCompany($company);
+            $contact->preCreate();
+            $em->persist($contact);
+            $em->flush();
+            $view = $this->load->view('service-provider/contact/partials/display-contact', ['contact' => $contact], true);
             $this->output_response_success($view);
         }else{
             $this->output_response_failure('Invalid arguments provided');
@@ -94,6 +130,16 @@ class ServiceProvider_Controller extends Authenticated_Controller
                     ->where(Criteria::expr()->eq("serviceId", $id));
         $services = $company->getServices();
         return $services->matching($criteria)->get(0);
+    }
+
+    private function getContact($company_id, $id) {
+        $company = $this->getServiceProvider($company_id);
+        if(!$company) return null;
+
+        $criteria = Criteria::create()
+                    ->where(Criteria::expr()->eq("contId", $id));
+        $contacts = $company->getContacts();
+        return $contacts->matching($criteria)->get(0);
     }
 
     private function callback_service_provider_service_add(){
@@ -137,6 +183,29 @@ class ServiceProvider_Controller extends Authenticated_Controller
         }
     }
 
+    private function callback_service_provider_contact_update(){
+
+        $company = null;
+        $em = $this->doctrine->em;
+
+        $contact = $this->getContact($this->input->post('service_provider_id'), $this->input->post('contact_id'));
+        if($contact){
+            $contact->setSalutation($this->input->post('salutation'));
+            $contact->setFirstName($this->input->post('first_name'));
+            $contact->setMiddleName($this->input->post('middle_name'));
+            $contact->setLastName($this->input->post('last_name'));
+            $contact->setJobTitle($this->input->post('job_title'));
+            $contact->setJobFunction($this->input->post('job_function'));
+            $contact->setJobRole($this->input->post('job_role'));
+            $em->persist($contact);
+            $em->flush();
+            $view = $this->load->view('service-provider/contact/partials/display-contact', ['contact' => $contact], true);
+            $this->output_response_success($view);
+        }else{
+            $this->output_response_failure('Invalid arguments provided');
+        }
+    }
+
     public function ajax(){
       $this->{'callback_'.$this->input->post('action')}();
     }
@@ -171,7 +240,71 @@ class ServiceProvider_Controller extends Authenticated_Controller
     } else {
         $this->output_response_failure('Invalid argument provided');
     }
-}
+  }
+
+  public function json_contact($id){
+    $object = null;
+    $em = $this->doctrine->em;
+    $error = false;
+
+    $object = $em->find('GptCompanyContact', $id);
+
+    if(!$object) $error = true;
+    
+    if(!$error){
+        $this->output_response_success($object->toJson());
+    } else {
+        $this->output_response_failure('Invalid argument provided');
+    }
+  }
+
+  public function json_contact_address($id){
+    $object = null;
+    $em = $this->doctrine->em;
+    $error = false;
+
+    $object = $em->find('GptCompanyContactAddress', $id);
+
+    if(!$object) $error = true;
+    
+    if(!$error){
+        $this->output_response_success($object->toJson());
+    } else {
+        $this->output_response_failure('Invalid argument provided');
+    }
+  }
+  
+  public function json_contact_email($id){
+    $object = null;
+    $em = $this->doctrine->em;
+    $error = false;
+
+    $object = $em->find('GptCompanyContactEmail', $id);
+
+    if(!$object) $error = true;
+    
+    if(!$error){
+        $this->output_response_success($object->toJson());
+    } else {
+        $this->output_response_failure('Invalid argument provided');
+    }
+  }
+
+  public function json_contact_phone($id){
+    $object = null;
+    $em = $this->doctrine->em;
+    $error = false;
+
+    $object = $em->find('GptCompanyContactPhone', $id);
+
+    if(!$object) $error = true;
+    
+    if(!$error){
+        $this->output_response_success($object->toJson());
+    } else {
+        $this->output_response_failure('Invalid argument provided');
+    }
+  }
 
   private function output_response_success($html){
       $response = array('success' => TRUE, 'html' => $html);
