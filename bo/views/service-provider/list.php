@@ -13,7 +13,7 @@
             <th>Name</th>
             <th>Type</th>
             <th>Url</th>
-            <th></th>
+            <th style="width: 20%;"></th>
           </tr>
         </thead>
         <tbody>

@@ -73,6 +73,13 @@ class GptCompany
      */
     private $contacts;
 
+    /**
+     * Bidirectional - One-To-Many (INVERSE SIDE)
+     *
+     * @OneToMany(targetEntity="GptCompanyService", mappedBy="company", cascade={"remove"})
+     */
+    private $services;
+
     public function preCreate()
     {
         $this->createTs = new \DateTime();
@@ -118,5 +125,9 @@ class GptCompany
             'service_provider_type' => $this->companyType,
             'service_provider_url' => $this->companyUrl
         ];
+    }
+
+    public function getServices(){
+        return $this->services;
     }
 }

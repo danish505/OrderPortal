@@ -110,4 +110,12 @@ class GptCompanyService
     public function isActive(){
         return $this->activeFlg == '1';
     }
+
+    public function setCompany(GptCompany $company) {
+        $this->company = $company;
+    }
+
+    public function getCompany() {
+        return $this->company;
+    }
 }

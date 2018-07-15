@@ -1,65 +1,23 @@
-<div class="card mb-3">
-  <div class="card-header">
-    <i class="fa fa-wheelchair"></i>
-    <?php echo $patient->details->getDisplayName();?>
-  </div>
-  <div class="card-body">
-    <table class="table table-striped">
-      <tbody>
-        <tr>
-          <td scope="col colsm-3">Username</td>
-          <td scope="col col-sm-9">
-            <?php echo $patient->getUserName();?>
-          </td>
-        </tr>
-        <tr>
-          <td scope="col colsm-3">Salutation</td>
-          <td scope="col col-sm-9">
-            <?php echo $patient->details->getSalutation();?>
-          </td>
-        </tr>
-        <tr>
-          <td scope="col colsm-3">First Name</td>
-          <td scope="col col-sm-9">
-            <?php echo $patient->details->getFirstName();?>
-          </td>
-        </tr>
-        <tr>
-          <td scope="col colsm-3">Middle Name</td>
-          <td scope="col col-sm-9">
-            <?php echo $patient->details->getMiddleName();?>
-          </td>
-        </tr>
-        <tr>
-          <td scope="col colsm-3">Last Name</td>
-          <td scope="col col-sm-9">
-            <?php echo $patient->details->getLastName();?>
-          </td>
-        </tr>
-        <tr>
-          <td scope="col colsm-3">Email Address</td>
-          <td scope="col col-sm-9">
-            <?php echo $patient->getEmail();?>
-          </td>
-        </tr>
-        <tr>
-          <td scope="col colsm-3">Gender</td>
-          <td scope="col col-sm-9">
-            <?php echo $genderMap[$patient->details->getGender()];?>
-          </td>
-        </tr>
-        <tr>
-          <td scope="col colsm-3">Age</td>
-          <td scope="col col-sm-9">
-            <?php echo $patient->details->getAge();?>
-          </td>
-        </tr>
-        <tr>
-          <td scope="col colsm-3">Status</td>
-          <td scope="col col-sm-9"><span class="badge badge-<?php echo $statusClassMap[$patient->getStatus()];?>"><?php echo $statusMap[$patient->getStatus()];?></span></td>
-        </tr>
-      </tbody>
-    </table>
-    <a class="btn btn-primary float-right" href="<?php echo $base_url;?>" role="button">Back</a>
+<div class="container">
+  <div class="card mx-auto mb-5">
+    <div class="card-header"><?php echo $serviceProvider->getCompanyName();?></div>
+    <div class="card-body">
+      <ul class="nav nav-tabs" id="service-provider" role="tablist">
+        <li class="nav-item">
+          <a class="nav-link active" id="services-tab" data-toggle="tab" href="#services" role="tab" aria-controls="services" aria-selected="true">Services</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" id="contacts-tab" data-toggle="tab" href="#contacts" role="tab" aria-controls="contacts" aria-selected="false">Contacts</a>
+        </li>
+      </ul>
+      <div class="tab-content mt-2" id="serviceProviderContent">
+        <div class="tab-pane fade show active" id="services" role="tabpanel" aria-labelledby="services-tab">
+          <?php $this->load->view('service-provider/services', ['services' => $serviceProvider->getServices()]);?>
+        </div>
+        <div class="tab-pane fade" id="contacts" role="tabpanel" aria-labelledby="contacts-tab">
+        <?php //$this->load->view('service-provider/contacts');?>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

@@ -22,15 +22,14 @@ class ServiceProvider_Controller extends Authenticated_Controller
     public function view($id)
     {
         $em = $this->doctrine->em;
-        $userRepository = $em->getRepository('GptUser');
-        $patient = $userRepository->findOneBy([
-          'role'    =>  GptUser::USER_ROLE_PATIENT,
-          'userId'  =>  $id
+        $serviceProviderRepository = $em->getRepository('GptCompany');
+        $serviceProvider = $serviceProviderRepository->findOneBy([
+          'svcCompId'  =>  $id
         ]);
-        $patient->details = $patient->getDetail($em);
+        //$patient->details = $patient->getDetail($em);
 
-        $this->render('patient/view', [
-        'patient' => $patient,
+        $this->render('service-provider/view', [
+        'serviceProvider' => $serviceProvider,
       ]);
     }
 
