@@ -27,6 +27,75 @@ $(document).ready(function(){
                 list.append(response.html);
                 list.find('li.not-found').addClass('d-none');
         },
+        callback_contact_email_address_add: function(response, contact_id) {
+            handler.handle(response, function(r){
+                let list = $('div.collapse#contactDetail'+contact_id).find('div.emails-list');
+                list.append(r.html);
+                list.find('div.not-found').addClass('d-none');
+            });
+        },
+        callback_contact_email_address_update: function(response, contact_id) {
+            handler.handle(response, function(r){
+                var id = $(r.html).data('id');
+                let div = $('div.collapse#contactDetail'+contact_id).find('div.emails-list').find('#row-email-'+id);
+                div.replaceWith(r.html);
+            });
+        },
+        callback_contact_address_add: function(response, contact_id) {
+            handler.handle(response, function(r){
+                let list = $('div.collapse#contactDetail'+contact_id).find('div.address-list');
+                list.append(r.html);
+                list.find('div.not-found').addClass('d-none');
+            });
+        },
+        callback_contact_phone_number_add: function(response, contact_id) {
+            handler.handle(response, function(r){
+                let list = $('div.collapse#contactDetail'+contact_id).find('div.phones-list');
+                list.append(r.html);
+                list.find('div.not-found').addClass('d-none');
+            });
+        },
+        callback_contact_phone_number_update: function(response, contact_id) {
+            handler.handle(response, function(r){
+                var id = $(r.html).data('id');
+                let div = $('div.collapse#contactDetail'+contact_id).find('div.phones-list').find('#row-phone-'+id);
+                div.replaceWith(r.html);
+            });
+        },
+        callback_contact_address_update: function(response, contact_id) {
+            handler.handle(response, function(r){
+                var id = $(r.html).data('id');
+                let div = $('div.collapse#contactDetail'+contact_id).find('div.address-list').find('#row-address-'+id);
+                div.replaceWith(r.html);
+            });
+        },
+        callback_delete_email: function(response, $el){
+            handler.handle(response, function(r){
+                let $parent = $el.parent();
+                $el.remove();
+                if($parent.find('div.single-email').length == 0){
+                    $parent.find('div.not-found').removeClass('d-none');
+                }
+            });
+        },
+        callback_delete_address: function(response, $el){
+            handler.handle(response, function(r){
+                let $parent = $el.parent();
+                $el.remove();
+                if($parent.find('div.single-address').length == 0){
+                    $parent.find('div.not-found').removeClass('d-none');
+                }
+            });
+        },
+        callback_delete_phone: function(response, $el){
+            handler.handle(response, function(r){
+                let $parent = $el.parent();
+                $el.remove();
+                if($parent.find('div.single-phone').length == 0){
+                    $parent.find('div.not-found').removeClass('d-none');
+                }
+            });
+        },
         callback_service_provider_contact_update: function(response){
             handler.handle(response, function(r){
                 var id = $(r.html).data('id');
@@ -95,7 +164,10 @@ $(document).ready(function(){
         submit_form: function(modal, callback) {
             console.log(callback);
             var form = modal.find('form');
-            var service_provider_id = form.find('input[name="service_provider_id"]').val();
+            var id = form.find('input[name="service_provider_id"]').val();
+            if(!id){
+                id = form.find('input[name="contact_id"]').val();
+            }
             if (form[0].checkValidity() === false) {
                 display_errors(form[0]);
             } else {
@@ -104,7 +176,7 @@ $(document).ready(function(){
                     $.param(form.serializeArray()),
                     function(response){
                         if(!!handler[callback]){
-                            handler[callback](response, service_provider_id);
+                            handler[callback](response, id);
                         }
                         callback_after_success(response, modal);
                     },
@@ -143,6 +215,36 @@ $(document).ready(function(){
             modal.find('input[name="job_role"]').val(data.job_role);
             modal.modal('show');
         },
+        prepare_email: function(data){
+            let modal = $('div.modal#contactEmailAddressUpdateModal');
+            modal.find('input[name="contact_id"]').val(data.contact_id);
+            modal.find('input[name="email_id"]').val(data.email_id);
+            modal.find('input[name="email_address"]').val(data.email);
+            modal.modal('show');
+        },
+        prepare_phone: function(data){
+            let modal = $('div.modal#contactPhoneNumberUpdateModal');
+            modal.find('input[name="contact_id"]').val(data.contact_id);
+            modal.find('input[name="phone_id"]').val(data.phone_id);
+            modal.find('input[name="ctry_cd"]').val(data.ctry_code);
+            modal.find('input[name="area_cd"]').val(data.area_code);
+            modal.find('input[name="phone_no"]').val(data.phone_no);
+            modal.find('input[name="ext"]').val(data.extension);
+            modal.modal('show');
+        },
+        prepare_address: function(data){
+            let modal = $('div.modal#contactAddressUpdateModal');
+            modal.find('input[name="contact_id"]').val(data.contact_id);
+            modal.find('input[name="address_id"]').val(data.address_id);
+            modal.find('input[name="street_add_1"]').val(data.street_addr_1);
+            modal.find('input[name="street_add_2"]').val(data.street_addr_2);
+            modal.find('input[name="street_add_3"]').val(data.street_addr_3);
+            modal.find('input[name="city"]').val(data.city);
+            modal.find('input[name="state"]').val(data.state);
+            modal.find('input[name="zipcode"]').val(data.zipcode);
+            modal.find('input[name="country"]').val(data.country);
+            modal.modal('show');
+        },
     }
     
     $('div.modal:not(#deleteConfirmationModal)').on('hidden.bs.modal', function (e) {
@@ -150,6 +252,13 @@ $(document).ready(function(){
         form.reset();
         form.classList.remove('was-validated');
         $(this).find('.alert.alert-danger').addClass('d-none');
+    }).on('show.bs.modal', function(e){
+        if(['contactEmailAddressAddModal',
+        'contactAddressAddModal',
+        'contactPhoneNumberAddModal'].indexOf(this.id) > -1) {
+            let contact_id = $(e.relatedTarget).closest('li.single-contact').data('id');
+            $(this).find('form').find('input[name="contact_id"]').val(contact_id);
+        }
     }).find('button.btn-primary').click(function(){
         let callback = this.id.replace('btn','callback');
         let modal = $(this).closest('div.modal');
@@ -183,14 +292,20 @@ $(document).ready(function(){
         'service_provider': '',
         'service': '/service',
         'contact': '/contact',
-        'contact_address':'/contact-address',
-        'contact_email':'/contact-email',
-        'contact_phone':'/contact-phone',
+        'address':'/contact-address',
+        'email':'/contact-email',
+        'phone':'/contact-phone',
     }
     $('body').on('click','button.edit', function(){
         
         let action_for = $(this).data('for');
-        let id = $(this).closest('tr,li').data('id');
+        let id = null;
+        
+        if(['email', 'address', 'phone'].indexOf(action_for) > -1) {
+            id = $(this).closest('div.row').data('id');
+        } else {
+            id = $(this).closest('tr,li').data('id');
+        }
 
         $.get(`/service-providers/json/${id}${urlSuffixMap[action_for]}`, null, function(response){
             let prepare_function = 'prepare_'+action_for;

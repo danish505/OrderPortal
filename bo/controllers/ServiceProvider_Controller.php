@@ -64,7 +64,7 @@ class ServiceProvider_Controller extends Authenticated_Controller
 
     private function callback_service_provider_contact_delete() {
         $em = $this->doctrine->em;
-        $contact = $em->find('GptCompanyContact', $this->input->post('id'));
+        $contact = $this->getContact($this->input->post('id'));
         if($contact){
             $em->remove($contact);
             $em->flush();
@@ -116,6 +116,137 @@ class ServiceProvider_Controller extends Authenticated_Controller
         }
     }
 
+    private function callback_service_provider_contact_email_address_add() {
+        $contact = null;
+        $em = $this->doctrine->em;
+
+        $contact = $this->getContact($this->input->post('contact_id'));
+
+        if($contact){
+            $email = new GptCompanyContactEmail();
+            $email->setEmail($this->input->post('email_address'));
+            $email->setContact($contact);
+            $email->preCreate();
+            $em->persist($email);
+            $em->flush();
+            $view = $this->load->view('service-provider/contact/partials/display-email', ['email' => $email], true);
+            $this->output_response_success($view);
+        }else{
+            $this->output_response_failure('Invalid arguments provided');
+        }
+    }
+
+    private function callback_service_provider_contact_email_address_update() {
+        $em = $this->doctrine->em;
+        $email = $em->find('GptCompanyContactEmail', $this->input->post('email_id'));
+        
+        if($email){
+            $email->setEmail($this->input->post('email_address'));
+            $em->persist($email);
+            $em->flush();
+            $view = $this->load->view('service-provider/contact/partials/display-email', ['email' => $email], true);
+            $this->output_response_success($view);
+        }else{
+            $this->output_response_failure('Invalid arguments provided');
+        }
+    }
+
+    private function callback_service_provider_contact_address_add() {
+        $contact = null;
+        $em = $this->doctrine->em;
+
+        $contact = $this->getContact($this->input->post('contact_id'));
+
+        if($contact){
+            $address = new GptCompanyContactAddress();
+            $address->setAddress([
+                'streetAddr1' => $this->input->post('street_add_1'),
+                'streetAddr2' => $this->input->post('street_add_2'),
+                'streetAddr3' => $this->input->post('street_add_3'),
+                'zipcode' => $this->input->post('zipcode'),
+                'city' => $this->input->post('city'),
+                'state' => $this->input->post('state'),
+                'country' => $this->input->post('country')
+            ]);
+            $address->setContact($contact);
+            $address->preCreate();
+            $em->persist($address);
+            $em->flush();
+            $view = $this->load->view('service-provider/contact/partials/display-address', ['address' => $address], true);
+            $this->output_response_success($view);
+        }else{
+            $this->output_response_failure('Invalid arguments provided');
+        }
+    }
+
+    private function callback_service_provider_contact_address_update() {
+        $em = $this->doctrine->em;
+        $address = $em->find('GptCompanyContactAddress', $this->input->post('address_id'));
+        
+        if($address){
+            $address->setAddress([
+                'streetAddr1' => $this->input->post('street_add_1'),
+                'streetAddr2' => $this->input->post('street_add_2'),
+                'streetAddr3' => $this->input->post('street_add_3'),
+                'zipcode' => $this->input->post('zipcode'),
+                'city' => $this->input->post('city'),
+                'state' => $this->input->post('state'),
+                'country' => $this->input->post('country')
+            ]);
+            $em->persist($address);
+            $em->flush();
+            $view = $this->load->view('service-provider/contact/partials/display-address', ['address' => $address], true);
+            $this->output_response_success($view);
+        }else{
+            $this->output_response_failure('Invalid arguments provided');
+        }
+    }
+
+    private function callback_service_provider_contact_phone_number_add() {
+        $contact = null;
+        $em = $this->doctrine->em;
+
+        $contact = $this->getContact($this->input->post('contact_id'));
+
+        if($contact){
+            $phone_number = new GptCompanyContactPhone();
+            $phone_number->setPhone([
+                'ctryCd' => $this->input->post('ctry_cd'),
+                'areaCd' => $this->input->post('area_cd'),
+                'phoneNo' => $this->input->post('phone_no'),
+                'extension' => $this->input->post('ext')
+            ]);
+            $phone_number->setContact($contact);
+            $phone_number->preCreate();
+            $em->persist($phone_number);
+            $em->flush();
+            $view = $this->load->view('service-provider/contact/partials/display-phone', ['phone_number' => $phone_number], true);
+            $this->output_response_success($view);
+        }else{
+            $this->output_response_failure('Invalid arguments provided');
+        }
+    }
+
+    private function callback_service_provider_contact_phone_number_update() {
+        $em = $this->doctrine->em;
+        $phone_number = $em->find('GptCompanyContactPhone', $this->input->post('phone_id'));
+        
+        if($phone_number){
+            $phone_number->setPhone([
+                'ctryCd' => $this->input->post('ctry_cd'),
+                'areaCd' => $this->input->post('area_cd'),
+                'phoneNo' => $this->input->post('phone_no'),
+                'extension' => $this->input->post('ext')
+            ]);
+            $em->persist($phone_number);
+            $em->flush();
+            $view = $this->load->view('service-provider/contact/partials/display-phone', ['phone_number' => $phone_number], true);
+            $this->output_response_success($view);
+        }else{
+            $this->output_response_failure('Invalid arguments provided');
+        }
+    }
+
     private function getServiceProvider($id) {
         $company = null;
         $em = $this->doctrine->em;
@@ -132,7 +263,7 @@ class ServiceProvider_Controller extends Authenticated_Controller
         return $services->matching($criteria)->get(0);
     }
 
-    private function getContact($company_id, $id) {
+    private function getContactByServiceProvider($company_id, $id) {
         $company = $this->getServiceProvider($company_id);
         if(!$company) return null;
 
@@ -140,6 +271,10 @@ class ServiceProvider_Controller extends Authenticated_Controller
                     ->where(Criteria::expr()->eq("contId", $id));
         $contacts = $company->getContacts();
         return $contacts->matching($criteria)->get(0);
+    }
+
+    private function getContact($id) {
+        return $this->doctrine->em->find('GptCompanyContact', $id);
     }
 
     private function callback_service_provider_service_add(){
@@ -188,7 +323,7 @@ class ServiceProvider_Controller extends Authenticated_Controller
         $company = null;
         $em = $this->doctrine->em;
 
-        $contact = $this->getContact($this->input->post('service_provider_id'), $this->input->post('contact_id'));
+        $contact = $this->getContactByServiceProvider($this->input->post('service_provider_id'), $this->input->post('contact_id'));
         if($contact){
             $contact->setSalutation($this->input->post('salutation'));
             $contact->setFirstName($this->input->post('first_name'));
@@ -247,7 +382,7 @@ class ServiceProvider_Controller extends Authenticated_Controller
     $em = $this->doctrine->em;
     $error = false;
 
-    $object = $em->find('GptCompanyContact', $id);
+    $object = $this->getContact($id);
 
     if(!$object) $error = true;
     

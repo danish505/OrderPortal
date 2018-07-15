@@ -10,7 +10,7 @@
             <div class="modal-body">
                 <?php echo form_open(''); ?>
                 <div class="alert alert-danger d-none" role="alert">An error occurred while processing your request. Please try again.</div>
-                <input type="hidden" name="action" value="patient_contact_address_add" />
+                <input type="hidden" name="action" value="service_provider_contact_address_add" />
                 <input type="hidden" name="contact_id" />
                 <div class="form-group row">
                     <label for="street_add_1" class="col-sm-3 col-form-label">Street Address 1</label>
