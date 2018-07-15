@@ -88,14 +88,19 @@ class GptHospitalContact
     private $updateTs = 'CURRENT_TIMESTAMP';
 
     /**
-     * @var \GptHospital
-     *
-     * @ManyToOne(targetEntity="GptHospital", inversedBy="contacts")
-     * @JoinColumns({
-     *   @JoinColumn(name="hospital_id", referencedColumnName="hospital_id")
-     * })
+     * Many Contacts have Many Hospitals.
+     * @ManyToMany(targetEntity="GptHospital", inversedBy="contacts")
+     * @JoinTable(name="gpt_hospital_contact_xref")
      */
-    private $company;
+    private $hospitals;
+
+    public function __construct() {
+        $this->hospitals = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    public function addHospital($hospital) {
+        $this->hospitals[] = $hospital;
+    }
 
     /**
      * Bidirectional - One-To-Many (INVERSE SIDE)

@@ -11,6 +11,12 @@
           <span class="nav-link-text">Hospitals</span>
         </a>
       </li>
+      <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Contacts">
+        <a class="nav-link" href="<?php echo $base_url;?>contacts">
+          <i class="fa fa-fw fa-hospital-o"></i>
+          <span class="nav-link-text">Contacts</span>
+        </a>
+      </li>
       <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Service Providers">
         <a class="nav-link" href="<?php echo $base_url;?>service-providers">
           <i class="fa fa-fw fa-handshake-o"></i>
