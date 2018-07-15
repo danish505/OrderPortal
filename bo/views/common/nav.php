@@ -13,7 +13,7 @@
       </li>
       <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Contacts">
         <a class="nav-link" href="<?php echo $base_url;?>contacts">
-          <i class="fa fa-fw fa-hospital-o"></i>
+          <i class="fa fa-fw fa-user"></i>
           <span class="nav-link-text">Contacts</span>
         </a>
       </li>

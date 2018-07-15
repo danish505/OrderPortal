@@ -69,6 +69,9 @@ $route['service-providers/json/(:num)/contact-address'] = 'ServiceProvider_Contr
 $route['service-providers/json/(:num)/contact-email'] = 'ServiceProvider_Controller/json_contact_email/$1';
 $route['service-providers/json/(:num)/contact-phone'] = 'ServiceProvider_Controller/json_contact_phone/$1';
 $route['service-providers/(:num)'] = 'ServiceProvider_Controller/view/$1';
+$route['contacts'] = 'Contact_Controller';
+$route['contacts/ajax'] = 'Contact_Controller/ajax';
+$route['contacts/json/(:any)/(:num)'] = 'Contact_Controller/json/$1/$2';
 
 
 $route['login'] = 'Login_Controller';

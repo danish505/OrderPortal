@@ -10,14 +10,14 @@ $(document).ready(function(){
         },
         callback_contact_add: function(response, contact_id) {
             handler.handle(response, function(r){
-                let list = $('ul.patient-contacts-list');
+                let list = $('ul.contacts-list');
                 list.append(r.html);
                 list.find('li.not-found').addClass('d-none');
             });
         },
         callback_contact_update: function(response, contact_id) {
             handler.handle(response, function(r){
-                let list = $('ul.patient-contacts-list').find('li#row-contact-'+contact_id);
+                let list = $('ul.contacts-list').find('li#row-contact-'+contact_id);
                 list.replaceWith(r.html);
             });
         },
@@ -104,8 +104,8 @@ $(document).ready(function(){
             let token = $('input[name="csrf_token"]').eq(0).val();
 
             make_call(
-                '/my-account/ajax',
-                $.param([{name:'email_id', value: email_id}, {name:'contact_id', value: contact_id}, {name: "action", value: "patient_contact_email_delete"},{name:'csrf_token', value:token}]),
+                '/contacts/ajax',
+                $.param([{name:'email_id', value: email_id}, {name:'contact_id', value: contact_id}, {name: "action", value: "contact_email_delete"},{name:'csrf_token', value:token}]),
                 function(response){
                     handler['callback_delete_email'](response, $el);
                 },
@@ -119,8 +119,8 @@ $(document).ready(function(){
             let token = $('input[name="csrf_token"]').eq(0).val();
 
             make_call(
-                '/my-account/ajax',
-                $.param([{name:'address_id', value: address_id}, {name:'contact_id', value: contact_id}, {name: "action", value: "patient_contact_address_delete"},{name:'csrf_token', value:token}]),
+                '/contacts/ajax',
+                $.param([{name:'address_id', value: address_id}, {name:'contact_id', value: contact_id}, {name: "action", value: "contact_address_delete"},{name:'csrf_token', value:token}]),
                 function(response){
                     handler['callback_delete_address'](response, $el);
                 },
@@ -134,8 +134,8 @@ $(document).ready(function(){
             let token = $('input[name="csrf_token"]').eq(0).val();
 
             make_call(
-                '/my-account/ajax',
-                $.param([{name:'phone_id', value: phone_id}, {name:'contact_id', value: contact_id}, {name: "action", value: "patient_contact_phone_delete"},{name:'csrf_token', value:token}]),
+                '/contacts/ajax',
+                $.param([{name:'phone_id', value: phone_id}, {name:'contact_id', value: contact_id}, {name: "action", value: "contact_phone_delete"},{name:'csrf_token', value:token}]),
                 function(response){
                     handler['callback_delete_phone'](response, $el);
                 },
@@ -147,8 +147,8 @@ $(document).ready(function(){
         delete_contact: function(modal, $el, contact_id){
             let token = $('input[name="csrf_token"]').eq(0).val();
             make_call(
-                '/my-account/ajax',
-                $.param([{name:'contact_id', value: contact_id}, {name: "action", value: "patient_contact_delete"},{name:'csrf_token', value:token}]),
+                '/contacts/ajax',
+                $.param([{name:'contact_id', value: contact_id}, {name: "action", value: "contact_delete"},{name:'csrf_token', value:token}]),
                 function(response){
                     handler['callback_delete_contact'](response, $el);
                 },
@@ -164,7 +164,7 @@ $(document).ready(function(){
                 display_errors(form[0]);
             } else {
                 make_call(
-                    '/my-account/ajax',
+                    '/contacts/ajax',
                     $.param(form.serializeArray()),
                     function(response){
                         if(!!handler[callback]){
@@ -180,11 +180,14 @@ $(document).ready(function(){
         },
         prepare_contact: function(data){
             let modal = $('div.modal#contactUpdateModal');
-            modal.find('input[name="contact_id"]').val(data.id);
+            modal.find('input[name="contact_id"]').val(data.contact_id);
             modal.find('input[name="salutation"]').val(data.salutation);
             modal.find('input[name="first_name"]').val(data.first_name);
             modal.find('input[name="middle_name"]').val(data.middle_name);
             modal.find('input[name="last_name"]').val(data.last_name);
+            modal.find('input[name="job_title"]').val(data.job_title);
+            modal.find('input[name="job_function"]').val(data.job_function);
+            modal.find('input[name="job_role"]').val(data.job_role);
             modal.modal('show');
         },
         prepare_email: function(data){
@@ -279,7 +282,7 @@ $(document).ready(function(){
         let action_for = $(this).data('for');
         let id = $(this).closest('.single-'+action_for).data('id');
 
-        $.get(`/my-account/json/${action_for}/${id}`, null, function(response){
+        $.get(`/contacts/json/${action_for}/${id}`, null, function(response){
             let prepare_function = 'prepare_'+action_for;
             if(response.success && !!handler[prepare_function]){
                 handler[prepare_function](response.html);

@@ -10,7 +10,7 @@
             <div class="modal-body">
                 <?php echo form_open(''); ?>
                 <div class="alert alert-danger d-none" role="alert">An error occurred while processing your request. Please try again.</div>
-                <input type="hidden" name="action" value="patient_contact_add" />
+                <input type="hidden" name="action" value="contact_add" />
                 <div class="form-group row">
                     <label for="salutation" class="col-sm-4 col-form-label">Salutation</label>
                     <div class="col-sm-8">
@@ -42,6 +42,33 @@
                         <input type="text" class="form-control" id="last_name" name="last_name" value="" required>
                         <div class="invalid-feedback">
                         Please provide last name
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="job_title" class="col-sm-4 col-form-label">Job Title</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" id="job_title" name="job_title" value="" required>
+                        <div class="invalid-feedback">
+                        Please provide job title
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="job_function" class="col-sm-4 col-form-label">Job Function</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" id="job_function" name="job_function" value="" required>
+                        <div class="invalid-feedback">
+                        Please provide job function
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="job_role" class="col-sm-4 col-form-label">Job Role</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" id="job_role" name="job_role" value="" required>
+                        <div class="invalid-feedback">
+                        Please provide job role
                         </div>
                     </div>
                 </div>

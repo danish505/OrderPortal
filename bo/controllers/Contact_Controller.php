@@ -3,7 +3,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 require_once APPPATH.'controllers/Authenticated_Controller.php';
 
-class Service_Controller extends Authenticated_Controller
+use Doctrine\Common\Collections\Criteria;
+
+class Contact_Controller extends Authenticated_Controller
 {
     public function index()
     {
@@ -14,7 +16,8 @@ class Service_Controller extends Authenticated_Controller
         $this->load->library('form_validation');
         $this->render('contact/list', [
           'contacts' => $contacts,
-          'injected_scripts' => implode('', $injectedScripts)
+          'injected_scripts' => implode('', $injectedScripts),
+          'salutations' => $this->config->config['gpt_variable']['salutation']
         ]);
     }
 

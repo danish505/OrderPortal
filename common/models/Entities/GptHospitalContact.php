@@ -3,7 +3,7 @@
 /**
  * GptHospitalContact
  *
- * @Table(name="gpt_hospital_contact", indexes={@Index(name="fk_contact_hospital1_idx", columns={"hospital_id"})})
+ * @Table(name="gpt_hospital_contact")
  * @Entity
  */
 class GptHospitalContact
@@ -57,7 +57,7 @@ class GptHospitalContact
      *
      * @Column(name="job_fuction", type="string", length=100, nullable=true)
      */
-    private $jobFuction;
+    private $jobFunction;
 
     /**
      * @var string
@@ -92,7 +92,7 @@ class GptHospitalContact
      * @ManyToMany(targetEntity="GptHospital", inversedBy="contacts")
      * @JoinTable(name="gpt_hospital_contact_xref")
      */
-    private $hospitals;
+    /*private $hospitals;
 
     public function __construct() {
         $this->hospitals = new \Doctrine\Common\Collections\ArrayCollection();
@@ -100,7 +100,7 @@ class GptHospitalContact
 
     public function addHospital($hospital) {
         $this->hospitals[] = $hospital;
-    }
+    }*/
 
     /**
      * Bidirectional - One-To-Many (INVERSE SIDE)
@@ -169,11 +169,6 @@ class GptHospitalContact
         return $this->getFirstName().' '.$this->getLastName();
     }
 
-    public function toJson() {
-        return [
-        ];
-    }
-
     public function getSalutation(){
         return $this->salutation;
     }
@@ -225,12 +220,12 @@ class GptHospitalContact
         return $this->jobTitle;
     }
     
-    public function setJobFuction($jobFuction){
-        $this->jobFuction = $jobFuction;
+    public function setJobFunction($jobFunction){
+        $this->jobFunction = $jobFunction;
     }
 
-    public function getJobFuction(){
-        return $this->jobFuction;
+    public function getJobFunction(){
+        return $this->jobFunction;
     }
 
     public function setJobRole($jobRole){
@@ -239,5 +234,17 @@ class GptHospitalContact
 
     public function getJobRole(){
         return $this->jobRole;
+    }
+
+    public function toJson() {
+        return [
+            'contact_id' => $this->contId,
+            'first_name' => $this->firstName,
+            'middle_name' => $this->middleName,
+            'last_name' => $this->lastName,
+            'job_title' => $this->jobTitle,
+            'job_function' => $this->jobFunction,
+            'job_role' => $this->jobRole
+        ];
     }
 }
