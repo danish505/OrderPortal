@@ -8,9 +8,16 @@ $(document).ready(function(){
                 console.log(response.message);
             }
         },
-        callback_service_provider_add: function(response, service_provider_id) {
+        callback_service_provider_add: function(response) {
             handler.handle(response, function(r){
                 let list = $('table > tbody');
+                list.append(r.html);
+                list.find('tr.not-found').addClass('d-none');
+            });
+        },
+        callback_service_provider_service_add: function(response){
+            handler.handle(response, function(r){
+                let list = $('table#serviceDataTable > tbody');
                 list.append(r.html);
                 list.find('tr.not-found').addClass('d-none');
             });
@@ -19,6 +26,13 @@ $(document).ready(function(){
             handler.handle(response, function(r){
                 var id = $(r.html).data('id');
                 let div = $('tr#'+prefix+service_provider_id);
+                div.replaceWith(r.html);
+            });
+        },
+        callback_service_provider_service_update: function(response){
+            handler.handle(response, function(r){
+                var id = $(r.html).data('id');
+                let div = $('table#serviceDataTable > tbody').find('tr#service_'+id);
                 div.replaceWith(r.html);
             });
         },
@@ -72,6 +86,15 @@ $(document).ready(function(){
             modal.find('input[name="company_type"]').val(data.service_provider_type);
             modal.find('input[name="company_url"]').val(data.service_provider_url);
             modal.modal('show');
+        },
+        prepare_service: function(data){
+            let modal = $('div.modal#serviceUpdateModal');
+            modal.find('input[name="service_provider_id"]').val(data.service_provider_id);
+            modal.find('input[name="service_id"]').val(data.service_id);
+            modal.find('input[name="service_name"]').val(data.service_name);
+            modal.find('input[name="service_category"]').val(data.service_category);
+            modal.find('input[name="service_sub_category"]').val(data.service_sub_category);
+            modal.modal('show');
         }
     }
     
@@ -109,16 +132,25 @@ $(document).ready(function(){
         ).fail(failure);
     }
 
+    let urlSuffixMap = {
+        'service_provider': '',
+        'service': '/service',
+        'contact': '/contact',
+        'contact_address':'/contact-address',
+        'contact_email':'/contact-email',
+        'contact_phone':'/contact-phone',
+    }
     $('body').on('click','button.edit', function(){
+        
         let action_for = $(this).data('for');
         let id = $(this).closest('tr').data('id');
 
-        $.get(`/service-providers/json/${id}`, null, function(response){
+        $.get(`/service-providers/json/${id}${urlSuffixMap[action_for]}`, null, function(response){
             let prepare_function = 'prepare_'+action_for;
             if(response.success && !!handler[prepare_function]){
                 handler[prepare_function](response.html);
             } else {
-                console.log("Unable to process request");
+                console.log("Unable to process request. Seeking ",prepare_function);
             }
         })
     })

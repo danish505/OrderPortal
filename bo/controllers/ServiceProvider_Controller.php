@@ -3,6 +3,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 require_once APPPATH.'controllers/Authenticated_Controller.php';
 
+use Doctrine\Common\Collections\Criteria;
+
 class ServiceProvider_Controller extends Authenticated_Controller
 {
     public function index()
@@ -23,13 +25,12 @@ class ServiceProvider_Controller extends Authenticated_Controller
     {
         $em = $this->doctrine->em;
         $serviceProviderRepository = $em->getRepository('GptCompany');
-        $serviceProvider = $serviceProviderRepository->findOneBy([
-          'svcCompId'  =>  $id
-        ]);
-        //$patient->details = $patient->getDetail($em);
-
+        $serviceProvider = $this->getServiceProvider($id);
+        $injectedScripts[] = $this->getScriptTag('/assets/js/service-provider.js');
+        $this->load->library('form_validation');
         $this->render('service-provider/view', [
         'serviceProvider' => $serviceProvider,
+        'injected_scripts' => implode('', $injectedScripts)
       ]);
     }
 
@@ -52,7 +53,7 @@ class ServiceProvider_Controller extends Authenticated_Controller
 
     private function callback_service_provider_delete() {
         $em = $this->doctrine->em;
-        $compnay = $em->find('GptCompany', $this->input->post('id'));
+        $compnay = $this->getServiceProvider($this->input->post('id'));
         if($compnay){
             $em->remove($compnay);
             $em->flush();
@@ -64,7 +65,7 @@ class ServiceProvider_Controller extends Authenticated_Controller
 
         $company = null;
         $em = $this->doctrine->em;
-        $company = $em->find('GptCompany', $this->input->post('service_provider_id'));
+        $company = $this->getServiceProvider($this->input->post('service_provider_id'));
 
         if($company){
             $company->setCompanyName($this->input->post('company_name'));
@@ -73,6 +74,63 @@ class ServiceProvider_Controller extends Authenticated_Controller
             $em->persist($company);
             $em->flush();
             $view = $this->load->view('service-provider/partials/display-service-provider', ['serviceProvider' => $company], true);
+            $this->output_response_success($view);
+        }else{
+            $this->output_response_failure('Invalid arguments provided');
+        }
+    }
+
+    private function getServiceProvider($id) {
+        $company = null;
+        $em = $this->doctrine->em;
+        return $em->find('GptCompany', $id);
+    }
+
+    private function getService($company_id, $id) {
+        $company = $this->getServiceProvider($company_id);
+        if(!$company) return null;
+
+        $criteria = Criteria::create()
+                    ->where(Criteria::expr()->eq("serviceId", $id));
+        $services = $company->getServices();
+        return $services->matching($criteria)->get(0);
+    }
+
+    private function callback_service_provider_service_add(){
+
+        $company = null;
+        $em = $this->doctrine->em;
+        $company = $this->getServiceProvider($this->input->post('service_provider_id'));
+
+        if($company){
+            $service = new GptCompanyService();
+            $service->setServiceName($this->input->post('service_name'));
+            $service->setCategory($this->input->post('service_category'));
+            $service->setSubCategory($this->input->post('service_sub_category'));
+            $service->setCompany($company);
+            $service->preCreate();
+            $em->persist($service);
+            $em->flush();
+            $view = $this->load->view('service-provider/service/partials/display-service', ['service' => $service], true);
+            $this->output_response_success($view);
+        }else{
+            $this->output_response_failure('Invalid arguments provided');
+        }
+    }
+
+    private function callback_service_provider_service_update(){
+
+        $company = null;
+        $em = $this->doctrine->em;
+
+        $service = $this->getService($this->input->post('service_provider_id'), $this->input->post('service_id'));
+        if($service){
+            $service->setServiceName($this->input->post('service_name'));
+            $service->setCategory($this->input->post('service_category'));
+            $service->setSubCategory($this->input->post('service_sub_category'));
+            $em->persist($service);
+            $em->flush();
+            $view = $this->load->view('service-provider/service/partials/display-service', ['service' => $service], true);
             $this->output_response_success($view);
         }else{
             $this->output_response_failure('Invalid arguments provided');
@@ -98,6 +156,22 @@ class ServiceProvider_Controller extends Authenticated_Controller
           $this->output_response_failure('Invalid argument provided');
       }
   }
+
+  public function json_service($id){
+    $object = null;
+    $em = $this->doctrine->em;
+    $error = false;
+
+    $object = $em->find('GptCompanyService', $id);
+
+    if(!$object) $error = true;
+    
+    if(!$error){
+        $this->output_response_success($object->toJson());
+    } else {
+        $this->output_response_failure('Invalid argument provided');
+    }
+}
 
   private function output_response_success($html){
       $response = array('success' => TRUE, 'html' => $html);

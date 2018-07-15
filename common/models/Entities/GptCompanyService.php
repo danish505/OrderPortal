@@ -87,19 +87,19 @@ class GptCompanyService
         $this->serviceName = $serviceName;
     }
     
-    public function getServiceCategory() {
+    public function getCategory() {
         return $this->serviceCategory;
     }
 
-    public function setServiceCategory($serviceCategory) {
+    public function setCategory($serviceCategory) {
         $this->serviceCategory = $serviceCategory;
     }
     
-    public function getServiceSubCategory(){
+    public function getSubCategory(){
         return $this->serviceSubCategory;
     }
 
-    public function setServiceSubCategory($serviceSubCategory){
+    public function setSubCategory($serviceSubCategory){
         $this->serviceSubCategory = $serviceSubCategory;
     }
 
@@ -117,5 +117,15 @@ class GptCompanyService
 
     public function getCompany() {
         return $this->company;
+    }
+
+    public function toJson() {
+        return [
+            'service_provider_id' => $this->getCompany()->getId(),
+            'service_id' => $this->serviceId,
+            'service_name' => $this->serviceName,
+            'service_category' => $this->serviceCategory,
+            'service_sub_category' => $this->serviceSubCategory
+        ];
     }
 }

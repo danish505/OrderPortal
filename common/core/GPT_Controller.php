@@ -12,7 +12,7 @@ class GPT_Controller extends CI_Controller
         parent::__construct();
         $this->load->vars(array(
           'base_url' => base_url(),
-          'site_title' => $this->config->config['site_title'],
+          'site_title' => $this->config->config['site_title']
         ));
 
         $this->isLoggedIn = ($this->session->user && $this->session->user->id > 0);
@@ -40,6 +40,6 @@ class GPT_Controller extends CI_Controller
     }
 
     public function getScriptTag($script_uri){
-        return '<script type="text/javascript" async="" src="'.$this->config->config['base_url'].$script_uri.'"></script>';
+        return '<script type="text/javascript" async="" src="'.$this->config->config['base_url'].$script_uri.'?v='.$this->config->config['gpt_version'].'"></script>';
     }
 }
