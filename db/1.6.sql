@@ -1,0 +1,1 @@
+alter table gpt_hospital modify last_verified_dt TIMESTAMP NULL default NULL;

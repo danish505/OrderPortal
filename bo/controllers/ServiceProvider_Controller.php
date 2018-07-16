@@ -54,9 +54,9 @@ class ServiceProvider_Controller extends Authenticated_Controller
 
     private function callback_service_provider_delete() {
         $em = $this->doctrine->em;
-        $compnay = $this->getServiceProvider($this->input->post('id'));
-        if($compnay){
-            $em->remove($compnay);
+        $company = $this->getServiceProvider($this->input->post('id'));
+        if($company){
+            $em->remove($company);
             $em->flush();
         }
         $this->output_response_success('');

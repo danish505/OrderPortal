@@ -72,6 +72,9 @@ $route['service-providers/(:num)'] = 'ServiceProvider_Controller/view/$1';
 $route['contacts'] = 'Contact_Controller';
 $route['contacts/ajax'] = 'Contact_Controller/ajax';
 $route['contacts/json/(:any)/(:num)'] = 'Contact_Controller/json/$1/$2';
+$route['hospitals'] = 'Hospital_Controller';
+$route['hospitals/ajax'] = 'Hospital_Controller/ajax';
+$route['hospitals/json/(:any)/(:num)'] = 'Hospital_Controller/json/$1/$2';
 
 
 $route['login'] = 'Login_Controller';

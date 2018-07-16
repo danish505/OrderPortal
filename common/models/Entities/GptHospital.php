@@ -13,7 +13,7 @@ class GptHospital
      *
      * @Column(name="hospital_id", type="smallint", nullable=false)
      * @Id
-     * @GeneratedValue(strategy="IDNETITY")
+     * @GeneratedValue(strategy="IDENTITY")
      */
     private $hospitalId;
 
@@ -50,7 +50,7 @@ class GptHospital
      *
      * @Column(name="last_verified_dt", type="datetime", nullable=true)
      */
-    private $lastVerifiedDt = 'CURRENT_TIMESTAMP';
+    private $lastVerifiedDt;
 
     /**
      * @var \DateTime
@@ -92,6 +92,21 @@ class GptHospital
 
     public function setHospitalUrl($hospitalUrl) {
         $this->hospitalUrl = $hospitalUrl;
+    }
+
+    public function preCreate()
+    {
+        $this->createTs = new \DateTime();
+        $this->updateTs = new \DateTime();
+    }
+
+    public function toJson() {
+        return [
+            'hospital_id' => $this->hospitalId,
+            'hospital_name' => $this->hospitalName,
+            'hospital_type' => $this->hospitalType,
+            'hospital_url' => $this->hospitalUrl
+        ];
     }
 
 }
