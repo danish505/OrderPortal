@@ -109,4 +109,28 @@ class GptHospital
         ];
     }
 
+    // ...
+
+    /**
+     * Many Hospitals have Many Groups.
+     * @ManyToMany(targetEntity="GptHospitalDept")
+     * @JoinTable(name="gpt_hospital_dept_xref",
+     *      joinColumns={@JoinColumn(name="hospital_id", referencedColumnName="hospital_id")},
+     *      inverseJoinColumns={@JoinColumn(name="hospital_dept_id", referencedColumnName="hospital_dept_id")}
+     *      )
+     */
+    private $departments;
+
+    public function __construct() {
+        $this->departments = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    public function addDepartment($department){
+        $this->departments[] = $department;
+    }
+
+    public function getDepartments(){
+        return $this->departments;
+    }
+
 }

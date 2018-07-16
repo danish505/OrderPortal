@@ -21,75 +21,6 @@ $(document).ready(function(){
                 list.replaceWith(r.html);
             });
         },
-        callback_hospital_email_address_add: function(response, hospital_id) {
-            handler.handle(response, function(r){
-                let list = $('div.collapse#'+prefix+hospital_id).find('div.emails-list');
-                list.append(r.html);
-                list.find('div.not-found').addClass('d-none');
-            });
-        },
-        callback_hospital_email_address_update: function(response, hospital_id) {
-            handler.handle(response, function(r){
-                var id = $(r.html).data('id');
-                let div = $('div.collapse#'+prefix+hospital_id).find('div.emails-list').find('#row-email-'+id);
-                div.replaceWith(r.html);
-            });
-        },
-        callback_hospital_address_add: function(response, hospital_id) {
-            handler.handle(response, function(r){
-                let list = $('div.collapse#'+prefix+hospital_id).find('div.address-list');
-                list.append(r.html);
-                list.find('div.not-found').addClass('d-none');
-            });
-        },
-        callback_hospital_phone_number_add: function(response, hospital_id) {
-            handler.handle(response, function(r){
-                let list = $('div.collapse#'+prefix+hospital_id).find('div.phones-list');
-                list.append(r.html);
-                list.find('div.not-found').addClass('d-none');
-            });
-        },
-        callback_hospital_phone_number_update: function(response, hospital_id) {
-            handler.handle(response, function(r){
-                var id = $(r.html).data('id');
-                let div = $('div.collapse#'+prefix+hospital_id).find('div.phones-list').find('#row-phone-'+id);
-                div.replaceWith(r.html);
-            });
-        },
-        callback_hospital_address_update: function(response, hospital_id) {
-            handler.handle(response, function(r){
-                var id = $(r.html).data('id');
-                let div = $('div.collapse#'+prefix+hospital_id).find('div.address-list').find('#row-address-'+id);
-                div.replaceWith(r.html);
-            });
-        },
-        callback_delete_email: function(response, $el){
-            handler.handle(response, function(r){
-                let $parent = $el.parent();
-                $el.remove();
-                if($parent.find('div.single-email').length == 0){
-                    $parent.find('div.not-found').removeClass('d-none');
-                }
-            });
-        },
-        callback_delete_address: function(response, $el){
-            handler.handle(response, function(r){
-                let $parent = $el.parent();
-                $el.remove();
-                if($parent.find('div.single-address').length == 0){
-                    $parent.find('div.not-found').removeClass('d-none');
-                }
-            });
-        },
-        callback_delete_phone: function(response, $el){
-            handler.handle(response, function(r){
-                let $parent = $el.parent();
-                $el.remove();
-                if($parent.find('div.single-phone').length == 0){
-                    $parent.find('div.not-found').removeClass('d-none');
-                }
-            });
-        },
         callback_delete_hospital: function(response, $el){
             handler.handle(response, function(r){
                 let $parent = $el.parent();
@@ -98,51 +29,6 @@ $(document).ready(function(){
                     $parent.find('li.not-found').removeClass('d-none');
                 }
             });
-        },
-        delete_email: function(modal, $el, hospital_id) {
-            let email_id = $el.data('id');
-            let token = $('input[name="csrf_token"]').eq(0).val();
-
-            make_call(
-                '/hospitals/ajax',
-                $.param([{name:'email_id', value: email_id}, {name:'hospital_id', value: hospital_id}, {name: "action", value: "hospital_email_delete"},{name:'csrf_token', value:token}]),
-                function(response){
-                    handler['callback_delete_email'](response, $el);
-                },
-                function(response){
-                    callback_delete_fail(response, modal);
-                }
-            );
-        },
-        delete_address: function(modal, $el, hospital_id) {
-            let address_id = $el.data('id');
-            let token = $('input[name="csrf_token"]').eq(0).val();
-
-            make_call(
-                '/hospitals/ajax',
-                $.param([{name:'address_id', value: address_id}, {name:'hospital_id', value: hospital_id}, {name: "action", value: "hospital_address_delete"},{name:'csrf_token', value:token}]),
-                function(response){
-                    handler['callback_delete_address'](response, $el);
-                },
-                function(response){
-                    callback_delete_fail(response, modal);
-                }
-            );
-        },
-        delete_phone: function(modal, $el, hospital_id) {
-            let phone_id = $el.data('id');
-            let token = $('input[name="csrf_token"]').eq(0).val();
-
-            make_call(
-                '/hospitals/ajax',
-                $.param([{name:'phone_id', value: phone_id}, {name:'hospital_id', value: hospital_id}, {name: "action", value: "hospital_phone_delete"},{name:'csrf_token', value:token}]),
-                function(response){
-                    handler['callback_delete_phone'](response, $el);
-                },
-                function(response){
-                    callback_delete_fail(response, modal);
-                }
-            );
         },
         delete_hospital: function(modal, $el, hospital_id){
             let token = $('input[name="csrf_token"]').eq(0).val();
@@ -186,36 +72,28 @@ $(document).ready(function(){
             modal.find('input[name="hospital_url"]').val(data.hospital_url);
             modal.modal('show');
         },
-        prepare_email: function(data){
-            let modal = $('div.modal#hospitalEmailAddressUpdateModal');
-            modal.find('input[name="hospital_id"]').val(data.hospital_id);
-            modal.find('input[name="email_id"]').val(data.email_id);
-            modal.find('input[name="email_address"]').val(data.email);
+        prepare_services: function(data, hospital_id) {
+            let modal = $('div.modal#serviceAttachModal');
+            let list = $(`li#row-hospital-${hospital_id} div.services-list`);
+            modal.find('select').html(handler.make_dropdown(data, list));
+            modal.find('input[name="hospital_id"]').val(hospital_id);
             modal.modal('show');
         },
-        prepare_phone: function(data){
-            let modal = $('div.modal#hospitalPhoneNumberUpdateModal');
-            modal.find('input[name="hospital_id"]').val(data.hospital_id);
-            modal.find('input[name="phone_id"]').val(data.phone_id);
-            modal.find('input[name="ctry_cd"]').val(data.ctry_code);
-            modal.find('input[name="area_cd"]').val(data.area_code);
-            modal.find('input[name="phone_no"]').val(data.phone_no);
-            modal.find('input[name="ext"]').val(data.extension);
+        prepare_departments: function(data, hospital_id) {
+            let modal = $('div.modal#departmentAttachModal');
+            let list = $(`li#row-hospital-${hospital_id} ul.departments-list li`);
+            modal.find('select').html(handler.make_dropdown(data, list));
+            modal.find('input[name="hospital_id"]').val(hospital_id);
             modal.modal('show');
         },
-        prepare_address: function(data){
-            let modal = $('div.modal#hospitalAddressUpdateModal');
-            modal.find('input[name="hospital_id"]').val(data.hospital_id);
-            modal.find('input[name="address_id"]').val(data.id);
-            modal.find('input[name="street_add_1"]').val(data.street_addr_1);
-            modal.find('input[name="street_add_2"]').val(data.street_addr_2);
-            modal.find('input[name="street_add_3"]').val(data.street_addr_3);
-            modal.find('input[name="city"]').val(data.city);
-            modal.find('input[name="state"]').val(data.state);
-            modal.find('input[name="zipcode"]').val(data.zipcode);
-            modal.find('input[name="country"]').val(data.country);
-            modal.modal('show');
-        },
+        make_dropdown: function(data, list) {
+            let html = '<option>-- Select --</option>';
+            for(i in data){
+                if(list.filter(`[data-id="${data[i].id}"]`).length > 0) continue;
+                html += `<option value="${data[i].id}">${data[i].label}</option>`;
+            }
+            return html;
+        }
     }
     
     $('div.modal:not(#deleteConfirmationModal)').on('hidden.bs.modal', function (e) {
@@ -276,12 +154,13 @@ $(document).ready(function(){
 
     $('body').on('click','button.edit', function(){
         let action_for = $(this).data('for');
-        let id = $(this).closest('.single-'+action_for).data('id');
+        let id = $(this).closest('.single-hospital').data('id');
 
         $.get(`/hospitals/json/${action_for}/${id}`, null, function(response){
             let prepare_function = 'prepare_'+action_for;
+            console.log(prepare_function);
             if(response.success && !!handler[prepare_function]){
-                handler[prepare_function](response.html);
+                handler[prepare_function](response.html, id);
             } else {
                 console.log("Unable to process request");
             }

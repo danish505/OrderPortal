@@ -11,14 +11,14 @@
     </div>
     <div class="collapse" id="hospitalDetail<?php echo $hospital->getId();?>">
         <div class="row">
-            <div class="col-12 col-sm-6 col-md-6">
+            <div class="col-12 col-sm-12 col-md-12">
                 <div class="card mt-2">
                     <div class="card-header"><span class="h4">Affiliates</span>
-                        <button class="btn btn-primary btn-sm float-right" data-toggle="modal" data-target="#hospitalAddressAddModal">
+                        <button class="btn btn-primary btn-sm float-right edit" data-for="affiliates">
                             <i class="fa fa-fw fa-plus"></i>
                         </button>
                     </div>
-                    <div class="card-body address-list">
+                    <div class="card-body affiliates-list">
                         <?php 
                         $class='';
                         /*$addresses = $hospital->getAddresses();
@@ -30,30 +30,7 @@
                             }
                         }*/
                         ?>
-                        <div class="not-found <?php echo $class;?>">No address found. Click "+" above to add.</div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-12 col-sm-6 col-md-6">
-                <div class="card mt-2">
-                    <div class="card-header"><span class="h4">Services</span>
-                        <button class="btn btn-primary btn-sm float-right" data-toggle="modal" data-target="#hospitalEmailAddressAddModal">
-                            <i class="fa fa-fw fa-plus"></i>
-                        </button>
-                    </div>
-                    <div class="card-body emails-list">
-                    <?php 
-                    $class='';
-                        /*$emails = $hospital->getEmails();
-                        $class='';
-                        if($emails && count($emails)){
-                            $class='d-none';
-                            foreach($emails as $email){
-                                $this->load->view('service-provider/hospital/partials/display-email',['email'=>$email]);
-                            }
-                        }*/
-                        ?>
-                        <div class="not-found <?php echo $class;?>">No email found. Click "+" above to add.</div>
+                        <div class="not-found <?php echo $class;?>">No affiliated hospital found. Click "+" above to attach.</div>
                     </div>
                 </div>
             </div>
@@ -62,24 +39,23 @@
             <div class="col-12 col-sm-12 col-md-12">
                 <div class="card mt-2">
                     <div class="card-header"><span class="h4">Departments</span>
-                        <button class="btn btn-primary btn-sm float-right" data-toggle="modal" data-target="#hospitalAddressAddModal">
+                        <button class="btn btn-primary btn-sm float-right edit" data-for="departments">
                             <i class="fa fa-fw fa-plus"></i>
                         </button>
                     </div>
-                    <div class="card-body address-list">
+                    <ul class="list-group mt-2 departments-list">
                         <?php 
+                        $departments = $hospital->getDepartments();
                         $class='';
-                        /*$addresses = $hospital->getAddresses();
-                        $class='';
-                        if($addresses && count($addresses)){
+                        if($departments && count($departments)){
                             $class='d-none';
-                            foreach($addresses as $address){
-                                $this->load->view('service-provider/hospital/partials/display-address',['address'=>$address]);
+                            foreach($departments as $department) {
+                                $this->load->view('hospital/partials/display-department', ['department' => $department]);
                             }
-                        }*/
+                        }
                         ?>
-                        <div class="not-found <?php echo $class;?>">No address found. Click "+" above to add.</div>
-                    </div>
+                        <li class="list-group-item not-found <?php echo $class;?>">No hospital found. Click "+" above to add.</li>
+                    </ul>
                 </div>
             </div>
         </div>
