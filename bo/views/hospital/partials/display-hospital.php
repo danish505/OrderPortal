@@ -20,15 +20,14 @@
                     </div>
                     <div class="card-body affiliates-list">
                         <?php 
+                        $affiliates = $hospital->getAffiliates();
                         $class='';
-                        /*$addresses = $hospital->getAddresses();
-                        $class='';
-                        if($addresses && count($addresses)){
+                        if($affiliates && count($affiliates)){
                             $class='d-none';
-                            foreach($addresses as $address){
-                                $this->load->view('service-provider/hospital/partials/display-address',['address'=>$address]);
+                            foreach($affiliates as $affiliate){
+                                $this->load->view('hospital/partials/display-affiliate',['affiliate'=>$affiliate]);
                             }
-                        }*/
+                        }
                         ?>
                         <div class="not-found <?php echo $class;?>">No affiliated hospital found. Click "+" above to attach.</div>
                     </div>
@@ -43,7 +42,7 @@
                             <i class="fa fa-fw fa-plus"></i>
                         </button>
                     </div>
-                    <ul class="list-group mt-2 departments-list">
+                    <ul class="list-group mt-2 departments-list list-group-flush">
                         <?php 
                         $departments = $hospital->getDepartments();
                         $class='';

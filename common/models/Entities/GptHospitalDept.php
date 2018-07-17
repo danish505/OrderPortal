@@ -70,4 +70,22 @@ class GptHospitalDept
             'department_name' => $this->hospitalDeptName
         ];
     }
+
+    /**
+     * Many Departments have Many Hospitals.
+     * @ManyToMany(targetEntity="GptHospital")
+     * @JoinTable(name="gpt_hospital_dept_xref",
+     *      joinColumns={@JoinColumn(name="hospital_dept_id", referencedColumnName="hospital_dept_id")},
+     *      inverseJoinColumns={@JoinColumn(name="hospital_id", referencedColumnName="hospital_id")}
+     *      )
+     */
+    private $hospitals;
+
+    public function __construct() {
+        $this->hospitals = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    public function getHospitals(){
+        return $this->hospitals;
+    }
 }

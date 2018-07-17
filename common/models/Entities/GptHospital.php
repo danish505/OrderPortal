@@ -123,6 +123,7 @@ class GptHospital
 
     public function __construct() {
         $this->departments = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->affiliates = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     public function addDepartment($department){
@@ -131,6 +132,24 @@ class GptHospital
 
     public function getDepartments(){
         return $this->departments;
+    }
+
+    /**
+     * Many Hospitals have Many Hospitals as affiliates.
+     * @ManyToMany(targetEntity="GptHospital")
+     * @JoinTable(name="gpt_hospital_affiliate_xref",
+     *      joinColumns={@JoinColumn(name="hospital_id", referencedColumnName="hospital_id")},
+     *      inverseJoinColumns={@JoinColumn(name="affiliate_hospital_id", referencedColumnName="hospital_id")}
+     *      )
+     */
+    private $affiliates;
+
+    public function addAffiliate($hospital){
+        $this->affiliates[] = $hospital;
+    }
+
+    public function getAffiliates(){
+        return $this->affiliates;
     }
 
 }

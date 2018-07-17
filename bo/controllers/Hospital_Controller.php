@@ -76,14 +76,35 @@ class Hospital_Controller extends Authenticated_Controller
         $this->output_response_success($view);
     }
 
-    private function callback_hospital_service_detach(){
-        /*$em = $this->doctrine->em;
+    private function callback_hospital_department_detach(){
+        $em = $this->doctrine->em;
         $hospital = $em->find('GptHospital', $this->input->post('hospital_id'));
-        $service = $em->find('GptHospitalService', $this->input->post('service_id'));
-        $hospital->addService($service);
+        $department = $em->find('GptHospitalDept', $this->input->post('hospital_dept_id'));
+        $hospital->getDepartments()->removeElement($department);
         $em->persist($hospital);
         $em->flush();
-        $view = $this->load->view('hospital/partials/display-service', ['service' => $service], true);*/
+        $this->output_response_success('');
+    }
+
+    private function callback_hospital_affiliate_attach(){
+        $em = $this->doctrine->em;
+        $hospital = $em->find('GptHospital', $this->input->post('hospital_id'));
+        $affiliate = $em->find('GptHospital', $this->input->post('affiliate_id'));
+        $hospital->addAffiliate($affiliate);
+        $em->persist($hospital);
+        $em->flush();
+        $view = $this->load->view('hospital/partials/display-affiliate', ['affiliate' => $affiliate], true);
+        $this->output_response_success($view);
+    }
+
+    private function callback_hospital_affiliate_detach(){
+        $em = $this->doctrine->em;
+        $hospital = $em->find('GptHospital', $this->input->post('hospital_id'));
+        $affiliate = $em->find('GptHospital', $this->input->post('affiliate_hospital_id'));
+        $hospital->getAffiliates()->removeElement($affiliate);
+        $em->persist($hospital);
+        $em->flush();
+        $this->output_response_success('');
     }
 
       public function ajax(){
@@ -131,6 +152,21 @@ class Hospital_Controller extends Authenticated_Controller
         $this->output_response_success($collection);
       }
 
+      private function hospitalListJson($id){
+        $em = $this->doctrine->em;
+        $hospitalRepository = $em->getRepository('GptHospital');
+        $hospitals = $hospitalRepository->findAll();
+        $collection = [];
+
+        foreach($hospitals as $hospital){
+            $hospital_id = $hospital->getId();
+            if($hospital_id == $id) continue;
+            $collection[] = ['id'=>$hospital_id, 'label'=>$hospital->getHospitalName()];
+        }
+        
+        $this->output_response_success($collection);
+      }
+
       public function json($type, $id){
 
         switch($type){
@@ -141,7 +177,7 @@ class Hospital_Controller extends Authenticated_Controller
                 $this->serviceListJson();
             break;
             case 'affiliates':
-                $this->hospitalListJson();
+                $this->hospitalListJson($id);
             break;
             case 'departments':
                 $this->departmentListJson();

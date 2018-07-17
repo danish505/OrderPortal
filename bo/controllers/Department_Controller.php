@@ -40,7 +40,7 @@ class Department_Controller extends Authenticated_Controller
         $department = $em->find('GptHospitalDept', $this->input->post('department_id'));
 
         if($department){
-            $department->setDepartmentName($this->input->post('department_name'));;
+            $department->setDepartmentName($this->input->post('department_name'));
             $em->persist($department);
             $em->flush();
             $view = $this->load->view('department/partials/display-department', ['department' => $department], true);

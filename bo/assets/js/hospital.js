@@ -43,7 +43,62 @@ $(document).ready(function(){
                 }
             );
         },
+        callback_delete_department: function(response, $el){
+            handler.handle(response, function(r){
+                let $parent = $el.parent();
+                $el.remove();
+                if($parent.find('li:not(.not-found)').length == 0){
+                    $parent.find('li.not-found').removeClass('d-none');
+                }
+            });
+        },
+        callback_delete_affiliate: function(response, $el){
+            handler.handle(response, function(r){
+                let $parent = $el.parent();
+                $el.remove();
+                if($parent.children('div:not(.not-found)').length == 0){
+                    $parent.children('div.not-found').removeClass('d-none');
+                }
+            });
+        },
+        delete_department: function(modal, $el, hospital_id) {
+            let token = $('input[name="csrf_token"]').eq(0).val();
+            let department_id = $el.data('id');
+            make_call(
+                '/hospitals/ajax',
+                $.param([{name:'hospital_dept_id', value: department_id},{name:'hospital_id', value: hospital_id}, {name: "action", value: "hospital_department_detach"},{name:'csrf_token', value:token}]),
+                function(response){
+                    handler['callback_delete_department'](response, $el);
+                },
+                function(response){
+                    callback_delete_fail(response, modal);
+                }
+            );
+        },
+        delete_affiliate: function(modal, $el, hospital_id) {
+            let token = $('input[name="csrf_token"]').eq(0).val();
+            let affiliate_id = $el.data('id');
+            make_call(
+                '/hospitals/ajax',
+                $.param([{name:'affiliate_hospital_id', value: affiliate_id},{name:'hospital_id', value: hospital_id}, {name: "action", value: "hospital_affiliate_detach"},{name:'csrf_token', value:token}]),
+                function(response){
+                    handler['callback_delete_affiliate'](response, $el);
+                },
+                function(response){
+                    callback_delete_fail(response, modal);
+                }
+            );
+        },
+        callback_hospital_department_attach: function(response, hospital_id){
+            let list = $(`li#row-hospital-${hospital_id} ul.departments-list`);
+            list.find('li.not-found').addClass('d-none').before(response.html);
+        },
+        callback_hospital_affiliate_attach: function(response, hospital_id){
+            let list = $(`li#row-hospital-${hospital_id} div.affiliates-list`);
+            list.find('div.not-found').addClass('d-none').before(response.html);
+        },
         submit_form: function(modal, callback) {
+            console.log(callback);
             var form = modal.find('form');
             var hospital_id = form.find('input[name="hospital_id"]').val();
             if (form[0].checkValidity() === false) {
@@ -82,6 +137,13 @@ $(document).ready(function(){
         prepare_departments: function(data, hospital_id) {
             let modal = $('div.modal#departmentAttachModal');
             let list = $(`li#row-hospital-${hospital_id} ul.departments-list li`);
+            modal.find('select').html(handler.make_dropdown(data, list));
+            modal.find('input[name="hospital_id"]').val(hospital_id);
+            modal.modal('show');
+        },
+        prepare_affiliates: function(data, hospital_id) {
+            let modal = $('div.modal#affiliateAttachModal');
+            let list = $(`li#row-hospital-${hospital_id} div.affiliates-list > div`);
             modal.find('select').html(handler.make_dropdown(data, list));
             modal.find('input[name="hospital_id"]').val(hospital_id);
             modal.modal('show');
