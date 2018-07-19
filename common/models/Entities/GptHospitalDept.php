@@ -88,4 +88,5 @@ class GptHospitalDept
     public function getHospitals(){
         return $this->hospitals;
     }
+
 }

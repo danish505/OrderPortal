@@ -72,7 +72,7 @@ class Hospital_Controller extends Authenticated_Controller
         $hospital->addDepartment($department);
         $em->persist($hospital);
         $em->flush();
-        $view = $this->load->view('hospital/partials/display-department', ['department' => $department], true);
+        $view = $this->load->view('hospital/partials/display-department', ['department' => $department, 'hospital' => $hospital], true);
         $this->output_response_success($view);
     }
 
@@ -83,6 +83,62 @@ class Hospital_Controller extends Authenticated_Controller
         $hospital->getDepartments()->removeElement($department);
         $em->persist($hospital);
         $em->flush();
+        $this->output_response_success('');
+    }
+
+    private function callback_hospital_contact_attach(){
+        $em = $this->doctrine->em;
+        $hospital = $em->find('GptHospital', $this->input->post('hospital_id'));
+        $department = $em->find('GptHospitalDept', $this->input->post('department_id'));
+        $contact = $em->find('GptHospitalContact', $this->input->post('contact_id'));
+
+        $xref = new GptHospitalContXref();
+        $xref->setDepartment($department);
+        $xref->setHospital($hospital);
+        $xref->setContact($contact);
+        $xref->preCreate();
+        $em->persist($xref);
+        $em->flush();
+        $view = $this->load->view('hospital/partials/display-contact', ['contact' => $xref], true);
+        $this->output_response_success($view);
+    }
+
+    private function callback_hospital_contact_detach(){
+        $em = $this->doctrine->em;
+        $contact = $em->find('GptHospitalContXref', $this->input->post('contact_id'));
+        
+        if($contact){
+            $em->remove($contact);
+            $em->flush();
+        }
+        $this->output_response_success('');
+    }
+
+    private function callback_hospital_service_attach(){
+        $em = $this->doctrine->em;
+        $hospital = $em->find('GptHospital', $this->input->post('hospital_id'));
+        $department = $em->find('GptHospitalDept', $this->input->post('department_id'));
+        $service = $em->find('GptHospitalService', $this->input->post('service_id'));
+
+        $xref = new GptHospitalServiceXref();
+        $xref->setDepartment($department);
+        $xref->setHospital($hospital);
+        $xref->setService($service);
+        $xref->preCreate();
+        $em->persist($xref);
+        $em->flush();
+        $view = $this->load->view('hospital/partials/display-service', ['service' => $xref], true);
+        $this->output_response_success($view);
+    }
+
+    private function callback_hospital_service_detach(){
+        $em = $this->doctrine->em;
+        $service = $em->find('GptHospitalServiceXref', $this->input->post('service_id'));
+        
+        if($service){
+            $em->remove($service);
+            $em->flush();
+        }
         $this->output_response_success('');
     }
 
@@ -167,6 +223,20 @@ class Hospital_Controller extends Authenticated_Controller
         $this->output_response_success($collection);
       }
 
+      private function contactListJson(){
+        $em = $this->doctrine->em;
+        $contactRepository = $em->getRepository('GptHospitalContact');
+        $contacts = $contactRepository->findAll();
+        $collection = [];
+
+        foreach($contacts as $contact){
+            $contact_id = $contact->getId();
+            $collection[] = ['id'=>$contact_id, 'label'=>$contact->getDisplayName()];
+        }
+        
+        $this->output_response_success($collection);
+      }
+
       public function json($type, $id){
 
         switch($type){
@@ -187,7 +257,6 @@ class Hospital_Controller extends Authenticated_Controller
             break;
         }
     }
-
     
       private function output_response_success($html){
         $response = array('success' => TRUE, 'html' => $html);

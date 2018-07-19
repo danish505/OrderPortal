@@ -49,7 +49,7 @@
                         if($departments && count($departments)){
                             $class='d-none';
                             foreach($departments as $department) {
-                                $this->load->view('hospital/partials/display-department', ['department' => $department]);
+                                $this->load->view('hospital/partials/display-department', ['department' => $department, 'hospital' => $hospital]);
                             }
                         }
                         ?>

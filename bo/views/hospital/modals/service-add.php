@@ -12,6 +12,7 @@
                 <div class="alert alert-danger d-none" role="alert">An error occurred while processing your request. Please try again.</div>
                 <input type="hidden" name="action" value="hospital_service_attach" />
                 <input type="hidden" name="hospital_id" />
+                <input type="hidden" name="department_id" />
                 <div class="form-group row">
                     <label for="service_id" class="col-sm-3 col-form-label">Service</label>
                     <div class="col-sm-9">

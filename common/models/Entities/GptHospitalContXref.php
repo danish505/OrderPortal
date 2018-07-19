@@ -70,8 +70,52 @@ class GptHospitalContXref
      *
      * @ManyToOne(targetEntity="GptHospitalDept")
      * @JoinColumns({
-     *   @JoinColumn(name="hospital_dep_id", referencedColumnName="hospital_dept_id")
+     *   @JoinColumn(name="hospital_dept_id", referencedColumnName="hospital_dept_id")
      * })
      */
-    private $hospitalDep;
+    private $hospitalDept;
+
+    public function getContact() {
+        return $this->cont; 
+    }
+
+    public function getHospital() {
+        return $this->hospital;
+    }
+
+    public function getDepartment() {
+        return $this->hospitalDept;
+    }
+
+    public function setContact($cont) {
+        $this->cont = $cont;
+    }
+
+    public function setHospital($hospital) {
+        $this->hospital = $hospital;
+    }
+
+    public function setDepartment($hospitalDept) {
+        $this->hospitalDept = $hospitalDept;
+    }
+
+    public function preCreate()
+    {
+        $this->createTs = new \DateTime();
+        $this->updateTs = new \DateTime();
+    }
+
+    public function getId() {
+        return $this->hcId;
+    }
+    
+    public function toJson() {
+        return [
+            'hc_id' => $this->hcId,
+            'department_id' => $this->department->getId(),
+            'hospital_id' => $this->hospital->getId(),
+            'contact_id' => $this->cont->getId(),
+            'display_name' => $this->cont->getDisplayName()
+        ];
+    }
 }
