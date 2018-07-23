@@ -349,6 +349,36 @@ class MyAccount_Controller extends Authenticated_Controller
         $this->output_response_success('');
     }
 
+    private function callback_mark_favorite(){
+        $em = $this->doctrine->em;
+        $patient = $this->getUser()->getDetail($em);
+        $reference_id = $this->input->post('reference_id');
+        $type = $this->input->post('type');
 
-    
+        $favorite = new GptPatientFavorite();
+        $favorite->setType($type);
+        $favorite->setReferenceId($reference_id);
+        $favorite->setPatient($patient);
+        $em->persist($favorite);
+        $em->flush();
+
+        $this->output_response_success('');
+        
+    }
+
+    private function callback_unmark_favorite(){
+        $em = $this->doctrine->em;
+        $patient = $this->getUser()->getDetail($em);
+
+        $criteria = Criteria::create()
+                    ->where(Criteria::expr()->eq("referenceId", $this->input->post('reference_id')))
+                    ->andWhere(Criteria::expr()->eq("type", $this->input->post('type')));
+        $favorites = $patient->getFavorites();
+        $favorite = $favorites->matching($criteria)->get(0);
+        if($favorite){
+            $em->remove($favorite);
+            $em->flush();
+        }
+        $this->output_response_success('');
+    }    
 }

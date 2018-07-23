@@ -24,18 +24,18 @@
 																					                                            </a>
 		</div>
 		<div class="col-lg-4 col-md-12">
-			<ul id="menu-main_menu" class="menu">
-				<li class="menu-item menu-item-type-post_type menu-item-object-page current-menu-item page_item page-item-245 current_page_item menu-item-250"><a href="http://us-patienttransfer.com/">Homepage</a></li>
-				<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-249"><a href="<?php echo $base_url;?>about-us">About Us</a></li>
-				<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-266"><a href="<?php echo $base_url;?>services">Services</a></li>
-				<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-267"><a href="<?php echo $base_url;?>patient">Patient</a></li>
-				<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-265"><a href="<?php echo $base_url;?>hospitals">Hospitals</a></li>
-				<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-307"><a href="<?php echo $base_url;?>contact-us">Contact Us</a></li>
-				<li id="tb-search-item" class="tb-search-item"><a href="#"><span class="icon-search tb-search"></span>Search</a></li>
+			<ul class="list-group pt-3">
+				<li class="list-group-item bg-transparent border-0 p-1"><a href="<?php echo $base_url;?>">Homepage</a></li>
+				<li class="list-group-item bg-transparent border-0 p-1"><a href="<?php echo $base_url;?>about-us">About Us</a></li>
+				<li class="list-group-item bg-transparent border-0 p-1"><a href="<?php echo $base_url;?>services">Services</a></li>
+				<li class="list-group-item bg-transparent border-0 p-1"><a href="<?php echo $base_url;?>patient">Patient</a></li>
+				<li class="list-group-item bg-transparent border-0 p-1"><a href="<?php echo $base_url;?>hospitals">Hospitals</a></li>
+				<li class="list-group-item bg-transparent border-0 p-1"><a href="<?php echo $base_url;?>contact-us">Contact Us</a></li>
+				<li id="tb-search-item" class="list-group-item bg-transparent border-0 p-1 tb-search-item"><a href="#"><span class="fa fa-search"></span>  Search</a></li>
 				<div id="tb-search" class="tb-menu-search">
-					<div class="search-close"><span class="icon-cancel tb-close"></span></div>
+					<div class="search-close"><span class="fa fa-close"></span></div>
 					<div class="tb-search-inner">
-						<form role="search" method="get" class="search-form" action="<?php echo $base_url;?>"><label><span class="screen-reader-text">Search for:</span><input type="search" class="search-field" placeholder="Type and press enter…" value="" name="s" title="Search for:"></label></form>
+						<form role="search" method="get" class="search-form" action="<?php echo $base_url;?>search"><label><input type="search" class="search-field" placeholder="Type and press enter…" value="" name="s" title="Search for:"></label></form>
 					</div>
 				</div>
 			</ul>

@@ -41,6 +41,12 @@
           <span class="nav-link-text">Departments</span>
         </a>
       </li>
+      <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Searches">
+        <a class="nav-link" href="<?php echo $base_url;?>searches">
+          <i class="fa fa-fw fa-search"></i>
+          <span class="nav-link-text">Searches</span>
+        </a>
+      </li>
     </ul>
     <ul class="navbar-nav sidenav-toggler">
       <li class="nav-item">

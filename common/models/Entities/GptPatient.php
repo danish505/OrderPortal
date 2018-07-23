@@ -87,6 +87,13 @@ class GptPatient
      */
     private $contacts;
 
+    /**
+     * Bidirectional - One-To-Many (INVERSE SIDE)
+     *
+     * @OneToMany(targetEntity="GptPatientFavorite", mappedBy="patient", cascade={"remove"})
+     */
+    private $favorites;
+
     public function setSalutation($salutation)
     {
         $this->salutation = $salutation;
@@ -165,6 +172,10 @@ class GptPatient
 
     public function getContacts(){
         return $this->contacts;
+    }
+
+    public function getFavorites(){
+        return $this->favorites;
     }
 
     public function __toString() {

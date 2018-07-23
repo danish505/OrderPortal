@@ -9,6 +9,11 @@
         <li class="nav-item">
           <a class="nav-link" id="contacts-tab" data-toggle="tab" href="#contacts" role="tab" aria-controls="contacts" aria-selected="false">Contacts</a>
         </li>
+        <?php if($user->getRole() == GptUser::USER_ROLE_PATIENT):?>
+        <li class="nav-item">
+          <a class="nav-link" id="favorites-tab" data-toggle="tab" href="#favorites" role="tab" aria-controls="favorites" aria-selected="false">Favorites</a>
+        </li>
+        <?php endif;?>
       </ul>
       <div class="tab-content mt-2" id="myaccountContent">
         <div class="tab-pane fade show active" id="profile" role="tabpanel" aria-labelledby="profile-tab">
@@ -17,6 +22,11 @@
         <div class="tab-pane fade" id="contacts" role="tabpanel" aria-labelledby="contacts-tab">
         <?php $this->load->view('myaccount/patient-contacts');?>
         </div>
+        <?php if($user->getRole() == GptUser::USER_ROLE_PATIENT):?>
+        <div class="tab-pane fade" id="favorites" role="tabpanel" aria-labelledby="favorites-tab">
+        <?php $this->load->view('myaccount/patient-favorites');?>
+        </div>
+        <?php endif;?>
       </div>
     </div>
   </div>
