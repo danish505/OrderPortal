@@ -74,6 +74,55 @@ class Service_Controller extends Authenticated_Controller
       }
   }
 
+  private function callback_service_delete(){
+    $em = $this->doctrine->em;
+    $department = $em->find('GptHospitalDept', $this->input->post('department_id'));
+    if($department){
+        $repository = $em->getRepository('GptHospitalDeptXref');
+        $references = $repository->findBy([
+          'hospitalDept' => $department
+        ]);
+        if(count($references) == 0){
+            $em->remove($department);
+            $em->flush();
+            $this->output_response_success('');
+        }else{
+            $this->output_response_failure('Deparment has '.count($references).' association(s) with hospitals.');
+        }
+    }else{
+        $this->output_response_failure('Invalid department ID');
+    }
+
+    
+    $serviceReferences = $em->getRepository('GptHospitalServiceXref')->findAll();
+        
+        $contReferencesCount = 0;
+        foreach ($contReferences as $contact) {
+            if($contact->getDepartment()->getId() == $department->getId()
+                    && $contact->getHospital()->getId() == $hospital->getId()){
+                        ++$contReferencesCount;
+                    }
+        }
+        
+        $serviceReferencesCount = 0;
+        foreach ($serviceReferences as $service) {
+            if ($service->getDepartment()->getId() == $department->getId()
+                    && $service->getHospital()->getId() == $hospital->getId()){
+                        ++$serviceReferencesCount;
+                    }
+        }
+
+        if($serviceReferencesCount == 0 && $contReferencesCount == 0){
+            $hospital->getDepartments()->removeElement($department);
+            $em->persist($hospital);
+            $em->flush();
+            $this->output_response_success('');
+        }else{
+            $this->output_response_failure('Department has other associations.');
+        }
+        
+}
+
   private function output_response_success($html){
       $response = array('success' => TRUE, 'html' => $html);
       $this->output
