@@ -24,7 +24,7 @@
                 <div class="form-group row">
                     <label for="street_add_2" class="col-sm-3 col-form-label">Street Address 2</label>
                     <div class="col-sm-9">
-                        <input type="text" class="form-control" id="street_add_2" name="street_add_2" value="" required>
+                        <input type="text" class="form-control" id="street_add_2" name="street_add_2" value="">
                         <div class="invalid-feedback">
                         Please provide Street Address 2
                         </div>
@@ -33,7 +33,7 @@
                 <div class="form-group row">
                     <label for="street_add_3" class="col-sm-3 col-form-label">Street Address 3</label>
                     <div class="col-sm-9">
-                        <input type="text" class="form-control" id="street_add_3" name="street_add_3" value="" required>
+                        <input type="text" class="form-control" id="street_add_3" name="street_add_3" value="">
                         <div class="invalid-feedback">
                         Please provide Street Address 3
                         </div>
@@ -69,7 +69,11 @@
                 <div class="form-group row">
                     <label for="country" class="col-sm-3 col-form-label">Country</label>
                     <div class="col-sm-9">
-                        <input type="text" class="form-control" id="country" name="country" value="" required>
+                        <select class="form-control" id="country" name="country">
+                            <?php foreach ($countries as $country):?>
+                            <option value="<?php echo $country;?>"><?php echo $country;?></option>
+                            <?php endforeach;?>
+                        </select>
                         <div class="invalid-feedback">
                         Please provide country
                         </div>

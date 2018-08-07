@@ -17,7 +17,8 @@ class Contact_Controller extends Authenticated_Controller
         $this->render('contact/list', [
           'contacts' => $contacts,
           'injected_scripts' => implode('', $injectedScripts),
-          'salutations' => $this->config->config['gpt_variable']['salutation']
+          'salutations' => $this->config->config['gpt_variable']['salutation'],
+          'countries' => $this->config->config['gpt_variable']['sorted_countries']
         ]);
     }
 

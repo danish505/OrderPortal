@@ -217,7 +217,7 @@ $(document).ready(function(){
             modal.find('input[name="city"]').val(data.city);
             modal.find('input[name="state"]').val(data.state);
             modal.find('input[name="zipcode"]').val(data.zipcode);
-            modal.find('input[name="country"]').val(data.country);
+            modal.find('select[name="country"]').val(data.country);
             modal.modal('show');
         },
     }

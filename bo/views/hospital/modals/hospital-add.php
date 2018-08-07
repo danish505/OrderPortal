@@ -32,10 +32,19 @@
                 <div class="form-group row">
                     <label for="hospital_url" class="col-sm-3 col-form-label">URL</label>
                     <div class="col-sm-9">
-                        <input type="url" class="form-control" id="hospital_url" name="hospital_url" value="" required>
+                        <input type="text" class="form-control" id="hospital_url" name="hospital_url" placeholder="https://example.com" value="" required>
                         <div class="invalid-feedback">
                         Please provide website url
                         </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="hospital_url" class="col-sm-3 col-form-label">In Contract</label>
+                    <div class="col-sm-9">
+                    <select class="form-control" id="in_contract" name="in_contract">
+                        <option value="0" selected>No</option>
+                        <option value="1">Yes</option>
+                    </select>
                     </div>
                 </div>
                 <?php echo form_close(); ?>

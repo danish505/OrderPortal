@@ -23,6 +23,8 @@ class MyAccount_Controller extends Authenticated_Controller
           'user' => $user,
           'user_detail' => $user_detail,
           'salutations' => $this->config->config['gpt_variable']['salutation'],
+          'countries' => $this->config->config['gpt_variable']['unsorted_countries'],
+          'relations' => $this->config->config['gpt_variable']['relations'],
           'profile_update_successful' => false,
           'GOOGLE_CAPTCHA_SITE_KEY' => $this->captcha->getSiteKey(),
           'injected_scripts' => implode('',$injectedScripts)
@@ -122,6 +124,7 @@ class MyAccount_Controller extends Authenticated_Controller
         $contact->setFirstName($this->input->post('first_name'));
         $contact->setLastName($this->input->post('last_name'));
         $contact->setMiddleName($this->input->post('middle_name'));
+        $contact->setRelation($this->input->post('relation'));
         $patient = $this->getUser()->getDetail($em);
         $contact->setPatient($patient);
         $contact->preCreate();
@@ -143,6 +146,7 @@ class MyAccount_Controller extends Authenticated_Controller
             $contact->setFirstName($this->input->post('first_name'));
             $contact->setLastName($this->input->post('last_name'));
             $contact->setMiddleName($this->input->post('middle_name'));
+            $contact->setRelation($this->input->post('relation'));
             $em->persist($contact);
             $em->flush();
             $view = $this->load->view('myaccount/partials/display-contact', ['contact' => $contact], true);

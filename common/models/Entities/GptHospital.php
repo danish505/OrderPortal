@@ -41,6 +41,13 @@ class GptHospital
     /**
      * @var boolean
      *
+     * @Column(name="in_contract", type="boolean", nullable=false)
+     */
+    private $inContract = '0';
+
+    /**
+     * @var boolean
+     *
      * @Column(name="active_flg", type="boolean", nullable=false)
      */
     private $activeFlg = '1';
@@ -94,6 +101,14 @@ class GptHospital
         $this->hospitalUrl = $hospitalUrl;
     }
 
+    public function setInContract($inContract) {
+        $this->inContract = $inContract;
+    }
+
+    public function getInContract() {
+        return $this->inContract;
+    }
+
     public function preCreate()
     {
         $this->createTs = new \DateTime();
@@ -105,7 +120,8 @@ class GptHospital
             'hospital_id' => $this->hospitalId,
             'hospital_name' => $this->hospitalName,
             'hospital_type' => $this->hospitalType,
-            'hospital_url' => $this->hospitalUrl
+            'hospital_url' => $this->hospitalUrl,
+            'in_contract' => (int) $this->inContract
         ];
     }
 

@@ -46,6 +46,13 @@ class GptPatientContact
     private $lastName;
 
     /**
+     * @var string
+     *
+     * @Column(name="relation", type="string", length=50, nullable=true)
+     */
+    private $relation;
+
+    /**
      * @var boolean
      *
      * @Column(name="primary_flg", type="boolean", nullable=true)
@@ -133,6 +140,11 @@ class GptPatientContact
         return $this->middleName;
     }
 
+    public function getRelation()
+    {
+        return $this->relation;
+    }
+
     public function setFirstName($firstName)
     {
         $this->firstName = $firstName;
@@ -148,9 +160,14 @@ class GptPatientContact
         $this->middleName = $middleName;
     }
 
+    public function setRelation($relation)
+    {
+        $this->relation = $relation;
+    }
+
     public function getDisplayName()
     {
-        return $this->getFirstName().' '.$this->getLastName();
+        return $this->getFirstName().' '.$this->getLastName() . ' ( '.$this->getRelation().' )';
     }
 
     public function setPatient(GptPatient $patient) {
@@ -201,6 +218,7 @@ class GptPatientContact
             'first_name' => $this->getFirstName(),
             'middle_name' => $this->getMiddleName(),
             'last_name' => $this->getLastName(),
+            'relation' => $this->getRelation(),
         ];
     }
 }
