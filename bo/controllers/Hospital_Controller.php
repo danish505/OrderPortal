@@ -26,6 +26,7 @@ class Hospital_Controller extends Authenticated_Controller
         $hospital->setHospitalName($this->input->post('hospital_name'));
         $hospital->setHospitalType($this->input->post('hospital_type'));
         $hospital->setHospitalUrl($this->input->post('hospital_url'));
+        $hospital->setInContract($this->input->post('in_contract'));
         $hospital->preCreate();
         $em->persist($hospital);
         $em->flush();
@@ -56,6 +57,7 @@ class Hospital_Controller extends Authenticated_Controller
             $hospital->setHospitalName($this->input->post('hospital_name'));
             $hospital->setHospitalType($this->input->post('hospital_type'));
             $hospital->setHospitalUrl($this->input->post('hospital_url'));
+            $hospital->setInContract($this->input->post('in_contract'));
             $em->persist($hospital);
             $em->flush();
             $view = $this->load->view('hospital/partials/display-hospital', ['hospital' => $hospital], true);

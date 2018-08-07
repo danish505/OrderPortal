@@ -64,10 +64,10 @@ class GptPatientContact extends \GptPatientContact implements \Doctrine\ORM\Prox
     public function __sleep()
     {
         if ($this->__isInitialized__) {
-            return ['__isInitialized__', '' . "\0" . 'GptPatientContact' . "\0" . 'patientContId', '' . "\0" . 'GptPatientContact' . "\0" . 'salutation', '' . "\0" . 'GptPatientContact' . "\0" . 'firstName', '' . "\0" . 'GptPatientContact' . "\0" . 'middleName', '' . "\0" . 'GptPatientContact' . "\0" . 'lastName', '' . "\0" . 'GptPatientContact' . "\0" . 'primaryFlg', '' . "\0" . 'GptPatientContact' . "\0" . 'activeFlg', '' . "\0" . 'GptPatientContact' . "\0" . 'createTs', '' . "\0" . 'GptPatientContact' . "\0" . 'updateTs', '' . "\0" . 'GptPatientContact' . "\0" . 'patient', '' . "\0" . 'GptPatientContact' . "\0" . 'addresses', '' . "\0" . 'GptPatientContact' . "\0" . 'emails', '' . "\0" . 'GptPatientContact' . "\0" . 'phone_numbers'];
+            return ['__isInitialized__', '' . "\0" . 'GptPatientContact' . "\0" . 'patientContId', '' . "\0" . 'GptPatientContact' . "\0" . 'salutation', '' . "\0" . 'GptPatientContact' . "\0" . 'firstName', '' . "\0" . 'GptPatientContact' . "\0" . 'middleName', '' . "\0" . 'GptPatientContact' . "\0" . 'lastName', '' . "\0" . 'GptPatientContact' . "\0" . 'relation', '' . "\0" . 'GptPatientContact' . "\0" . 'primaryFlg', '' . "\0" . 'GptPatientContact' . "\0" . 'activeFlg', '' . "\0" . 'GptPatientContact' . "\0" . 'createTs', '' . "\0" . 'GptPatientContact' . "\0" . 'updateTs', '' . "\0" . 'GptPatientContact' . "\0" . 'patient', '' . "\0" . 'GptPatientContact' . "\0" . 'addresses', '' . "\0" . 'GptPatientContact' . "\0" . 'emails', '' . "\0" . 'GptPatientContact' . "\0" . 'phone_numbers'];
         }
 
-        return ['__isInitialized__', '' . "\0" . 'GptPatientContact' . "\0" . 'patientContId', '' . "\0" . 'GptPatientContact' . "\0" . 'salutation', '' . "\0" . 'GptPatientContact' . "\0" . 'firstName', '' . "\0" . 'GptPatientContact' . "\0" . 'middleName', '' . "\0" . 'GptPatientContact' . "\0" . 'lastName', '' . "\0" . 'GptPatientContact' . "\0" . 'primaryFlg', '' . "\0" . 'GptPatientContact' . "\0" . 'activeFlg', '' . "\0" . 'GptPatientContact' . "\0" . 'createTs', '' . "\0" . 'GptPatientContact' . "\0" . 'updateTs', '' . "\0" . 'GptPatientContact' . "\0" . 'patient', '' . "\0" . 'GptPatientContact' . "\0" . 'addresses', '' . "\0" . 'GptPatientContact' . "\0" . 'emails', '' . "\0" . 'GptPatientContact' . "\0" . 'phone_numbers'];
+        return ['__isInitialized__', '' . "\0" . 'GptPatientContact' . "\0" . 'patientContId', '' . "\0" . 'GptPatientContact' . "\0" . 'salutation', '' . "\0" . 'GptPatientContact' . "\0" . 'firstName', '' . "\0" . 'GptPatientContact' . "\0" . 'middleName', '' . "\0" . 'GptPatientContact' . "\0" . 'lastName', '' . "\0" . 'GptPatientContact' . "\0" . 'relation', '' . "\0" . 'GptPatientContact' . "\0" . 'primaryFlg', '' . "\0" . 'GptPatientContact' . "\0" . 'activeFlg', '' . "\0" . 'GptPatientContact' . "\0" . 'createTs', '' . "\0" . 'GptPatientContact' . "\0" . 'updateTs', '' . "\0" . 'GptPatientContact' . "\0" . 'patient', '' . "\0" . 'GptPatientContact' . "\0" . 'addresses', '' . "\0" . 'GptPatientContact' . "\0" . 'emails', '' . "\0" . 'GptPatientContact' . "\0" . 'phone_numbers'];
     }
 
     /**
@@ -242,6 +242,17 @@ class GptPatientContact extends \GptPatientContact implements \Doctrine\ORM\Prox
     /**
      * {@inheritDoc}
      */
+    public function getRelation()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getRelation', []);
+
+        return parent::getRelation();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public function setFirstName($firstName)
     {
 
@@ -270,6 +281,17 @@ class GptPatientContact extends \GptPatientContact implements \Doctrine\ORM\Prox
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'setMiddleName', [$middleName]);
 
         return parent::setMiddleName($middleName);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setRelation($relation)
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setRelation', [$relation]);
+
+        return parent::setRelation($relation);
     }
 
     /**

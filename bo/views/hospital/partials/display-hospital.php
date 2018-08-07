@@ -1,6 +1,12 @@
 <li class="list-group-item single-hospital" data-id="<?php echo $hospital->getId();?>" id="row-hospital-<?php echo $hospital->getId();?>">
     <div class="row pr-3">
-        <div class="col-10 mt-2"><h4><?php echo $hospital->getHospitalName();?></h4></div>
+        <div class="col-10 mt-2">
+        <h4><?php echo $hospital->getHospitalName();?>
+        <?php if($hospital->getInContract() == '1'):?>
+        <i class="fa fa-fw fa-check-circle text-success"></i>
+        <?php endif; ?>
+        </h4>
+        </div>
         <div class="col-2 pr-0">
             <div class="btn-group pt-1 float-right" role="group">
                 <button type="button" class="btn btn-secondary btn-sm" data-toggle="collapse" href="#hospitalDetail<?php echo $hospital->getId();?>"><i class="fa fa-fw fa-eye"></i></button>

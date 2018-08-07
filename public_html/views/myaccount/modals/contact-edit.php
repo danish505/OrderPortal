@@ -45,6 +45,19 @@
                         </div>
                     </div>
                 </div>
+                <div class="form-group row">
+                    <label for="relation" class="col-sm-4 col-form-label">Relationship with Patient</label>
+                    <div class="col-sm-8">
+                        <select class="form-control" id="relation" name="relation">
+                            <?php foreach ($relations as $relation):?>
+                            <option value="<?php echo $relation;?>"><?php echo $relation;?></option>
+                            <?php endforeach;?>
+                        </select>
+                        <div class="invalid-feedback">
+                            Please select relationship
+                        </div>
+                    </div>
+                </div>
                 <?php echo form_close(); ?>
             </div>
             <div class="modal-footer">
