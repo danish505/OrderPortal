@@ -33,7 +33,7 @@
                 <div class="form-group row">
                     <label for="company_url" class="col-sm-3 col-form-label">URL</label>
                     <div class="col-sm-9">
-                        <input type="url" class="form-control" id="company_url" name="company_url" value="" required>
+                        <input type="text" class="form-control" id="company_url" name="company_url" placeholder="https://example.com" value="" required>
                         <div class="invalid-feedback">
                         Please provide website url
                         </div>

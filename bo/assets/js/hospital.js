@@ -179,6 +179,7 @@ $(document).ready(function(){
             modal.find('input[name="hospital_name"]').val(data.hospital_name);
             modal.find('input[name="hospital_type"]').val(data.hospital_type);
             modal.find('input[name="hospital_url"]').val(data.hospital_url);
+            modal.find('select[name="in_contract"]').val(data.in_contract);
             modal.modal('show');
         },
         prepare_services: function(data, hospital_id, department_id) {

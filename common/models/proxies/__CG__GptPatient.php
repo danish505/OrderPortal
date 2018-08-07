@@ -64,10 +64,10 @@ class GptPatient extends \GptPatient implements \Doctrine\ORM\Proxy\Proxy
     public function __sleep()
     {
         if ($this->__isInitialized__) {
-            return ['__isInitialized__', '' . "\0" . 'GptPatient' . "\0" . 'patientId', '' . "\0" . 'GptPatient' . "\0" . 'salutation', '' . "\0" . 'GptPatient' . "\0" . 'firstName', '' . "\0" . 'GptPatient' . "\0" . 'middleName', '' . "\0" . 'GptPatient' . "\0" . 'lastName', '' . "\0" . 'GptPatient' . "\0" . 'gender', '' . "\0" . 'GptPatient' . "\0" . 'age', '' . "\0" . 'GptPatient' . "\0" . 'activeFlg', '' . "\0" . 'GptPatient' . "\0" . 'createTs', '' . "\0" . 'GptPatient' . "\0" . 'updateTs', '' . "\0" . 'GptPatient' . "\0" . 'contacts'];
+            return ['__isInitialized__', '' . "\0" . 'GptPatient' . "\0" . 'patientId', '' . "\0" . 'GptPatient' . "\0" . 'salutation', '' . "\0" . 'GptPatient' . "\0" . 'firstName', '' . "\0" . 'GptPatient' . "\0" . 'middleName', '' . "\0" . 'GptPatient' . "\0" . 'lastName', '' . "\0" . 'GptPatient' . "\0" . 'gender', '' . "\0" . 'GptPatient' . "\0" . 'age', '' . "\0" . 'GptPatient' . "\0" . 'activeFlg', '' . "\0" . 'GptPatient' . "\0" . 'createTs', '' . "\0" . 'GptPatient' . "\0" . 'updateTs', '' . "\0" . 'GptPatient' . "\0" . 'contacts', '' . "\0" . 'GptPatient' . "\0" . 'favorites'];
         }
 
-        return ['__isInitialized__', '' . "\0" . 'GptPatient' . "\0" . 'patientId', '' . "\0" . 'GptPatient' . "\0" . 'salutation', '' . "\0" . 'GptPatient' . "\0" . 'firstName', '' . "\0" . 'GptPatient' . "\0" . 'middleName', '' . "\0" . 'GptPatient' . "\0" . 'lastName', '' . "\0" . 'GptPatient' . "\0" . 'gender', '' . "\0" . 'GptPatient' . "\0" . 'age', '' . "\0" . 'GptPatient' . "\0" . 'activeFlg', '' . "\0" . 'GptPatient' . "\0" . 'createTs', '' . "\0" . 'GptPatient' . "\0" . 'updateTs', '' . "\0" . 'GptPatient' . "\0" . 'contacts'];
+        return ['__isInitialized__', '' . "\0" . 'GptPatient' . "\0" . 'patientId', '' . "\0" . 'GptPatient' . "\0" . 'salutation', '' . "\0" . 'GptPatient' . "\0" . 'firstName', '' . "\0" . 'GptPatient' . "\0" . 'middleName', '' . "\0" . 'GptPatient' . "\0" . 'lastName', '' . "\0" . 'GptPatient' . "\0" . 'gender', '' . "\0" . 'GptPatient' . "\0" . 'age', '' . "\0" . 'GptPatient' . "\0" . 'activeFlg', '' . "\0" . 'GptPatient' . "\0" . 'createTs', '' . "\0" . 'GptPatient' . "\0" . 'updateTs', '' . "\0" . 'GptPatient' . "\0" . 'contacts', '' . "\0" . 'GptPatient' . "\0" . 'favorites'];
     }
 
     /**
@@ -347,6 +347,17 @@ class GptPatient extends \GptPatient implements \Doctrine\ORM\Proxy\Proxy
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'getContacts', []);
 
         return parent::getContacts();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getFavorites()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getFavorites', []);
+
+        return parent::getFavorites();
     }
 
     /**

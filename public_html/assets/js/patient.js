@@ -185,6 +185,7 @@ $(document).ready(function(){
             modal.find('input[name="first_name"]').val(data.first_name);
             modal.find('input[name="middle_name"]').val(data.middle_name);
             modal.find('input[name="last_name"]').val(data.last_name);
+            modal.find('select[name="relation"]').val(data.relation);
             modal.modal('show');
         },
         prepare_email: function(data){
@@ -214,7 +215,7 @@ $(document).ready(function(){
             modal.find('input[name="city"]').val(data.city);
             modal.find('input[name="state"]').val(data.state);
             modal.find('input[name="zipcode"]').val(data.zipcode);
-            modal.find('input[name="country"]').val(data.country);
+            modal.find('select[name="country"]').val(data.country);
             modal.modal('show');
         },
     }
