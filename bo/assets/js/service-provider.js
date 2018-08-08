@@ -139,6 +139,28 @@ $(document).ready(function(){
                 }
             );
         },
+        delete_service: function(modal, $el, service_id){
+            let token = $('input[name="csrf_token"]').eq(0).val();
+            make_call(
+                '/service-providers/ajax',
+                $.param([{name:'id', value: service_id}, {name: "action", value: "service_provider_service_delete"},{name:'csrf_token', value:token}]),
+                function(response){
+                    handler['callback_delete_service_provider_service'](response, $el);
+                },
+                function(response){
+                    callback_delete_fail(response, modal);
+                }
+            );
+        },
+        callback_delete_service_provider_service: function(response, $el){
+            handler.handle(response, function(r){
+                let $parent = $el.parent();
+                $el.remove();
+                if($parent.find('tr:not(.not-found)').length == 0){
+                    $parent.find('tr.not-found').removeClass('d-none');
+                }
+            });
+        },
         callback_delete_contact: function(response, $el) {
             handler.handle(response, function(r){
                 let $parent = $el.parent();
@@ -160,6 +182,72 @@ $(document).ready(function(){
                     callback_delete_fail(response, modal);
                 }
             );
+        },
+        delete_address: function(modal, $el, address_id){
+            let token = $('input[name="csrf_token"]').eq(0).val();
+            make_call(
+                '/service-providers/ajax',
+                $.param([{name:'id', value: address_id}, {name: "action", value: "service_provider_contact_address_delete"},{name:'csrf_token', value:token}]),
+                function(response){
+                    handler['callback_delete_contact_address'](response, $el);
+                },
+                function(response){
+                    callback_delete_fail(response, modal);
+                }
+            );
+        },
+        delete_email: function(modal, $el, email_id){
+            let token = $('input[name="csrf_token"]').eq(0).val();
+            make_call(
+                '/service-providers/ajax',
+                $.param([{name:'id', value: email_id}, {name: "action", value: "service_provider_contact_email_address_delete"},{name:'csrf_token', value:token}]),
+                function(response){
+                    handler['callback_delete_contact_email_address'](response, $el);
+                },
+                function(response){
+                    callback_delete_fail(response, modal);
+                }
+            );
+        },
+        delete_phone: function(modal, $el, phone_id){
+            let token = $('input[name="csrf_token"]').eq(0).val();
+            make_call(
+                '/service-providers/ajax',
+                $.param([{name:'id', value: phone_id}, {name: "action", value: "service_provider_contact_phone_number_delete"},{name:'csrf_token', value:token}]),
+                function(response){
+                    handler['callback_delete_contact_phone_number'](response, $el);
+                },
+                function(response){
+                    callback_delete_fail(response, modal);
+                }
+            );
+        },
+        callback_delete_contact_address: function(response, $el) {
+            handler.handle(response, function(r){
+                let $parent = $el.parent();
+                $el.remove();
+                if($parent.children('div.single-address').length == 0){
+                    $parent.find('div.not-found').removeClass('d-none');
+                }
+            });
+        },
+        callback_delete_contact_email_address: function(response, $el) {
+            handler.handle(response, function(r){
+                let $parent = $el.parent();
+                $el.remove();
+                if($parent.children('div.single-email').length == 0){
+                    $parent.find('div.not-found').removeClass('d-none');
+                }
+            });
+        },
+        callback_delete_contact_phone_number: function(response, $el) {
+            handler.handle(response, function(r){
+                let $parent = $el.parent();
+                $el.remove();
+                if($parent.children('div.single-phone').length == 0){
+                    $parent.find('div.not-found').removeClass('d-none');
+                }
+            });
         },
         submit_form: function(modal, callback) {
             console.log(callback);
@@ -318,16 +406,22 @@ $(document).ready(function(){
     })
 
     $('div.modal#deleteConfirmationModal').on('show.bs.modal', function(e){
-        let $el = $(e.relatedTarget).closest('tr, li');
-        let service_provider_id = $el.data('id');
         let action_for = $(e.relatedTarget).data('for');
+        let $el = null;
+        let id = null;
+        if(['email','phone','address'].indexOf(action_for) > -1){
+            $el = $(e.relatedTarget).closest('div.row');
+            id = $el.data('id');
+        }else{
+            $el = $(e.relatedTarget).closest('tr, li');
+            id = $el.data('id');
+        }
         let action = 'delete_'+action_for;
         let modal = $(this);
         modal.find('.alert.alert-danger').addClass('d-none');
-        console.log(action);
         $(this).find('button.btn-primary').bind('click', function(){
             if(!!handler[action]){
-                handler[action](modal, $el, service_provider_id);
+                handler[action](modal, $el, id);
                 modal.modal('hide');
             }
         });

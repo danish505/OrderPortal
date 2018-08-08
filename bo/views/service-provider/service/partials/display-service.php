@@ -4,5 +4,6 @@
     <td><?php echo $service->getSubCategory();?></td>
     <td>
       <button type="button" class="btn btn-secondary btn-sm edit" data-for="service"><i class="fa fa-fw fa-edit"></i></button>
+      <button type="button" class="btn btn-secondary btn-sm" data-toggle="modal" data-for="service" data-target="#deleteConfirmationModal"><i class="fa fa-fw fa-trash"></i></button>
     </td>
   </tr>

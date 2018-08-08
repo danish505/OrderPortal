@@ -1,10 +1,10 @@
 <table class="table table-bordered" id="serviceDataTable" width="100%" cellspacing="0">
     <thead>
         <tr>
-        <th>Name</th>
-        <th>Category</th>
-        <th>Sub Category</th>
-        <th>
+        <th width="30%">Name</th>
+        <th width="30%">Category</th>
+        <th width="25%">Sub Category</th>
+        <th width="15%">
         <button class="btn btn-primary btn-sm float-right" data-toggle="modal" data-target="#serviceAddModal">
             <i class="fa fa-fw fa-plus"></i>
         </button>

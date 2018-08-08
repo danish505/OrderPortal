@@ -10,7 +10,7 @@
       <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
         <thead>
           <tr>
-            <th>Name</th>
+            <th width="85%">Name</th>
             <th></th>
           </tr>
         </thead>
@@ -34,3 +34,4 @@
 </div>
 <?php $this->load->view('department/modals/add');?>
 <?php $this->load->view('department/modals/edit');?>
+<?php $this->load->view('department/modals/delete-confirmation');?>

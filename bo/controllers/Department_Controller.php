@@ -70,6 +70,23 @@ class Department_Controller extends Authenticated_Controller
       }
   }
 
+  private function callback_department_delete(){
+    $em = $this->doctrine->em;
+    $department = $em->find('GptHospitalDept', $this->input->post('department_id'));
+    if($department){
+        $references = $department->getHospitals();
+        if(count($references) == 0){
+            $em->remove($department);
+            $em->flush();
+            $this->output_response_success('');
+        }else{
+            $this->output_response_failure('Deparment has '.count($references).' association(s) with hospitals.');
+        }
+    }else{
+        $this->output_response_failure('Invalid department ID');
+    }
+}
+
   private function output_response_success($html){
       $response = array('success' => TRUE, 'html' => $html);
       $this->output
