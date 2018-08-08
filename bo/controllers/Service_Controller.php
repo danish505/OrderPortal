@@ -74,6 +74,32 @@ class Service_Controller extends Authenticated_Controller
       }
   }
 
+  private function callback_service_delete(){
+    $em = $this->doctrine->em;
+    $service_id = $this->input->post('service_id');
+
+    $service = $em->find('GptHospitalService', $service_id);
+
+    if($service){
+        $serviceReferences = $em->getRepository('GptHospitalServiceXref')->findAll();
+        $serviceReferencesCount = 0;
+        foreach ($serviceReferences as $service) {
+            if ($service->getService()->getId() == $service_id){
+                        ++$serviceReferencesCount;
+                    }
+        }
+        if($serviceReferencesCount == 0){
+            $em->remove($service);
+            $em->flush();
+            $this->output_response_success('');
+        }else{
+            $this->output_response_failure('Service has other associations.');
+        }
+    }else{
+        $this->output_response_failure('Invalid service ID');
+    }  
+}
+
   private function output_response_success($html){
       $response = array('success' => TRUE, 'html' => $html);
       $this->output

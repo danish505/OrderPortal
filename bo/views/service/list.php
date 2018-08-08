@@ -10,9 +10,9 @@
       <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
         <thead>
           <tr>
-            <th>Name</th>
-            <th>Category</th>
-            <th>Sub Category</th>
+            <th width="30%">Name</th>
+            <th width="30%">Category</th>
+            <th width="25%">Sub Category</th>
             <th></th>
           </tr>
         </thead>
@@ -36,3 +36,4 @@
 </div>
 <?php $this->load->view('service/modals/add');?>
 <?php $this->load->view('service/modals/edit');?>
+<?php $this->load->view('service/modals/delete-confirmation');?>

@@ -64,10 +64,10 @@ class GptHospital extends \GptHospital implements \Doctrine\ORM\Proxy\Proxy
     public function __sleep()
     {
         if ($this->__isInitialized__) {
-            return ['__isInitialized__', '' . "\0" . 'GptHospital' . "\0" . 'hospitalId', '' . "\0" . 'GptHospital' . "\0" . 'hospitalName', '' . "\0" . 'GptHospital' . "\0" . 'hospitalType', '' . "\0" . 'GptHospital' . "\0" . 'hospitalUrl', '' . "\0" . 'GptHospital' . "\0" . 'activeFlg', '' . "\0" . 'GptHospital' . "\0" . 'lastVerifiedDt', '' . "\0" . 'GptHospital' . "\0" . 'createTs', '' . "\0" . 'GptHospital' . "\0" . 'updateTs', '' . "\0" . 'GptHospital' . "\0" . 'departments', '' . "\0" . 'GptHospital' . "\0" . 'affiliates'];
+            return ['__isInitialized__', '' . "\0" . 'GptHospital' . "\0" . 'hospitalId', '' . "\0" . 'GptHospital' . "\0" . 'hospitalName', '' . "\0" . 'GptHospital' . "\0" . 'hospitalType', '' . "\0" . 'GptHospital' . "\0" . 'hospitalUrl', '' . "\0" . 'GptHospital' . "\0" . 'inContract', '' . "\0" . 'GptHospital' . "\0" . 'activeFlg', '' . "\0" . 'GptHospital' . "\0" . 'lastVerifiedDt', '' . "\0" . 'GptHospital' . "\0" . 'createTs', '' . "\0" . 'GptHospital' . "\0" . 'updateTs', '' . "\0" . 'GptHospital' . "\0" . 'departments', '' . "\0" . 'GptHospital' . "\0" . 'affiliates'];
         }
 
-        return ['__isInitialized__', '' . "\0" . 'GptHospital' . "\0" . 'hospitalId', '' . "\0" . 'GptHospital' . "\0" . 'hospitalName', '' . "\0" . 'GptHospital' . "\0" . 'hospitalType', '' . "\0" . 'GptHospital' . "\0" . 'hospitalUrl', '' . "\0" . 'GptHospital' . "\0" . 'activeFlg', '' . "\0" . 'GptHospital' . "\0" . 'lastVerifiedDt', '' . "\0" . 'GptHospital' . "\0" . 'createTs', '' . "\0" . 'GptHospital' . "\0" . 'updateTs', '' . "\0" . 'GptHospital' . "\0" . 'departments', '' . "\0" . 'GptHospital' . "\0" . 'affiliates'];
+        return ['__isInitialized__', '' . "\0" . 'GptHospital' . "\0" . 'hospitalId', '' . "\0" . 'GptHospital' . "\0" . 'hospitalName', '' . "\0" . 'GptHospital' . "\0" . 'hospitalType', '' . "\0" . 'GptHospital' . "\0" . 'hospitalUrl', '' . "\0" . 'GptHospital' . "\0" . 'inContract', '' . "\0" . 'GptHospital' . "\0" . 'activeFlg', '' . "\0" . 'GptHospital' . "\0" . 'lastVerifiedDt', '' . "\0" . 'GptHospital' . "\0" . 'createTs', '' . "\0" . 'GptHospital' . "\0" . 'updateTs', '' . "\0" . 'GptHospital' . "\0" . 'departments', '' . "\0" . 'GptHospital' . "\0" . 'affiliates'];
     }
 
     /**
@@ -248,6 +248,28 @@ class GptHospital extends \GptHospital implements \Doctrine\ORM\Proxy\Proxy
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'setHospitalUrl', [$hospitalUrl]);
 
         return parent::setHospitalUrl($hospitalUrl);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setInContract($inContract)
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setInContract', [$inContract]);
+
+        return parent::setInContract($inContract);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getInContract()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getInContract', []);
+
+        return parent::getInContract();
     }
 
     /**

@@ -82,10 +82,35 @@ class Hospital_Controller extends Authenticated_Controller
         $em = $this->doctrine->em;
         $hospital = $em->find('GptHospital', $this->input->post('hospital_id'));
         $department = $em->find('GptHospitalDept', $this->input->post('hospital_dept_id'));
-        $hospital->getDepartments()->removeElement($department);
-        $em->persist($hospital);
-        $em->flush();
-        $this->output_response_success('');
+        
+        $contReferences = $em->getRepository('GptHospitalContXref')->findAll();
+        $serviceReferences = $em->getRepository('GptHospitalServiceXref')->findAll();
+        
+        $contReferencesCount = 0;
+        foreach ($contReferences as $contact) {
+            if($contact->getDepartment()->getId() == $department->getId()
+                    && $contact->getHospital()->getId() == $hospital->getId()){
+                        ++$contReferencesCount;
+                    }
+        }
+        
+        $serviceReferencesCount = 0;
+        foreach ($serviceReferences as $service) {
+            if ($service->getDepartment()->getId() == $department->getId()
+                    && $service->getHospital()->getId() == $hospital->getId()){
+                        ++$serviceReferencesCount;
+                    }
+        }
+
+        if($serviceReferencesCount == 0 && $contReferencesCount == 0){
+            $hospital->getDepartments()->removeElement($department);
+            $em->persist($hospital);
+            $em->flush();
+            $this->output_response_success('');
+        }else{
+            $this->output_response_failure('Department has other associations.');
+        }
+        
     }
 
     private function callback_hospital_contact_attach(){
