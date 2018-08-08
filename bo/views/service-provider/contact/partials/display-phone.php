@@ -3,7 +3,7 @@
     <div class="col-4">
         <div class="btn-group float-right" role="group">
             <button type="button" class="btn btn-secondary btn-sm edit" data-for="phone"><i class="fa fa-fw fa-edit"></i></button>
-            <!--button type="button" class="btn btn-secondary btn-sm" data-toggle="modal" data-for="phone" data-target="#deleteConfirmationModal"><i class="fa fa-fw fa-trash"></i></button-->
+            <button type="button" class="btn btn-secondary btn-sm" data-toggle="modal" data-for="phone" data-target="#deleteConfirmationModal"><i class="fa fa-fw fa-trash"></i></button>
         </div>
     </div>
 </div>

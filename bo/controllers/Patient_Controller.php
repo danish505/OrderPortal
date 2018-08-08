@@ -8,6 +8,7 @@ class Patient_Controller extends Authenticated_Controller
     public function __construct()
     {
         parent::__construct();
+        $this->load->library('form_validation');
         $this->load->vars([
           'statusClassMap' => [
             GptUser::USER_STATUS_ACTIVE                 =>  'success',
@@ -22,7 +23,9 @@ class Patient_Controller extends Authenticated_Controller
           'genderMap' =>  [
             'M' =>  'Male',
             'F' =>  'Female'
-          ]
+          ],
+          'salutations' => $this->config->config['gpt_variable']['salutation'],
+          'profile_update_successful' => false,
         ]);
     }
     public function index()
@@ -40,6 +43,19 @@ class Patient_Controller extends Authenticated_Controller
         ]);
     }
 
+    private function updatePatient(&$patient)
+    {
+        $patient->setSalutation($this->input->post('salutation'));
+        $patient->setFirstName($this->input->post('first_name'));
+        $patient->setLastName($this->input->post('last_name'));
+        $patient->setMiddleName($this->input->post('middle_name'));
+        $patient->setAge($this->input->post('age'));
+        $patient->setGender($this->input->post('gender'));
+
+        $this->doctrine->em->persist($patient);
+        $this->doctrine->em->flush();
+    }
+
     public function view($id)
     {
         $em = $this->doctrine->em;
@@ -48,10 +64,23 @@ class Patient_Controller extends Authenticated_Controller
           'role'    =>  GptUser::USER_ROLE_PATIENT,
           'userId'  =>  $id
         ]);
+        
+        $data = [
+          'patient' => $patient,
+        ];
+        
         $patient->details = $patient->getDetail($em);
+        if ($this->form_validation->run('patient_profile')) {
+          if ($patient->getEmail() !== $this->input->post('email_address')) {
+              $patient->setEmail($this->input->post('email_address'));
+              $this->doctrine->em->persist($patient);
+              $this->doctrine->em->flush();
+          }
 
-        $this->render('patient/view', [
-        'patient' => $patient,
-      ]);
+          $this->updatePatient($patient->details);
+          $data['profile_update_successful'] = true;
+        }
+
+        $this->render('patient/view', $data);
     }
 }

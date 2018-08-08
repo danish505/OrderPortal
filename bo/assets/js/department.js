@@ -22,6 +22,19 @@ $(document).ready(function(){
                 div.replaceWith(r.html);
             });
         },
+        callback_delete_department: function(modal, response, $el){
+            if(response.success){
+                $parent = $el.parent();
+                modal.find('div.alert-danger').addClass('d-none');
+                modal.modal('hide');
+                $el.remove();
+                if($parent.find('tr:not(.not-found)').length == 0){
+                    $parent.find('tr.not-found').removeClass('d-none');
+                }
+            }else{
+                modal.find('div.alert-danger').removeClass('d-none');
+            }
+        },
         submit_form: function(modal, callback) {
             var form = modal.find('form');
             var department_id = form.find('input[name="department_id"]').val();
@@ -50,10 +63,23 @@ $(document).ready(function(){
             modal.find('input[name="department_category"]').val(data.department_category);
             modal.find('input[name="department_sub_category"]').val(data.department_sub_category);
             modal.modal('show');
+        },
+        delete_department: function(modal, $el, id){
+            let token = $('input[name="csrf_token"]').eq(0).val();
+            make_call(
+                '/departments/ajax',
+                $.param([{name:'department_id', value: id}, {name: "action", value: "department_delete"},{name:'csrf_token', value:token}]),
+                function(response){
+                    handler['callback_delete_department'](modal, response, $el);
+                },
+                function(response){
+                    callback_delete_fail(response, modal);
+                }
+            );
         }
     }
     
-    $('div.modal').on('hidden.bs.modal', function (e) {
+    $('div.modal:not(#deleteConfirmationModal)').on('hidden.bs.modal', function (e) {
         let form = $(this).find('form')[0];
         form.reset();
         form.classList.remove('was-validated');
@@ -63,6 +89,21 @@ $(document).ready(function(){
         let modal = $(this).closest('div.modal');
         handler.submit_form(modal, callback);
     });
+
+    $('div.modal#deleteConfirmationModal').on('show.bs.modal', function(e){
+        let id = $(e.relatedTarget).closest('tr').data('id');
+        let action_for = $(e.relatedTarget).data('for');
+        let action = 'delete_'+action_for;
+        let modal = $(this);
+        modal.find('.alert.alert-danger').addClass('d-none');
+        $(this).find('button.btn-primary').bind('click', function(){
+            if(!!handler[action]){
+                handler[action](modal, $(e.relatedTarget).closest('tr'), id);
+            }
+        });
+    }).on('hidden.bs.modal', function (e) {
+        $(this).find('button.btn-primary').unbind();
+    })
 
     function display_errors(form) {
         form.classList.add('was-validated');

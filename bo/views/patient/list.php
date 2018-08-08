@@ -22,7 +22,10 @@
             <td><?php echo $genderMap[$patient->details->getGender()]?></td>
             <td><?php echo $patient->details->getAge();?></td>
             <td><span class="badge badge-<?php echo $statusClassMap[$patient->getStatus()];?>"><?php echo $statusMap[$patient->getStatus()];?></span></td>
-            <td><a class="nav-link" href="<?php echo $base_url;?>patient/<?php echo $patient->getId();?>"><i class="fa fa-fw fa-eye"></i></a></td>
+            <td>
+            <div class="btn-group pt-1 float-right" role="group">
+                <a class="btn btn-secondary btn-sm" href="<?php echo $base_url;?>patient/<?php echo $patient->getId();?>"><i class="fa fa-fw fa-edit"></i></a></td>
+            </div>
           </tr>
         <?php endforeach;?>
         </tbody>

@@ -21,4 +21,4 @@
     </div>
   </div>
 </div>
-<?php $this->load->view('service-provider/service/modals/delete-confirmation');?>
+<?php $this->load->view('service-provider/modals/delete-confirmation');?>
