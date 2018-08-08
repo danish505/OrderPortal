@@ -32,6 +32,7 @@ class ServiceProvider_Controller extends Authenticated_Controller
         'serviceProvider' => $serviceProvider,
         'injected_scripts' => implode('', $injectedScripts),
         'salutations' => $this->config->config['gpt_variable']['salutation'],
+        'countries' => $this->config->config['gpt_variable']['sorted_countries'],
       ]);
     }
 
@@ -57,6 +58,17 @@ class ServiceProvider_Controller extends Authenticated_Controller
         $company = $this->getServiceProvider($this->input->post('id'));
         if($company){
             $em->remove($company);
+            $em->flush();
+        }
+        $this->output_response_success('');
+    }
+
+    private function callback_service_provider_service_delete() {
+        $em = $this->doctrine->em;
+        $em = $this->doctrine->em;
+        $service = $em->find('GptCompanyService', $this->input->post('id'));
+        if($service){
+            $em->remove($service);
             $em->flush();
         }
         $this->output_response_success('');
@@ -134,6 +146,38 @@ class ServiceProvider_Controller extends Authenticated_Controller
         }else{
             $this->output_response_failure('Invalid arguments provided');
         }
+    }
+    private function callback_service_provider_contact_email_address_delete(){
+        $em = $this->doctrine->em;
+        $em = $this->doctrine->em;
+        $email = $em->find('GptCompanyContactEmail', $this->input->post('id'));
+        if($email){
+            $em->remove($email);
+            $em->flush();
+        }
+        $this->output_response_success('');
+    }
+
+    private function callback_service_provider_contact_address_delete(){
+        $em = $this->doctrine->em;
+        $em = $this->doctrine->em;
+        $address = $em->find('GptCompanyContactAddress', $this->input->post('id'));
+        if($address){
+            $em->remove($address);
+            $em->flush();
+        }
+        $this->output_response_success('');
+    }
+
+    private function callback_service_provider_contact_phone_number_delete(){
+        $em = $this->doctrine->em;
+        $em = $this->doctrine->em;
+        $phone = $em->find('GptCompanyContactPhone', $this->input->post('id'));
+        if($phone){
+            $em->remove($phone);
+            $em->flush();
+        }
+        $this->output_response_success('');
     }
 
     private function callback_service_provider_contact_email_address_update() {
