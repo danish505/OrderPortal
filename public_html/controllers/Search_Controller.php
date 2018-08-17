@@ -48,7 +48,7 @@ class Search_Controller extends Public_Controller
         $query = $this->doctrine->em->createQueryBuilder()
                     ->select('h')
                     ->from('GptHospital', 'h')
-                    ->join('h.departments', 'd')
+                    ->leftJoin('h.departments', 'd')
                     ->leftJoin('GptHospitalServiceXref', 'xs', 'WITH','xs.hospital = h AND xs.department = d')
                     ->leftJoin('xs.service', 's')
                     ->leftJoin('GptHospitalContXref', 'xc', 'WITH','xc.hospital = h AND xc.hospitalDept = d')
