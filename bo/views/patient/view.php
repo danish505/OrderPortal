@@ -62,10 +62,10 @@
         </div>
     </div>
     <div class="form-group row">
-        <label for="age" class="col-sm-3 col-form-label">Age</label>
+        <label for="date_of_birth" class="col-sm-3 col-form-label">Date of Birth</label>
         <div class="col-sm-9">
-            <input type="number" class="form-control" id="age" name="age" min="1" value="<?php echo $patient->details->getAge();?>">
-            <?php echo form_error('age'); ?>
+            <input type="text" class="form-control" id="date_of_birth" name="date_of_birth" value="<?php echo $patient->details->getDOB();?>">
+            <?php echo form_error('date_of_birth'); ?>
         </div>
     </div>
     <div class="float-right">

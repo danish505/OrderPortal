@@ -49,7 +49,7 @@ class Patient_Controller extends Authenticated_Controller
         $patient->setFirstName($this->input->post('first_name'));
         $patient->setLastName($this->input->post('last_name'));
         $patient->setMiddleName($this->input->post('middle_name'));
-        $patient->setAge($this->input->post('age'));
+        $patient->setDOB($this->input->post('date_of_birth'));
         $patient->setGender($this->input->post('gender'));
 
         $this->doctrine->em->persist($patient);

@@ -55,9 +55,9 @@ class GptPatient
     /**
      * @var integer
      *
-     * @Column(name="age", type="integer", nullable=true)
+     * @Column(name="dob", type="string", nullable=false)
      */
-    private $age;
+    private $dob;
 
     /**
      * @var boolean
@@ -124,9 +124,10 @@ class GptPatient
         $this->gender = $gender;
     }
 
-    public function setAge($age)
+    public function setDOB($dob)
     {
-        $this->age = $age;
+        $date_chunks = explode('-',$dob); //parsing mm-dd-yy 
+        $this->dob = "{$date_chunks[2]}-{$date_chunks[0]}-{$date_chunks[1]}"; // convert to yy-mm-dd
     }
 
     public function getId()
@@ -165,9 +166,10 @@ class GptPatient
         return $this->gender;
     }
 
-    public function getAge()
+    public function getDOB()
     {
-        return $this->age;
+        $date_chunks = explode('-',$this->dob); //parse 'yy-mm-dd'
+        return "{$date_chunks[1]}-{$date_chunks[2]}-{$date_chunks[0]}"; // convert to 'mm-dd-yy'
     }
 
     public function getContacts(){

@@ -213,3 +213,9 @@ footer {
   right: 60px;
   cursor: pointer;
 }
+
+.gpt-datepicker{
+  width: 90%;
+  display: inline-block;
+  margin-right: 5px;
+}

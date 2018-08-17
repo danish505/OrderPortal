@@ -60,14 +60,14 @@
         </div>
       </div>
       <div class="form-group row">
-        <label for="age" class="col-sm-3 col-form-label">Age</label>
+        <label for="date_of_birth" class="col-sm-3 col-form-label">Date of Birth</label>
         <div class="col-sm-9">
-          <input type="number" class="form-control" id="age" name="age" min="1">
-          <?php echo form_error('age'); ?>
+          <input type="text" class="form-control gpt-datepicker" id="date_of_birth" name="date_of_birth" readonly="readonly">
+          <?php echo form_error('date_of_birth'); ?>
         </div>
       </div>
       <div class="form-group row">
-        <label for="age" class="col-sm-3 col-form-label"></label>
+        <label class="col-sm-3 col-form-label"></label>
         <div class="col-sm-9">
           <?php echo form_error('captcha'); ?>
           <div class="g-recaptcha" data-sitekey="<?php echo $GOOGLE_CAPTCHA_SITE_KEY;?>"></div>

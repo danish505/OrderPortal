@@ -36,10 +36,10 @@ $config = array(
         'error_suffix' => '</small>'
       ),
       array(
-        'field' => 'age',
-        'label' => 'Age',
+        'field' => 'date_of_birth',
+        'label' => 'Date of Birth',
         'rules' => 'required',
-        'error_prefix' => '<small id="error_age_name" class="form-text text-muted">',
+        'error_prefix' => '<small id="error_date_of_birth" class="form-text text-muted">',
         'error_suffix' => '</small>'
       )
     )

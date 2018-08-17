@@ -1,4 +1,18 @@
 $(document).ready(function(){
+
+    $( "input#date_of_birth" ).datepicker({
+        inline: true,
+        showOn: "button",
+        buttonImage: "/assets/images/calendar.jpeg",
+        buttonImageOnly: true,
+        dateFormat: 'mm-dd-yy',
+        changeMonth: true,
+        changeYear: true,
+        minDate: '-100y',
+        yearRange: 'c-100:c',
+        maxDate: new Date()
+    });
+
     var prefix = 'contactDetail';
     var handler = {
         handle: function(response, _cb){

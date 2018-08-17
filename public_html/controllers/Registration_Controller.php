@@ -46,12 +46,17 @@ class Registration_Controller extends Public_Controller
     {
         $this->load->library('form_validation');
         $this->load->library('captcha');
+        
+        $injectedScripts[] = $this->captcha->getScript();
+        $injectedScripts[] = '<script type="text/javascript" async="" src="'.$this->config->config['base_url'].'/assets/js/patient.js"></script>';
+        $injectedScripts[] = '<script type="text/javascript" async="" src="'.$this->config->config['base_url'].'/assets/vendor/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>';
+        $injectedScripts[] = '<link rel="stylesheet" href="'.$this->config->config['base_url'].'/assets/vendor/jquery-ui-1.12.1.custom/jquery-ui.min.css"/>';
 
         $data = array(
           'user_creation_successful' => false,
           'salutations' => $this->config->config['gpt_variable']['salutation'],
           'GOOGLE_CAPTCHA_SITE_KEY' => $this->captcha->getSiteKey(),
-          'injected_scripts' => $this->captcha->getScript()
+          'injected_scripts' => implode('',$injectedScripts)
         );
 
         if ($this->form_validation->run('patient_registration')) {
@@ -70,7 +75,7 @@ class Registration_Controller extends Public_Controller
         $patient->setFirstName($this->input->post('first_name'));
         $patient->setLastName($this->input->post('last_name'));
         $patient->setMiddleName($this->input->post('middle_name'));
-        $patient->setAge($this->input->post('age'));
+        $patient->setDOB($this->input->post('date_of_birth'));
         $patient->setGender($this->input->post('gender'));
         $patient->preCreate();
         $em->persist($patient);

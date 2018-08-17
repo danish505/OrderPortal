@@ -1,0 +1,1 @@
+ALTER TABLE `gpt_patient` CHANGE `age` `dob` date NOT NULL;
